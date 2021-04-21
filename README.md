@@ -6,9 +6,10 @@ Run on the following commmands on the root directory to get started.
 
 ## Setup
 1) ```npm run p/post``` Installs all packages
-2) ```npm run build``` Creates index.html by running build
-3) ```npm run dev``` Runs server (Port=5000) and client (Port=3000) concurrently using the "concurrently" package.
-4) Press the "Test" button on the html page. You should get a success response with a message.
+2) ```npm run audit``` Run fix audit on all packages
+3) ```npm run build``` Creates index.html by running build
+4) ```npm run dev``` Runs server (Port=5000) and client (Port=3000) concurrently using the "concurrently" package.
+5) Press the "Test" button on the html page. You should get a success response with a message.
 
 ## Tips & Instructions
 - Install packages seperately into the server/client folders.
@@ -16,4 +17,4 @@ Run on the following commmands on the root directory to get started.
 
 Enjoy ~
 
-ⓒ Austin Im
+Made by doodoobutterr & th3dougler
