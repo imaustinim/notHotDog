@@ -1,0 +1,12 @@
+body {
+    width: 100%;
+    margin: 0;
+    /* background-color: black; */
+    /* color: grey; */
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+    display: flex;
+}
