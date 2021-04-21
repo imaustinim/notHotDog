@@ -15,11 +15,16 @@ class CryptoBlockchain {
       updatedAt: Date.now(),
       createdAt: Date.now()
     }
-    return new CryptoBlock(0, Date.now(), dict,0)
+    const firstBlock = new CryptoBlock(0, Date.now(), dict,0)
+    this.addNewBlock(firstBlock)
   }
 
   obtainLatestBlock() {
-    return this.blockchain[this.blockchain.length -1];
+    if (this.blockchain.length == 0) {
+      return " "
+    } else {
+      return this.blockchain[this.blockchain.length -1];
+    }
   }
 
   addNewBlock(newBlock) {

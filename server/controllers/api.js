@@ -9,7 +9,6 @@ function test(req, res) {
     })
 }
 
-
 function addBlock(req, res) {
   let dict = chain.blockchain[chain.blockchain.length-1].data
   const newData = {
@@ -26,7 +25,7 @@ function addBlock(req, res) {
     timestamp = Date.now(),
     data = dict,
   ))
-  // console.log(chain.blockchain)
+  console.log(chain.blockchain)
   res.status(200).json({
     message: "success",
     block: newData,
