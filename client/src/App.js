@@ -1,17 +1,20 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import './App.css';
 
 function App() {
   const [message, setMessage] = useState("")
-  const [blockchain, setBlockchain] = useState([{
-    address: "address",
-    key: "key",
-    type: "type",
-    name: "name",
-    quantity: "quantity",
-    updatedAt: Date.now(),
-    createdAt: Date.now()
-  },])
+  useEffect(() => {
+    setBlockchain([{
+      address: "address",
+      key: "key",
+      type: "type",
+      name: "name",
+      quantity: "quantity",
+      updatedAt: Date.now(),
+      createdAt: Date.now()
+    }])
+  }, [])
+  const [blockchain, setBlockchain] = useState([])
   const [name, setName] = useState("")
   const [address, setAddress] = useState("")
   const [key, setKey] = useState("")
@@ -45,7 +48,6 @@ function App() {
         message: "error"
       })
     })
-    console.log(blockchain)
   }
 
   return (
@@ -77,8 +79,8 @@ function App() {
               <div>Address: {block.address}</div>
               <div>Key: {block.key}</div>
               <div>Quantity: {block.quantity}</div>
-              <div>CreatedAt: {Date(block.createdAt)}</div>
-              <div>UpdatedAt: {Date(block.updatedAt)}</div>
+              <div>CreatedAt: {block.createdAt}</div>
+              <div>UpdatedAt: {block.updatedAt}</div>
               <br/>
             </div>
           )
