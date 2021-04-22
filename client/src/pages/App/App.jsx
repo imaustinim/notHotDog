@@ -2,17 +2,14 @@ import { useState } from "react";
 import { Route, Switch } from "react-router";
 
 /* Material */
-import { Container, useMediaQuery } from "@material-ui/core";
+import { Typography, useMediaQuery, Box } from "@material-ui/core";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import { ThemeProvider, createMuiTheme } from "@material-ui/core/styles";
-
-import Box from "@material-ui/core/Box";
-import Grid from "@material-ui/core/Grid";
-
 /* Custom Components */
 import "./App.css";
 import NavBar from "../../components/NavBar/NavBar";
 import Footer from "../../components/Footer/Footer";
+import DemoColourGrid from "../../components/DemoColourGrid/DemoColourGrid";
 
 import Login from "../Login/Login";
 import Signup from "../Signup/Signup";
@@ -22,6 +19,9 @@ function App() {
     useMediaQuery("(prefers-color-scheme: dark)")
   );
 
+  let [user, setUser] = useState(null);
+
+  /* Custom Colour palette, this is a global theme */
   const theme = createMuiTheme({
     palette: {
       type: darkMode ? "dark" : "light",
@@ -66,7 +66,7 @@ function App() {
     <ThemeProvider theme={theme}>
       <CssBaseline />
       <main className='App'>
-        <NavBar toggleLightDark={toggleLightDark} />
+        <NavBar toggleLightDark={toggleLightDark} user={user} />
         <Switch>
           <Route
             path='/:type/signup/'
@@ -75,89 +75,18 @@ function App() {
           <Route path='/:type/login' render={(props) => <Login {...props} />} />
           <Route
             path='/'
-            render={(props) => (
-              <>
-                <Container>
-                  <Box pt={10}>
-                    <strong>Home Page</strong>
-                    <Grid container spacing={1}>
-                      <Grid item xs={12} sm={4}>
-                        <Box
-                          bgcolor='primary.main'
-                          color='primary.contrastText'
-                          p={2}>
-                          primary.main
-                        </Box>
-                      </Grid>
-                      <Grid item xs={12} sm={4}>
-                        <Box
-                          bgcolor='secondary.main'
-                          color='secondary.contrastText'
-                          p={2}>
-                          secondary.main
-                        </Box>
-                      </Grid>
-                      <Grid item xs={12} sm={4}>
-                        <Box
-                          bgcolor='error.main'
-                          color='error.contrastText'
-                          p={2}>
-                          error.main
-                        </Box>
-                      </Grid>
-                      <Grid item xs={12} sm={4}>
-                        <Box
-                          bgcolor='warning.main'
-                          color='warning.contrastText'
-                          p={2}>
-                          warning.main
-                        </Box>
-                      </Grid>
-                      <Grid item xs={12} sm={4}>
-                        <Box
-                          bgcolor='info.main'
-                          color='info.contrastText'
-                          p={2}>
-                          info.main
-                        </Box>
-                      </Grid>
-                      <Grid item xs={12} sm={4}>
-                        <Box
-                          bgcolor='success.main'
-                          color='success.contrastText'
-                          p={2}>
-                          success.main
-                        </Box>
-                      </Grid>
-                      <Grid item xs={12} sm={4}>
-                        <Box
-                          bgcolor='text.primary'
-                          color='background.paper'
-                          p={2}>
-                          text.primary
-                        </Box>
-                      </Grid>
-                      <Grid item xs={12} sm={4}>
-                        <Box
-                          bgcolor='text.secondary'
-                          color='background.paper'
-                          p={2}>
-                          text.secondary
-                        </Box>
-                      </Grid>
-                      <Grid item xs={12} sm={4}>
-                        <Box
-                          bgcolor='text.disabled'
-                          color='background.paper'
-                          p={2}>
-                          text.disabled
-                        </Box>
-                      </Grid>
-                    </Grid>
+            render={(props) => {
+              console.log(user !== null);
+              if (user == null) {
+                return <DemoColourGrid {...props} />;
+              } else {
+                return (
+                  <Box pt={8}>
+                    <Typography> Hello World</Typography>
                   </Box>
-                </Container>
-              </>
-            )}
+                );
+              }
+            }}
           />
         </Switch>
         <Footer />

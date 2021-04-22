@@ -8,6 +8,7 @@ import {
   MenuItem,
   MenuList,
   ClickAwayListener,
+  Box,
 } from "@material-ui/core";
 import { Link as RouterLink } from "react-router-dom";
 
@@ -35,7 +36,12 @@ export default function LoginButtons(props) {
         onClick={handleToggle}
         color='inherit'
         startIcon={props.icon}>
-        <Typography variant='body1'>{props.type}</Typography>
+        <Typography variant='body1'>
+          {props.type[0]}
+          <Box component='span' display={{ xs: "none", sm: "inline" }}>
+            {props.type.slice(1)}
+          </Box>
+        </Typography>
       </Button>
       <Popper
         open={open}
