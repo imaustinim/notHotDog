@@ -12,6 +12,10 @@ import Grid from "@material-ui/core/Grid";
 /* Custom Components */
 import "./App.css";
 import NavBar from "../../components/NavBar/NavBar";
+import Footer from "../../components/Footer/Footer";
+
+import Login from "../Login/Login";
+import Signup from "../Signup/Signup";
 
 function App() {
   let [darkMode, setDarkMode] = useState(
@@ -66,20 +70,9 @@ function App() {
         <Switch>
           <Route
             path='/:type/signup/'
-            render={(props) => (
-              <>
-                <em>index react route</em>
-              </>
-            )}
+            render={(props) => <Signup {...props} />}
           />
-          <Route
-            path='/:type/login'
-            render={(props) => (
-              <>
-                <em>index react route</em>
-              </>
-            )}
-          />
+          <Route path='/:type/login' render={(props) => <Login {...props} />} />
           <Route
             path='/'
             render={(props) => (
@@ -167,6 +160,7 @@ function App() {
             )}
           />
         </Switch>
+        <Footer />
       </main>
     </ThemeProvider>
   );

@@ -1,4 +1,10 @@
-import { Typography, AppBar, Toolbar, IconButton } from "@material-ui/core";
+import {
+  Typography,
+  AppBar,
+  Toolbar,
+  IconButton,
+  Link,
+} from "@material-ui/core";
 
 import InvertColorsIcon from "@material-ui/icons/InvertColors";
 import MenuIcon from "@material-ui/icons/Menu";
@@ -6,6 +12,7 @@ import MenuIcon from "@material-ui/icons/Menu";
 import BusinessIcon from "@material-ui/icons/Business";
 import PersonOutlineIcon from "@material-ui/icons/PersonOutline";
 
+import { Link as RouterLink } from "react-router-dom";
 import HideOnScroll from "../HideOnScroll/HideOnScroll";
 import LoginButtons from "./LoginButtons/LoginButtons";
 
@@ -14,18 +21,22 @@ export default function NavBar(props) {
     <HideOnScroll {...props}>
       <AppBar position='fixed'>
         <Toolbar>
-          <IconButton
+          {/*           <IconButton
             edge='start'
             aria-label='toggle light and dark mode'
             color='inherit'>
             <MenuIcon />
-          </IconButton>
+          </IconButton> */}
+
           <Typography
             variant='h5'
             component='h1'
             style={{ flexGrow: 1, textAlign: "center" }}>
-            !HOTDOG
+            <Link component={RouterLink} to='/' color='inherit'>
+              !HOTDOG
+            </Link>
           </Typography>
+
           <LoginButtons icon={<BusinessIcon />} type='business' />
           <LoginButtons icon={<PersonOutlineIcon />} type='user' />
           <IconButton
