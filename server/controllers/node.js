@@ -1,11 +1,6 @@
 const path = require("path");
-const generator = require("generate-password")
-
-const User = require("../models/user")
 const Business = require("../models/business")
 const Node = require("../models/node")
-const NodeItem = require("../models/nodeItem")
-const Token = require("../models/token")
 const Contract = require("../models/classes/contract");
 
 function createNode(req, res) {
@@ -21,36 +16,28 @@ function createNode(req, res) {
   )
 
   const business = Business.findOne({ id: req.user.id})
-  const newNode = new Node({
+  const node = Node.create({
     _business: business,
     name: "test token",
     description: "This is a test token lasting from a to b",
     type: "gift card",
     address: path.join(process.env.PATH, "api", "redeem", business.id),
-    quantity: 100,
+    initialQuantity: 100,
+    remainingQuantity: 100,
+    redeemed: 0,
     contract: contract,
     activeDate: req.body.activeDate,
     expireDate: req.body.expireDate,
     nodeItems: []
   })
-
+   
   res.send({
     success: true,
     message: "Successfully created node",
-    node: newNode
-  })
-}
-
-
-function redeemToken(req, res) {
-  console.log(req.body)
-  res.status(200).json({
-      message: "This is a test"
+    node: node
   })
 }
 
 module.exports = {
   createNode,
-  addNodeItem,
-  redeemToken,
 }

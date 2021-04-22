@@ -11,7 +11,15 @@ const nodeSchema = new mongoose.Schema({
     enum: ["gift card", "coupon", "ticket"]
   },
   address: String,
-  quantity: Number,
+  initialQuantity: Number,
+  remainingQuantity: {
+    type: Number,
+    default: -1,
+  },
+  redeemedQuantity: {
+    type: Number,
+    default: 0,
+  },
   contract: {
     type: Object,
   },

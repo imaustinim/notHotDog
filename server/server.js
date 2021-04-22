@@ -7,12 +7,10 @@ const dotenv = require("dotenv");
 const session = require('express-session');
 const MongoDBStore = require("connect-mongodb-session")(session);
 const app = express();
-
 // Config
 dotenv.config({ path: "./config/config.env"});
+require('./config/database')();
 const port = process.env.PORT || 5000;
-
-require('./config/database');
 
 app.use(logger('dev'));
 app.use(express.json());
