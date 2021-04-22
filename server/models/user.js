@@ -5,7 +5,6 @@ const userSchema = new mongoose.Schema({
   lastName: String,
   password: String,
   email: String,
-  avatar: String,
   tokens: [{
     type: mongoose.Schema.Types.ObjectId, ref: "Token",
   }]
