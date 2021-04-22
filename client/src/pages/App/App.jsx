@@ -1,14 +1,14 @@
 import { useState } from "react";
 import { Route, Switch } from "react-router";
-import { Link as rLink } from "react-router-dom";
-import { Link } from "@material-ui/core";
-import "./App.css";
 
+/* Material */
+import { Container, useMediaQuery } from "@material-ui/core";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import { ThemeProvider, createMuiTheme } from "@material-ui/core/styles";
-import InvertColorsIcon from "@material-ui/icons/InvertColors";
 
-import { IconButton, useMediaQuery } from "@material-ui/core";
+/* Custom Components */
+import "./App.css";
+import NavBar from "../../components/NavBar/NavBar";
 
 function App() {
   let [darkMode, setDarkMode] = useState(
@@ -28,10 +28,11 @@ function App() {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      <div className='App'>
+      <main className='App'>
+        <NavBar toggleLightDark={toggleLightDark} />
         <Switch>
           <Route
-            path='/auth/signup/:type'
+            path='/:type/signup/'
             render={(props) => (
               <>
                 <em>index react route</em>
@@ -39,7 +40,7 @@ function App() {
             )}
           />
           <Route
-            path='/auth/login:type'
+            path='/:type/login'
             render={(props) => (
               <>
                 <em>index react route</em>
@@ -50,39 +51,14 @@ function App() {
             path='/'
             render={(props) => (
               <>
-                <header>
-                  <em>index react route</em>
-                  <IconButton
-                    onClick={toggleLightDark}
-                    aria-label='toggle light and dark mode'
-                    color='inherit'>
-                    <InvertColorsIcon />
-                  </IconButton>
-                </header>
-
-                <div>
-                  <strong>User Login</strong>
-                  <Link component={rLink} to='/auth/signup/u' color='primary'>
-                    Signup
-                  </Link>
-                  <Link component={rLink} to='/auth/signup/u' color='primary'>
-                    Login User
-                  </Link>
-                </div>
-                <div>
-                  <strong>Business Login</strong>
-                  <Link component={rLink} to='/auth/signup/b' color='primary'>
-                    Signup
-                  </Link>
-                  <Link component={rLink} to='/auth/signup/b' color='primary'>
-                    Login User
-                  </Link>
-                </div>
+                <Container>
+                  <strong>Home Page</strong>
+                </Container>
               </>
             )}
           />
         </Switch>
-      </div>
+      </main>
     </ThemeProvider>
   );
 }
