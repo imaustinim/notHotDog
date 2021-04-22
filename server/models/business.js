@@ -1,7 +1,9 @@
 const mongoose = require('mongoose');
 
 const businessSchema = new mongoose.Schema({
-  username: String,
+  businessName: String,
+  firstName: String,
+  lastName: String,
   password: String,
   email: String,
   nodes: [{
