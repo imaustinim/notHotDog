@@ -1,0 +1,34 @@
+{
+"type": ['gc']
+"contract":{
+    "static": bool,
+    }
+
+}
+
+
+///
+
+{
+"type": ['coupon'],
+"contract":{
+    "static": bool,
+    "unit": STRING['%','$'],
+    "minPurchase": INTEGER,
+    }
+
+}
+///
+{
+"type": ['event']
+
+
+"contract":{
+    "static": bool,
+    "row": str,
+    "seat": str,
+    "type": str,
+    "value": int
+    }
+
+}
