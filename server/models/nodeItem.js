@@ -4,6 +4,7 @@ const nodeItemSchema = new mongoose.Schema({
   _node: {
     type: mongoose.Schema.Types.ObjectId, ref: "Node",
   },
+  key: String,
   amount: Number,
   type: {
     type: String,
@@ -13,7 +14,6 @@ const nodeItemSchema = new mongoose.Schema({
     type: Boolean,
     default: false
   },
-  key: String,
   contract: {
     type: Object,
   },

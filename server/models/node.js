@@ -11,6 +11,7 @@ const nodeSchema = new mongoose.Schema({
     enum: ["gift card", "coupon", "ticket"]
   },
   address: String,
+  quantity: Number,
   contract: {
     type: Object,
   },
