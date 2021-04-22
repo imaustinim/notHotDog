@@ -1,12 +1,13 @@
 const mongoose = require('mongoose');
 
 const userSchema = new mongoose.Schema({
-  username: String,
+  firstName: String,
+  lastName: String,
   password: String,
   email: String,
   avatar: String,
-  redeemables: [{
-    type: mongoose.Schema.Types.ObjectId, ref: "Redeemable",
+  tokens: [{
+    type: mongoose.Schema.Types.ObjectId, ref: "Token",
   }]
 },{
   timestamps: true,
