@@ -11,7 +11,10 @@ import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 
-import { Link as RouterLink, useParams } from "react-router-dom";
+import { useState } from "react";
+import { Link as RouterLink, useParams, useHistory } from "react-router-dom";
+
+import { registerNewUser } from "../../utils/authUtils";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -33,10 +36,62 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function SignUp() {
+export default function SignUp(props) {
   const classes = useStyles();
+  const history = useHistory();
   const { type } = useParams();
 
+  let [firstName, setFirstName] = useState("");
+  let [lastName, setLastName] = useState("");
+  let [businessName, setBusinessName] = useState("");
+  let [email, setEmail] = useState("");
+  let [password, setPassword] = useState("");
+
+  const handleSubmit = async (e) => {
+    /* Parse object format, then pass it to util function
+      to complete signup process and return toast
+    */
+    try {
+      e.preventDefault();
+      let formData = {
+        firstName: firstName,
+        lastName: lastName,
+        businessName: businessName !== "" ? businessName : null,
+        email: email,
+        password: password,
+      };
+      let res = await registerNewUser(formData);
+      if (res && !res._id) {
+        throw res;
+      } else {
+        history.push("/");
+        props.setSnack({
+          open: true,
+          message: `Successfully created your account!`,
+          severity: "success",
+        });
+        props.setUser(res);
+      }
+    } catch (err) {
+      let newErrorSnack;
+      if (err === 11000) {
+        newErrorSnack = {
+          open: true,
+          message: `${
+            type[0].toUpperCase() + type.slice(1)
+          } already exists with email ${email}`,
+          severity: "error",
+        };
+      } else {
+        newErrorSnack = {
+          open: true,
+          message: `${err}`,
+          severity: "error",
+        };
+      }
+      props.setSnack(newErrorSnack);
+    }
+  };
   return (
     <Container component='main' maxWidth='xs'>
       <CssBaseline />
@@ -49,7 +104,7 @@ export default function SignUp() {
             type && type.length > 2 ? type[0].toUpperCase() + type.slice(1) : ""
           } Sign Up`}
         </Typography>
-        <form className={classes.form} noValidate>
+        <form className={classes.form} onSubmit={handleSubmit}>
           <Grid container spacing={2}>
             <Grid item xs={12} sm={6}>
               <TextField
@@ -61,6 +116,10 @@ export default function SignUp() {
                 id='firstName'
                 label='First Name'
                 autoFocus
+                value={firstName}
+                onChange={(e) => {
+                  setFirstName(e.target.value);
+                }}
               />
             </Grid>
             <Grid item xs={12} sm={6}>
@@ -72,6 +131,10 @@ export default function SignUp() {
                 label='Last Name'
                 name='lastName'
                 autoComplete='lname'
+                value={lastName}
+                onChange={(e) => {
+                  setLastName(e.target.value);
+                }}
               />
             </Grid>
             {type && type === "business" ? (
@@ -82,7 +145,11 @@ export default function SignUp() {
                   fullWidth
                   id='bname'
                   label='Business Name'
-                  name='business-name'
+                  name='businessName'
+                  value={businessName}
+                  onChange={(e) => {
+                    setBusinessName(e.target.value);
+                  }}
                 />
               </Grid>
             ) : (
@@ -96,8 +163,13 @@ export default function SignUp() {
                 fullWidth
                 id='email'
                 label='Email Address'
+                type='email'
                 name='email'
                 autoComplete='email'
+                value={email}
+                onChange={(e) => {
+                  setEmail(e.target.value);
+                }}
               />
             </Grid>
             <Grid item xs={12}>
@@ -110,6 +182,10 @@ export default function SignUp() {
                 type='password'
                 id='password'
                 autoComplete='current-password'
+                value={password}
+                onChange={(e) => {
+                  setPassword(e.target.value);
+                }}
               />
             </Grid>
           </Grid>

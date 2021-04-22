@@ -1,8 +1,8 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Route, Switch } from "react-router";
 
 /* Material */
-import { Typography, useMediaQuery, Box } from "@material-ui/core";
+import { Typography, useMediaQuery, Box, Button } from "@material-ui/core";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import { ThemeProvider, createMuiTheme } from "@material-ui/core/styles";
 /* Custom Components */
@@ -10,9 +10,13 @@ import "./App.css";
 import NavBar from "../../components/NavBar/NavBar";
 import Footer from "../../components/Footer/Footer";
 import DemoColourGrid from "../../components/DemoColourGrid/DemoColourGrid";
+import SnackbarHandler from "../../components/SnackbarHandler/SnackbarHandler";
 
 import Login from "../Login/Login";
 import Signup from "../Signup/Signup";
+
+import { getUser, logout } from "../../utils/authUtils";
+import { Link } from "react-router-dom";
 
 function App() {
   let [darkMode, setDarkMode] = useState(
@@ -21,6 +25,25 @@ function App() {
 
   let [user, setUser] = useState(null);
 
+  let [snack, setSnack] = useState({
+    open: false,
+    message: "",
+    severity: "error",
+  });
+
+  let setOpen = () => {
+    console.log(snack);
+    let thisSnack = { ...snack };
+    thisSnack.open = false;
+    setSnack(thisSnack);
+  };
+
+  useEffect(() => {
+    let token = localStorage.getItem("token");
+    if (token) {
+      setUser(getUser(token));
+    }
+  }, []);
   /* Custom Colour palette, this is a global theme */
   const theme = createMuiTheme({
     palette: {
@@ -70,25 +93,33 @@ function App() {
         <Switch>
           <Route
             path='/:type/signup/'
-            render={(props) => <Signup {...props} />}
+            render={(props) => (
+              <Signup setSnack={setSnack} setUser={setUser} {...props} />
+            )}
           />
           <Route path='/:type/login' render={(props) => <Login {...props} />} />
           <Route
             path='/'
             render={(props) => {
-              console.log(user !== null);
-              if (user == null) {
+              if (user === null) {
                 return <DemoColourGrid {...props} />;
               } else {
                 return (
                   <Box pt={8}>
-                    <Typography> Hello World</Typography>
+                    <Typography> user: {user.email}</Typography>
+                    <Button onClick={logout}>Logout</Button>
                   </Box>
                 );
               }
             }}
           />
         </Switch>
+        <SnackbarHandler
+          setOpen={setOpen}
+          open={snack.open}
+          message={snack.message}
+          severity={snack.severity}
+        />
         <Footer />
       </main>
     </ThemeProvider>

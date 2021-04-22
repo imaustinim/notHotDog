@@ -16,9 +16,11 @@
     "express-session": "^1.17.1",
     "favicon": "^0.0.2",
     "generate-password": "^1.6.0",
+    "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.12.5",
     "morgan": "^1.10.0",
     "nodemon": "^2.0.7",
-    "serve-favicon": "^2.5.0"
+    "serve-favicon": "^2.5.0",
+    "validator": "^13.6.0"
   }
 }
