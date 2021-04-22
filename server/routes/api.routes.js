@@ -6,8 +6,7 @@ router.post("/test", apiCtrl.test);
 
 router.post("/nodes/create", apiCtrl.createNode);
 
-router.get("/get/:nodeId", apiCtrl.getNodeItem);
-
-router.post("/redeem/:businessId", apiCtrl.redeem);
+router.get("/items/add/:nodeId", apiCtrl.addNodeItem);
+router.post("/items/redeem/:businessId", apiCtrl.redeemItem);
 
 module.exports = router;
