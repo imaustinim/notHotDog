@@ -14,6 +14,7 @@ import SnackbarHandler from "../../components/SnackbarHandler/SnackbarHandler";
 
 import Login from "../Login/Login";
 import Signup from "../Signup/Signup";
+import BusinessDashboard from "../BusinessDashboard/BusinessDashboard"
 import LoginButtons from "../../components/NavBar/LoginButtons/LoginButtons";
 
 import { getUser, logout, checkExp } from "../../utils/authUtils";
@@ -120,10 +121,13 @@ function App() {
                 );
               } else {
                 return (
+                  <>
+                  <BusinessDashboard/>
                   <Box pt={8}>
                     <Typography> user: {user.email}</Typography>
                     <Button onClick={logout}>Logout</Button>
                   </Box>
+                  </>
                 );
               }
             }}
