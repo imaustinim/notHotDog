@@ -1,22 +1,12 @@
 const path = require("path");
-const Business = require("../models/business")
-const Node = require("../models/node")
-const Contract = require("../models/classes/contract");
+const Business = require("../../models/business")
+const Node = require("../../models/node")
+const Contract = require("../../models/classes/contract");
 
 function createNode(req, res) {
-  const contract = new Contract(
-    type = req.body.type,
-    numUses = req.body.numUses || 1,
-    value = req.body.value,
-    staticDate = req.body.staticDate,
-    duration = req.body.duration || null,
-    currentValue = req.body.value || null,
-    unit = req.body.unit || null,
-    access = req.body.access || null
-  )
-
+  const contract = Contract.createContract(req.body)
   const business = Business.findOne({ id: req.user.id})
-  const node = Node.create({
+  const testNode = Node.create({
     _business: business,
     name: "test token",
     description: "This is a test token lasting from a to b",
@@ -30,11 +20,11 @@ function createNode(req, res) {
     expireDate: req.body.expireDate,
     nodeItems: []
   })
-   
+
   res.send({
     success: true,
     message: "Successfully created node",
-    node: node
+    node: testNode
   })
 }
 
