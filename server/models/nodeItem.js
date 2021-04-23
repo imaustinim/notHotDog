@@ -8,7 +8,7 @@ const nodeItemSchema = new mongoose.Schema({
   amount: Number,
   type: {
     type: String,
-    enum: ["discount", "coupon", "ticket"]
+    enum: ["coupon", "gift card", "ticket"]
   },
   redeemed: {
     type: Boolean,

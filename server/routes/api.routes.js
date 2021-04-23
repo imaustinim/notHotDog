@@ -1,15 +1,17 @@
 const express = require("express");
 const router = express.Router();
-const apiCtrl = require("../controllers/api");
+const nodeCtrl = require("../controllers/items/node")
+const tokenCtrl = require("../controllers/items/token")
 const authCtrl = require("../controllers/api/auth");
 const checkLogin = require("../controllers/api/auth").checkLogin;
 
-router.post("/test", apiCtrl.test);
+// Nodes
+router.post("/nodes/create", nodeCtrl.createNode);
 
-router.post("/nodes/create", apiCtrl.createNode);
 
-router.get("/items/add/:nodeId", apiCtrl.addNodeItem);
-router.post("/items/redeem/:businessId", apiCtrl.redeemItem);
+// Tokens
+router.post("/tokens/create/:nodeId", tokenCtrl.createToken);
+router.get("/tokens/redeem/:nodeId", tokenCtrl.redeemToken);
 
 router.post("/signup", authCtrl.create);
 router.post("/login", authCtrl.login);
