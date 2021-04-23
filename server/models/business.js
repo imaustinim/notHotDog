@@ -23,7 +23,13 @@ const businessSchema = new mongoose.Schema(
   },
   {
     timestamps: true,
+    toJSON: {
+      transform: function (doc, ret) {
+        delete ret.password;
+        return ret;
+      },
+    },
   }
 );
-
+businessSchema.index({ email: 1 }, { unique: true });
 module.exports = mongoose.model("Business", businessSchema);
