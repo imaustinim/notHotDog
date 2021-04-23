@@ -49,7 +49,7 @@ export default function SignUp(props) {
 
   const handleSubmit = async (e) => {
     /* Parse object format, then pass it to util function
-      to complete signup process and return toast
+      to complete signup process and success or error message
     */
     try {
       e.preventDefault();
@@ -74,12 +74,12 @@ export default function SignUp(props) {
       }
     } catch (err) {
       let newErrorSnack;
-      if (err === 11000) {
+      if (err.code === 11000) {
         newErrorSnack = {
           open: true,
           message: `${
             type[0].toUpperCase() + type.slice(1)
-          } already exists with email ${email}`,
+          } already exists under email ${email}`,
           severity: "error",
         };
       } else {
