@@ -16,7 +16,9 @@ router.get("/tokens/redeem/:nodeId", tokenCtrl.redeemToken);
 router.post("/signup", authCtrl.create);
 router.post("/login", authCtrl.login);
 
+
 router.use(checkLogin);
+
 router.get("/test", function (req, res, next) {
   console.log(req.user);
   res.status(200).json(req.user);
