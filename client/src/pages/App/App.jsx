@@ -15,6 +15,7 @@ import SnackbarHandler from "../../components/SnackbarHandler/SnackbarHandler";
 import Login from "../Login/Login";
 import Signup from "../Signup/Signup";
 import BusinessDashboard from "../BusinessDashboard/BusinessDashboard"
+import LoginButtons from "../../components/NavBar/LoginButtons/LoginButtons";
 
 import { getUser, logout, checkExp } from "../../utils/authUtils";
 import { Link } from "react-router-dom";
@@ -32,6 +33,7 @@ function App() {
     severity: "error",
   });
 
+  
   let setOpen = () => {
     let thisSnack = { ...snack };
     thisSnack.open = false;
@@ -107,7 +109,16 @@ function App() {
             path='/'
             render={(props) => {
               if (user === null) {
-                return <DemoColourGrid {...props} />;
+                return (
+                  <>
+                  <Box pt={8} >
+                    
+                  </Box>
+                  SearchbAR /.// <LoginButtons type='user' />
+                    <DemoColourGrid {...props} />
+                    
+                  </>
+                );
               } else {
                 return (
                   <>
