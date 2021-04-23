@@ -27,7 +27,18 @@ export default function NavBar(props) {
             color='inherit'>
             <MenuIcon />
           </IconButton> */}
-
+          <IconButton
+            onClick={async () => {
+              let jwt = localStorage.getItem("token");
+              let res = await fetch("/api/test", {
+                headers: { Authorization: "Bearer " + jwt },
+              }).then((res) => res.json());
+              console.log(res);
+            }}
+            aria-label='toggle light and dark mode'
+            color='inherit'>
+            <MenuIcon />
+          </IconButton>
           <Typography
             variant='h5'
             component='h1'

@@ -15,7 +15,7 @@ import SnackbarHandler from "../../components/SnackbarHandler/SnackbarHandler";
 import Login from "../Login/Login";
 import Signup from "../Signup/Signup";
 
-import { getUser, logout } from "../../utils/authUtils";
+import { getUser, logout, checkExp } from "../../utils/authUtils";
 import { Link } from "react-router-dom";
 
 function App() {
@@ -32,7 +32,6 @@ function App() {
   });
 
   let setOpen = () => {
-    console.log(snack);
     let thisSnack = { ...snack };
     thisSnack.open = false;
     setSnack(thisSnack);
@@ -40,7 +39,7 @@ function App() {
 
   useEffect(() => {
     let token = localStorage.getItem("token");
-    if (token) {
+    if (token && checkExp(token)) {
       setUser(getUser(token));
     }
   }, []);
@@ -97,7 +96,12 @@ function App() {
               <Signup setSnack={setSnack} setUser={setUser} {...props} />
             )}
           />
-          <Route path='/:type/login' render={(props) => <Login {...props} />} />
+          <Route
+            path='/:type/login'
+            render={(props) => (
+              <Login setSnack={setSnack} setUser={setUser} {...props} />
+            )}
+          />
           <Route
             path='/'
             render={(props) => {
