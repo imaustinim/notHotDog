@@ -79,11 +79,11 @@ function createContract(body) {
   
   switch (obj.type) {
     case "coupon":
-      return new Contract.Coupon(obj.type, obj.numUses, obj.value, obj.staticDate, obj.duraction, obj.unit)
+      return new Coupon(obj.type, obj.numUses, obj.value, obj.staticDate, obj.duraction, obj.unit)
     case "gift card":
-      return new Contract.GiftCard(obj.type, obj.numUses, obj.value, obj.staticDate, obj.duraction, obj.remainingValue)
+      return new GiftCard(obj.type, obj.numUses, obj.value, obj.staticDate, obj.duraction, obj.remainingValue)
     case "ticket":
-      return new Contract.Ticket(obj.type, obj.numUses, obj.value, obj.staticDate, obj.duraction, obj.access )
+      return new Ticket(obj.type, obj.numUses, obj.value, obj.staticDate, obj.duraction, obj.access )
   }
 }
 
