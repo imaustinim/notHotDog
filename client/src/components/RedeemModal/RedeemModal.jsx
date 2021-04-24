@@ -37,19 +37,10 @@ function SimpleDialog(props) {
   let mdMatch = useMediaQuery(theme.breakpoints.up("md"));
   let lgMatch = useMediaQuery(theme.breakpoints.up("lg"));
   useEffect(() => {
-    if (lgMatch) {
-      console.log("0");
-      setQrSize(512);
-    } else if (mdMatch) {
-      console.log("1");
-      setQrSize(512);
-    } else if (smMatch) {
-      console.log("2");
-      setQrSize(400);
-    } else if (xsMatch) {
-      console.log("3");
-      setQrSize(200);
-    }
+    if (lgMatch) console.log("0");
+    else if (mdMatch) setQrSize(512);
+    else if (smMatch) setQrSize(400);
+    else if (xsMatch) setQrSize(200);
   }, [lgMatch, mdMatch, smMatch, xsMatch]);
 
   return (
