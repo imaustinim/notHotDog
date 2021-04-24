@@ -171,9 +171,20 @@ export default function NavBar(props) {
               <Icon>
                 <HotDogIcon />
               </Icon>
+              <Box pl={1} display={{ xs: "none", sm: "inline" }}>
+                <Typography
+                  variant='h5'
+                  component='h1'
+                  className={classes.grow}>
+                  <Link component={RouterLink} to='/' color='inherit'>
+                    !HOTDOG
+                  </Link>
+                </Typography>
+              </Box>
               <Box className={classes.grow}></Box>
-              <LoginButtons icon={<BusinessIcon />} type='business' />
+
               <LoginButtons icon={<PersonOutlineIcon />} type='user' />
+              <LoginButtons icon={<BusinessIcon />} type='business' />
             </>
           )}
 
