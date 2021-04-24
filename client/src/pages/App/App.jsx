@@ -14,10 +14,10 @@ import SnackbarHandler from "../../components/SnackbarHandler/SnackbarHandler";
 
 import Login from "../Login/Login";
 import Signup from "../Signup/Signup";
-import BusinessDashboard from "../BusinessDashboard/BusinessDashboard"
-import UserDashboard from "../UserDashboard/UserDashboard"
+import BusinessDashboard from "../BusinessDashboard/BusinessDashboard";
+import UserDashboard from "../UserDashboard/UserDashboard";
 import LoginButtons from "../../components/NavBar/LoginButtons/LoginButtons";
-
+import LoadingPage from "../../components/LoadingPage/LoadingPage";
 import { getUser, checkExp } from "../../utils/authUtils";
 
 function App() {
@@ -49,35 +49,35 @@ function App() {
   const theme = createMuiTheme({
     palette: {
       type: darkMode ? "dark" : "light",
-      primary: {
-        main: "#240065",
-        light: "#7A33FF",
-        dark: "#120033",
-      },
       secondary: {
+        main: "#000080",
+        light: "#2F60E5",
+        dark: "#102F85",
+      },
+      primary: {
         main: "#F0A202",
-        light: "#FED179",
-        dark: "#775001",
+        light: "#FDBB36",
+        dark: "#B27702",
       },
       error: {
         main: "#d92110",
-        light: "#F5897F",
-        dark: "#6D1108",
+        light: "#F14E3F",
+        dark: "#A4190C",
       },
       warning: {
         main: "#edafb8",
-        light: "#F6D8DC",
-        dark: "#A8263A",
+        light: "#F2C4CB",
+        dark: "#DA5C6F",
       },
       info: {
         main: "#E7F9A9",
-        light: "#F3FCD4",
-        dark: "#9CC40E",
+        light: "#EEFBBF",
+        dark: "#CDF247",
       },
       success: {
         main: "#85FFC7",
-        light: "#C2FFE2",
-        dark: "#00C267",
+        light: "#A3FFD4",
+        dark: "#24FF99",
       },
     },
   });
@@ -89,6 +89,7 @@ function App() {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
+
       <main className='App'>
         <NavBar toggleLightDark={toggleLightDark} user={user} />
         <Switch>
@@ -105,24 +106,30 @@ function App() {
             )}
           />
           <Route
+            path='/dashboard'
+            render={(props) => {
+              if (!user) {
+                return <LoadingPage />;
+              } else {
+                if (user.businessName) {
+                  return <BusinessDashboard user={user} {...props} />;
+                } else {
+                  return <UserDashboard user={user} {...props} />;
+                }
+              }
+            }}
+          />
+          <Route
             path='/'
             render={(props) => {
               if (user === null) {
-                return (
-                  <Box pt={8}>
-                    <DemoColourGrid {...props} />
-                  </Box>
-                );
+                return <DemoColourGrid user={user} {...props} />;
               } else {
-                return (
-                  <>
-                  <BusinessDashboard/>
-                  <UserDashboard/>
-                  <Box pt={8}>
-                    <Typography> user: {user.email}</Typography>
-                  </Box>
-                  </>
-                );
+                if (user.businessName) {
+                  return <BusinessDashboard user={user} {...props} />;
+                } else {
+                  return <UserDashboard user={user} {...props} />;
+                }
               }
             }}
           />

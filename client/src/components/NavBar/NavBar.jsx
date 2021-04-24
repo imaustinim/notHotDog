@@ -91,7 +91,7 @@ const useStyles = makeStyles((theme) => ({
     },
     "& li:active": {
       backgroundColor: theme.palette.secondary.main,
-      color: theme.palette.text.secondary,
+      color: theme.palette.common.white,
     },
   },
 }));
