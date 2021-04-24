@@ -12,20 +12,30 @@ import Collapse from '@material-ui/core/Collapse';
 import clsx from 'clsx';
 import Typography from "@material-ui/core/Typography";
 import Container from "@material-ui/core/Container";
-
-import { MuiPickersUtilsProvider, KeyboardDatePicker } from '@material-ui/pickers';
-import MomentUtils from '@date-io/moment';
+import InputLabel from '@material-ui/core/InputLabel';
+import FormControl from '@material-ui/core/FormControl';
+import MenuItem from '@material-ui/core/MenuItem';
+import Select from '@material-ui/core/Select';
 
 import { makeStyles } from "@material-ui/core/styles";
 
-import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-
 
 import { useState } from "react";
 import { Link as RouterLink, useParams, useHistory } from "react-router-dom";
 
-import { registerNewUser } from "../../utils/authUtils";
+import { CreateCampaign } from "../../utils/businessUtils";
+
+const symbols = [
+  {
+    value: 'dollar',
+    label: '$',
+  },
+  {
+    value: 'percent',
+    label: '%',
+  },
+];
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -34,13 +44,14 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: "column",
     alignItems: "center",
   },
-  avatar: {
-    margin: theme.spacing(1),
-    backgroundColor: theme.palette.secondary.main,
-  },
   form: {
     width: "100%", // Fix IE 11 issue.
     marginTop: theme.spacing(3),
+  },
+  cardcontent: {
+    "&:last-child": {
+      paddingBottom: theme.spacing(1)
+    }
   },
   submit: {
     margin: theme.spacing(3, 0, 2),
@@ -64,66 +75,68 @@ export default function BusinessDashboard(props) {
   const history = useHistory();
   const { type } = useParams();
 
-  let [firstName, setFirstName] = useState("");
-  let [businessName, setBusinessName] = useState("");
-  let [email, setEmail] = useState("");
-  let [password, setPassword] = useState("");
-  
   let [expanded, setExpanded] = useState(false);
-  let [campaignName, setCampaignName] = useState("");
-  let [description, setDescription] = useState("");
-  let [activeDate, setActiveDate] = useState(new Date());
-  let [expireDate, setExpireDate] = useState(new Date());
-
+  let [campaignName, setCampaignName] = useState();
+  let [campaignType, setCampaignType] = useState();
+  let [description, setDescription] = useState();
+  let [activeDate, setActiveDate] = useState();
+  let [expireDate, setExpireDate] = useState();
+  let [quantity, setQuantity] = useState();
+  let [value, setValue] = useState();
+  let [unit, setUnit] = useState();
+  let [access, setAccess] = useState();
+  let [numUses, setNumUses] = useState();
+  
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };
-
 
   const handleSubmit = async (e) => {
     /* Parse object format, then pass it to util function
       to complete signup process and success or error message
     */
-
     try {
       e.preventDefault();
       let formData = {
-        firstName: firstName,
-        // lastName: lastName,
-        businessName: businessName !== "" ? businessName : null,
-        email: email,
-        password: password,
+        campaignName: campaignName,
+        campaignType: campaignType,
+        description: description,
+        activeDate: activeDate,
+        expireDate: expireDate,
+        value: value,
+        unit: unit,
+        access: access
       };
-      let res = await registerNewUser(formData);
-      if (res && !res._id) {
-        throw res;
-      } else {
-        history.push("/");
-        props.setSnack({
-          open: true,
-          message: `Successfully created your account!`,
-          severity: "success",
-        });
-        props.setUser(res);
-      }
+      let res = await CreateCampaign(formData);
+      // if (res && !res._id) {
+      //   throw res;
+      // } else {
+      //   history.push("/");
+      //   props.setSnack({
+      //     open: true,
+      //     message: `Successfully created your account!`,
+      //     severity: "success",
+      //   });
+      //   props.setUser(res);
+      // }
     } catch (err) {
-      let newErrorSnack;
-      if (err.code === 11000) {
-        newErrorSnack = {
-          open: true,
-          message: `${
-            type[0].toUpperCase() + type.slice(1)
-          } already exists under email ${email}`,
-          severity: "error",
-        };
-      } else {
-        newErrorSnack = {
-          open: true,
-          message: `${err}`,
-          severity: "error",
-        };
-      }
-      props.setSnack(newErrorSnack);
+      // let newErrorSnack;
+      // if (err.code === 11000) {
+      //   newErrorSnack = {
+      //     open: true,
+      //     message: `${
+      //       type[0].toUpperCase() + type.slice(1)
+      //     } already exists under email ${email}`,
+      //     severity: "error",
+      //   };
+      // } else {
+      //   newErrorSnack = {
+      //     open: true,
+      //     message: `${err}`,
+      //     severity: "error",
+      //   };
+      // }
+      // props.setSnack(newErrorSnack);
     }
   };
   return (
@@ -133,7 +146,7 @@ export default function BusinessDashboard(props) {
         <form className={classes.form} onSubmit={handleSubmit}>
           <Grid container spacing={2}>
             <Grid item xs={12} sm={12}>
-              <Card className={classes.root}>
+              <Card className={classes.card}>
                 <CardActionArea
                   onClick={handleExpandClick}
                   aria-expanded={expanded}
@@ -153,7 +166,7 @@ export default function BusinessDashboard(props) {
                   </CardContent>
                 </CardActionArea>
                 <Collapse in={expanded} timeout="auto" unmountOnExit>
-                  <CardContent>
+                  <CardContent className={classes.cardcontent}>
                     <Grid container spacing={2}>
                       <Grid item xs={12} sm={6}>
                         <TextField
@@ -171,19 +184,26 @@ export default function BusinessDashboard(props) {
                         />
                       </Grid>
                       <Grid item xs={12} sm={6}>
-                        <TextField
-                          variant='outlined'
-                          required
-                          fullWidth
-                          id='campaignName'
-                          label='Campaign Name'
-                          name='campaignName'
-                          autoComplete='lname'
-                          value={campaignName}
-                          onChange={(e) => {
-                            setCampaignName(e.target.value);
-                          }}
-                        />
+                        <FormControl fullWidth required variant="outlined" className={classes.formControl}>
+                          <InputLabel htmlFor="outlined-age-native-simple">Campaign Type</InputLabel>
+                          <Select
+                            native
+                            value={campaignType}
+                            onChange={(e) => {
+                              setCampaignType(e.target.value)
+                            }}
+                            label="Campaign Type"
+                            inputProps={{
+                              name: 'age',
+                              id: 'outlined-age-native-simple',
+                            }}
+                          >
+                            <option aria-label="None" value="" />
+                            <option value="gift card">Gift Card</option>
+                            <option value="coupon">Coupon</option>
+                            <option value="ticket">Ticket</option>
+                          </Select>
+                        </FormControl>
                       </Grid>
                       <Grid item xs={12} sm={12}>
                         <TextField
@@ -202,118 +222,176 @@ export default function BusinessDashboard(props) {
                           }}
                         />
                       </Grid>
-                      <Grid item xs={12} sm={6}>
-                        <MuiPickersUtilsProvider utils={MomentUtils}>
-                          <KeyboardDatePicker
-                            disableToolbar
-                            variant="inline"
-                            format="MM/DD/yyyy"
-                            id="activeDate"
-                            label="Start Date"
-                            value={activeDate}
-                            onChange={(date) => {
-                              setActiveDate(date);
-                            }}
-                            KeyboardButtonProps={{
-                              'aria-label': 'change date',
-                            }}
-                          />
-                        </MuiPickersUtilsProvider>
+                      <Grid item xs={6} sm={6}>
+                        <TextField
+                          fullWidth
+                          id="activeDate"
+                          label="Start Date"
+                          type="datetime-local"
+                          InputLabelProps={{
+                            shrink: true,
+                          }}
+                          value={activeDate}
+                          onChange={(e) => {
+                            console.log(e.target.value)
+                            setActiveDate(e.target.value)}
+                          }
+                        />
+                      </Grid>
+                      <Grid item xs={6} sm={6}>
+                        <TextField
+                          fullWidth
+                          id="expireDate"
+                          label="End Date"
+                          type="datetime-local"
+                          InputLabelProps={{
+                            shrink: true,
+                          }}
+                          value={expireDate}
+                          onChange={(e) => {
+                            setExpireDate(e.target.value)}
+                          }
+                        />
                       </Grid>
                       <Grid item xs={12} sm={6}>
-                        <MuiPickersUtilsProvider utils={MomentUtils}>
-                          <KeyboardDatePicker
-                            disableToolbar
-                            variant="inline"
-                            format="MM/DD/yyyy"
-                            id="expireDate-inline"
-                            label="End Date"
-                            value={expireDate}
-                            onChange={(date) => {
-                              setExpireDate(date);
-                            }}
-                            KeyboardButtonProps={{
-                              'aria-label': 'change date',
+                        <TextField
+                          variant='outlined'
+                          required
+                          fullWidth
+                          id='quantity'
+                          label='Quantity'
+                          name='quantity'
+                          type="number"
+                          helperText="Use -1 for unlimited"
+                          InputProps={{ inputProps: { min: -1 } }}
+                          value={quantity}
+                          onChange={(e) => {
+                            setQuantity(e.target.value);
+                          }}
+                        />
+                      </Grid>
+                      <Grid item xs={12} sm={6}>
+                        <TextField
+                          variant='outlined'
+                          required
+                          fullWidth
+                          id='numUses'
+                          label='Number of Uses'
+                          name='numUses'
+                          type="number"
+                          helperText="Use -1 for unlimited"
+                          InputProps={{ inputProps: { min: -1 } }}
+                          value={numUses}
+                          onChange={(e) => {
+                            setNumUses(e.target.value);
+                          }}
+                        />
+                      </Grid>
+                      {campaignType === "gift card" ? (
+                        <Grid item xs={12} sm={6}>
+                          <TextField
+                            variant='outlined'
+                            required
+                            fullWidth
+                            id='value'
+                            label='Value'
+                            name='value'
+                            value={value}
+                            onChange={(e) => {
+                              setValue(e.target.value);
                             }}
                           />
-                        </MuiPickersUtilsProvider>
-                      </Grid>
+                        </Grid>
+                      ) : (
+                        <></>
+                      )}
+                      {campaignType === "coupon" ? (
+                        <>
+                        <Grid item xs={8} sm={8}>
+                          <TextField
+                            variant='outlined'
+                            required
+                            fullWidth
+                            id='value'
+                            label='Value'
+                            name='value'
+                            value={value}
+                            onChange={(e) => {
+                              setValue(e.target.value);
+                            }}
+                          />
+                        </Grid>
+                        <Grid item xs={4} sm={4}>
+                          <TextField
+                            required
+                            fullWidth
+                            id="unit"
+                            select
+                            label="Unit"
+                            value={unit}
+                            onChange={(e) => {
+                              setUnit(e.target.value)
+                            }}
+                            variant="outlined"
+                          >
+                            {symbols.map((option) => (
+                              <MenuItem key={option.value} value={option.value}>
+                                {option.label}
+                              </MenuItem>
+                            ))}
+                          </TextField>
+                        </Grid>
+                        </>
+                      ) : (
+                        <></>
+                      )}
+                      {campaignType === "ticket" ? (
+                        <>
+                        <Grid item xs={6} sm={6}>
+                          <TextField
+                            variant='outlined'
+                            required
+                            fullWidth
+                            id='access'
+                            label='Access'
+                            name='access'
+                            value={access}
+                            onChange={(e) => {
+                              setAccess(e.target.value);
+                            }}
+                          />
+                        </Grid>
+                        {/* <Grid item xs={6} sm={6}>
+                          <TextField
+                            required
+                            fullWidth
+                            id="numUses"
+                            label="Number of Uses"
+                            type="number"
+                            // InputLabelProps={{
+                            //   shrink: true,
+                            // }}
+                            variant="outlined"
+                          />
+                        </Grid> */}
+                        </>
+                      ) : (
+                        <></>
+                      )}
                     </Grid>
+                    <Button
+                      type='submit'
+                      fullWidth
+                      variant='contained'
+                      color='primary'
+                      className={classes.submit}>
+                      Create Campaign
+                    </Button>
                   </CardContent>
                 </Collapse>
               </Card>
             </Grid>
-            {type && type === "business" ? (
-              <Grid item xs={12}>
-                <TextField
-                  variant='outlined'
-                  required
-                  fullWidth
-                  id='bname'
-                  label='Business Name'
-                  name='businessName'
-                  value={businessName}
-                  onChange={(e) => {
-                    setBusinessName(e.target.value);
-                  }}
-                />
-              </Grid>
-            ) : (
-              <></>
-            )}
-
-            <Grid item xs={12}>
-              <TextField
-                variant='outlined'
-                required
-                fullWidth
-                id='email'
-                label='Email Address'
-                type='email'
-                name='email'
-                autoComplete='email'
-                value={email}
-                onChange={(e) => {
-                  setEmail(e.target.value);
-                }}
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <TextField
-                variant='outlined'
-                required
-                fullWidth
-                name='password'
-                label='Password'
-                type='password'
-                id='password'
-                autoComplete='current-password'
-                value={password}
-                onChange={(e) => {
-                  setPassword(e.target.value);
-                }}
-              />
-            </Grid>
           </Grid>
-          <Button
-            type='submit'
-            fullWidth
-            variant='contained'
-            color='primary'
-            className={classes.submit}>
-            Create Campaign
-          </Button>
-          {/* <Grid container justify='flex-end'>
-            <Grid item>
-              <Link
-                component={RouterLink}
-                to={`/${type}/login`}
-                variant='body2'
-                color='inherit'>
-                Already have an account? Sign in
-              </Link>
-            </Grid>
-          </Grid> */}
         </form>
       </div>
     </Container>

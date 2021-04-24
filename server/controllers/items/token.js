@@ -3,7 +3,7 @@ const generator = require("generate-password")
 const User = require("../../models/user")
 const Node = require("../../models/node")
 const NodeItem = require("../../models/nodeItem")
-const Token = require("../../models/Token")
+const Token = require("../../models/token")
 const Contract = require("../../models/classes/contract");
 
 module.exports = {

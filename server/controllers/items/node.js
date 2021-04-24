@@ -5,15 +5,15 @@ const Contract = require("../../models/classes/contract");
 
 function createNode(req, res) {
   const contract = Contract.createContract(req.body)
-  const business = Business.findOne({ id: req.user.id})
-  const testNode = Node.create({
-    _business: business,
-    name: "test token",
-    description: "This is a test token lasting from a to b",
-    type: "gift card",
-    address: path.join(process.env.PATH, "api", "redeem", business.id),
-    initialQuantity: 100,
-    remainingQuantity: 100,
+  // const business = Business.findOne({ id: req.user.id})
+  const campaign = Node.create({
+    _business: 2,
+    name: req.body.campaignName,
+    description: req.body.description,
+    type: req.body.campaignType,
+    address: path.join(process.env.PATH, "api", "tokens", "redeem", "1"),
+    initialQuantity: req.body.quantity,
+    remainingQuantity: req.body.quantity,
     redeemed: 0,
     contract: contract,
     activeDate: req.body.activeDate,
@@ -24,7 +24,7 @@ function createNode(req, res) {
   res.send({
     success: true,
     message: "Successfully created node",
-    node: testNode
+    campaign: campaign
   })
 }
 

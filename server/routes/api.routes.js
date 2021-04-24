@@ -13,7 +13,7 @@ router.post("/login", authCtrl.login);
 router.use(checkLogin);
 
 // Nodes
-router.post("/nodes/create", nodeCtrl.createNode);
+router.post("/campaigns/create", nodeCtrl.createNode);
 
 
 // Tokens
