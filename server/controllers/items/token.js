@@ -76,33 +76,6 @@ function createToken(req, res) {
 }
 
 async function redeemToken(req, res) {
-<<<<<<< HEAD
-  let node = Node.findOne({ id: req.params.nodeId });
-  let token = Token.findOne({ id: req.body.tokenId });
-  const now = new Date();
-
-  // Check 1: Current date is between node dates
-  if (node.activeDate >= now && node.expireDate <= now) {
-  } else if (node.activeDate < now) {
-    res.send({
-      checkFailed: 1,
-      message: "Campaign not yet started",
-      redeemed: false,
-    });
-    return;
-  } else if (node.expireDate < now) {
-    res.send({
-      checkFailed: 1,
-      message: "Campaing ended",
-      redeemed: false,
-    });
-    return;
-  }
-
-  // Check 2: Token exists and key is valid
-  try {
-    await node.findOne({ "nodeItems.key": token.key }).then((nodeItem) => {
-=======
   let node = Node.findOne({ id: req.params.nodeId })
   let token = Token.findOne({ id: req.body.tokenId })
   const now = new Date()
@@ -129,7 +102,6 @@ async function redeemToken(req, res) {
 
     await node.findOne({ "nodeItems.key" : token.key })
     .then(nodeItem => {
->>>>>>> 75e21a301166440608b44d6fdfac5f4dcca86efa
       // Check 3: Check if token is redeemed
       if (nodeItem.redeemed) {
         throw({
@@ -159,18 +131,6 @@ async function redeemToken(req, res) {
       }
 
       // Redeem token
-<<<<<<< HEAD
-      const newPrice = nodeItem.contract.redeem(req.body.tokenValue);
-      res.send({
-        message: "Token Redeemed",
-        contract: nodeItem.contract,
-        redeemed: true,
-      });
-    });
-  } catch (err) {
-    console.log("Error", err);
-    res.send({
-=======
       const newPrice = nodeItem.contract.redeem(req.body.tokenValue)
       throw({
         message: "Token Redeemed",
@@ -181,7 +141,6 @@ async function redeemToken(req, res) {
   } catch(err) {
     console.log("Error", err)
     throw({
->>>>>>> 75e21a301166440608b44d6fdfac5f4dcca86efa
       checkFailed: 1,
       message: "Invalid Key",
       redeemed: false,
