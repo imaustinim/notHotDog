@@ -30,7 +30,7 @@ class Coupon extends Contract {
 }
 
 class GiftCard extends Contract {
-  constructor(type, value, staticDate, duration, remainingValue) {
+  constructor(type, numUses, value, staticDate, duration, remainingValue) {
     super(type, numUses, value, staticDate, duration);
     this.remainingValue = remainingValue
   }

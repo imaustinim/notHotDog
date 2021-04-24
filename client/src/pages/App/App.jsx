@@ -111,11 +111,7 @@ function App() {
                 return (
                   <Box pt={8}>
                     <DemoColourGrid {...props} />
-<<<<<<< HEAD
-                  </>
-=======
                   </Box>
->>>>>>> main
                 );
               } else {
                 return (
