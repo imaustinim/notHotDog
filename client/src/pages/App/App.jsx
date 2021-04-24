@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { Route, Switch } from "react-router";
 
 /* Material */
-import { Typography, useMediaQuery, Box, Button } from "@material-ui/core";
+import { Typography, useMediaQuery, Box } from "@material-ui/core";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import { ThemeProvider, createMuiTheme } from "@material-ui/core/styles";
 /* Custom Components */
@@ -18,8 +18,7 @@ import BusinessDashboard from "../BusinessDashboard/BusinessDashboard"
 import UserDashboard from "../UserDashboard/UserDashboard"
 import LoginButtons from "../../components/NavBar/LoginButtons/LoginButtons";
 
-import { getUser, logout, checkExp } from "../../utils/authUtils";
-import { Link } from "react-router-dom";
+import { getUser, checkExp } from "../../utils/authUtils";
 
 function App() {
   let [darkMode, setDarkMode] = useState(
@@ -34,7 +33,6 @@ function App() {
     severity: "error",
   });
 
-  
   let setOpen = () => {
     let thisSnack = { ...snack };
     thisSnack.open = false;
@@ -111,13 +109,13 @@ function App() {
             render={(props) => {
               if (user === null) {
                 return (
-                  <>
-                  <Box pt={8} >
-                    
-                  </Box>
-                  SearchbAR /.// <LoginButtons type='user' />
+                  <Box pt={8}>
                     <DemoColourGrid {...props} />
+<<<<<<< HEAD
                   </>
+=======
+                  </Box>
+>>>>>>> main
                 );
               } else {
                 return (
@@ -126,7 +124,6 @@ function App() {
                   <UserDashboard/>
                   <Box pt={8}>
                     <Typography> user: {user.email}</Typography>
-                    <Button onClick={logout}>Logout</Button>
                   </Box>
                   </>
                 );

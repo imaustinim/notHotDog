@@ -30,18 +30,16 @@ export default function LoginButtons(props) {
     <>
       <Button
         ref={anchorRef}
+        edge='end'
         aria-controls={open ? "menu-list-grow" : undefined}
         aria-haspopup='true'
         aria-label={"login" + props.type}
         onClick={handleToggle}
         color='inherit'
         startIcon={props.icon}>
-        <Typography variant='body1'>
-          {props.type[0]}
-          <Box component='span' display={{ xs: "none", sm: "inline" }}>
-            {props.type.slice(1)}
-          </Box>
-        </Typography>
+        <Box display={{ xs: "none", sm: "inline" }}>
+          <Typography variant='body1'>{props.type}</Typography>
+        </Box>
       </Button>
       <Popper
         open={open}
@@ -63,13 +61,14 @@ export default function LoginButtons(props) {
                     onClick={handleClose}
                     to={`/${props.type}/login`}
                     component={RouterLink}>
-                    Login
+                    Login {props.type[0].toUpperCase() + props.type.slice(1)}
                   </MenuItem>
                   <MenuItem
                     onClick={handleClose}
                     to={`/${props.type}/signup`}
                     component={RouterLink}>
-                    Create Profile
+                    Create Profile for{" "}
+                    {props.type[0].toUpperCase() + props.type.slice(1)}
                   </MenuItem>
                 </MenuList>
               </ClickAwayListener>

@@ -1,42 +1,52 @@
-const generator = require("generate-password")
+const generator = require("generate-password");
 
-const User = require("../../models/user")
-const Node = require("../../models/node")
-const NodeItem = require("../../models/nodeItem")
-const Token = require("../../models/token")
+const User = require("../../models/user");
+const Node = require("../../models/node");
+const NodeItem = require("../../models/nodeItem");
+const Token = require("../../models/token");
 const Contract = require("../../models/classes/contract");
 
 module.exports = {
   createToken,
-  redeemToken
-}
+  redeemToken,
+};
 
 function createToken(req, res) {
-  let node = Node.findOne({ id: req.params.nodeId })
-  
+  let node = Node.findOne({ id: req.params.nodeId });
+
   // Edge Case [ No remaining node items ]
   if (node.remainingQuantity === 0) {
     res.send({
       message: "Sorry, we are out of this token!",
-      node: node
-    })
+      node: node,
+    });
   }
-  
+
   // Generate Key
-  const key = node.remainingQuantity > 0 ? key = generator.generate({length: 16, numbers: true, symbols: true, exclude: "0", strict: true}) : null
-  
+  const key =
+    node.remainingQuantity > 0
+      ? (key = generator.generate({
+          length: 16,
+          numbers: true,
+          symbols: true,
+          exclude: "0",
+          strict: true,
+        }))
+      : null;
+
   // Create & Add Node Item to Node Model
   let activeDate, expireDate;
   if (contractTemplate.staticDate) {
-    activeDate = node.activeDate,
-    expireDate = node.expireDate
+    (activeDate = node.activeDate), (expireDate = node.expireDate);
   } else {
-    activeDate = new Date(),
-    expireDate = new Date().setDate(new Date().getDate() + contractTemplate.duration)
-    if (expireDate > node.expireDate) expireDate = node.expireDate
+    (activeDate = new Date()),
+      (expireDate = new Date().setDate(
+        new Date().getDate() + contractTemplate.duration
+      ));
+    if (expireDate > node.expireDate) expireDate = node.expireDate;
   }
 
-  const contract = Contract.createContract(req.body)
+  const contract = Contract.createContract(req.body);
   const nodeItem = NodeItem.create({
     _node: node,
     key: key || null,
@@ -44,11 +54,11 @@ function createToken(req, res) {
     contract: contract,
     activeDate: activeDate,
     expireDate: expireDate,
-  })
-  node.nodeItems.push(nodeItem)
+  });
+  node.nodeItems.push(nodeItem);
 
   // Create & Add Token to User Model
-  let user = User.findOne({ id: req.user.id })
+  let user = User.findOne({ id: req.user.id });
 
   const token = Token.create({
     _user: user,
@@ -56,13 +66,13 @@ function createToken(req, res) {
     key: key || null,
     avatar: req.body.token.avatar,
     redeemed: false,
-  })
-  user.tokens.push(token)
+  });
+  user.tokens.push(token);
 
   res.send({
     message: "Successfully created added Token",
     nodeItem: nodeItem,
-  })
+  });
 }
 
 async function redeemToken(req, res) {
@@ -97,26 +107,26 @@ async function redeemToken(req, res) {
         throw({
           checkFailed: 3,
           message: "Token already redeemed",
-          redeemed: false
-        })
+          redeemed: false,
+        });
       }
 
-      // Check 4: Check dynamic dates and current date is between nodes 
+      // Check 4: Check dynamic dates and current date is between nodes
       if (!nodeItem.staticDate) {
         if (nodeItem.activeDate < now) {
           throw({
             checkFailed: 4,
             message: "Can't redeem token yet",
             redeemed: false,
-          })
-          return
+          });
+          return;
         } else if (nodeItem.expireDate > now) {
           throw({
             checkFailed: 4,
             message: "Token expired",
             redeemed: false,
-          })
-          return
+          });
+          return;
         }
       }
 
@@ -133,7 +143,7 @@ async function redeemToken(req, res) {
     throw({
       checkFailed: 1,
       message: "Invalid Key",
-      redeemed: false
-    })
+      redeemed: false,
+    });
   }
 }

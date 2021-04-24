@@ -5,7 +5,7 @@ import Container from "@material-ui/core/Container";
 export default function DemoColourGrid(props) {
   return (
     <Container>
-      <Box pt={10}>
+      <Box>
         <strong>Please Log IN!</strong>
         <Grid container spacing={1}>
           <Grid item xs={12} sm={4}>
