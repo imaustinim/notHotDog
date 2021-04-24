@@ -117,7 +117,6 @@ function App() {
                   </Box>
                   SearchbAR /.// <LoginButtons type='user' />
                     <DemoColourGrid {...props} />
-                    
                   </>
                 );
               } else {
