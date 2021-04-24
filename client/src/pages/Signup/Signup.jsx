@@ -63,7 +63,7 @@ export default function SignUp(props) {
       if (res && !res._id) {
         throw res;
       } else {
-        history.push("/");
+        history.push("/dashboard");
         props.setSnack({
           open: true,
           message: `Successfully created your account!`,

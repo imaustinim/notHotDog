@@ -17,7 +17,7 @@ import Signup from "../Signup/Signup";
 import BusinessDashboard from "../BusinessDashboard/BusinessDashboard";
 import UserDashboard from "../UserDashboard/UserDashboard";
 import LoginButtons from "../../components/NavBar/LoginButtons/LoginButtons";
-
+import LoadingPage from "../../components/LoadingPage/LoadingPage";
 import { getUser, checkExp } from "../../utils/authUtils";
 
 function App() {
@@ -89,6 +89,7 @@ function App() {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
+
       <main className='App'>
         <NavBar toggleLightDark={toggleLightDark} user={user} />
         <Switch>
@@ -105,24 +106,30 @@ function App() {
             )}
           />
           <Route
+            path='/dashboard'
+            render={(props) => {
+              if (!user) {
+                return <LoadingPage />;
+              } else {
+                if (user.businessName) {
+                  return <BusinessDashboard user={user} {...props} />;
+                } else {
+                  return <UserDashboard user={user} {...props} />;
+                }
+              }
+            }}
+          />
+          <Route
             path='/'
             render={(props) => {
               if (user === null) {
-                return (
-                  <Box pt={8}>
-                    <DemoColourGrid {...props} />
-                  </Box>
-                );
+                return <DemoColourGrid user={user} {...props} />;
               } else {
-                return (
-                  <>
-                    <BusinessDashboard />
-                    <UserDashboard />
-                    <Box pt={8}>
-                      <Typography> user: {user.email}</Typography>
-                    </Box>
-                  </>
-                );
+                if (user.businessName) {
+                  return <BusinessDashboard user={user} {...props} />;
+                } else {
+                  return <UserDashboard user={user} {...props} />;
+                }
               }
             }}
           />

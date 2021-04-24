@@ -11,7 +11,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import { useState } from "react";
 import { Link as RouterLink, useParams, useHistory } from "react-router-dom";
-import { attemptLogin} from "../../utils/authUtils";
+import { attemptLogin } from "../../utils/authUtils";
 const useStyles = makeStyles((theme) => ({
   paper: {
     marginTop: theme.spacing(8),
@@ -56,7 +56,7 @@ export default function SignIn(props) {
         message: `You have logged in!`,
         severity: "success",
       });
-      history.push("/");
+      history.push("/dashboard");
     } catch (err) {
       props.setSnack({
         open: true,
