@@ -5,6 +5,13 @@ const tokenCtrl = require("../controllers/items/token")
 const authCtrl = require("../controllers/api/auth");
 const checkLogin = require("../controllers/api/auth").checkLogin;
 
+
+
+router.post("/signup", authCtrl.create);
+router.post("/login", authCtrl.login);
+
+router.use(checkLogin);
+
 // Nodes
 router.post("/nodes/create", nodeCtrl.createNode);
 
@@ -13,11 +20,12 @@ router.post("/nodes/create", nodeCtrl.createNode);
 router.post("/tokens/create/:nodeId", tokenCtrl.createToken);
 router.get("/tokens/redeem/:nodeId", tokenCtrl.redeemToken);
 
-router.post("/signup", authCtrl.create);
-router.post("/login", authCtrl.login);
 
 
+<<<<<<< HEAD
 router.use(checkLogin);
+=======
+>>>>>>> 75e21a301166440608b44d6fdfac5f4dcca86efa
 
 router.get("/test", function (req, res, next) {
   console.log(req.user);
