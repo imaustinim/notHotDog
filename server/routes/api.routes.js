@@ -22,10 +22,7 @@ router.get("/tokens/redeem/:nodeId", tokenCtrl.redeemToken);
 
 
 
-<<<<<<< HEAD
 router.use(checkLogin);
-=======
->>>>>>> 75e21a301166440608b44d6fdfac5f4dcca86efa
 
 router.get("/test", function (req, res, next) {
   console.log(req.user);
