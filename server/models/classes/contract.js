@@ -67,7 +67,7 @@ class Ticket extends Contract {
 
 function createContract(body) {
   const obj = {
-    type: body.type,
+    type: body.campaignType,
     numUses: body.numUses || 1,
     value: body.value,
     staticDate: body.staticDate,

@@ -15,6 +15,7 @@ import SnackbarHandler from "../../components/SnackbarHandler/SnackbarHandler";
 import Login from "../Login/Login";
 import Signup from "../Signup/Signup";
 import BusinessDashboard from "../BusinessDashboard/BusinessDashboard"
+import UserDashboard from "../UserDashboard/UserDashboard"
 import LoginButtons from "../../components/NavBar/LoginButtons/LoginButtons";
 
 import { getUser, checkExp } from "../../utils/authUtils";
@@ -110,12 +111,17 @@ function App() {
                 return (
                   <Box pt={8}>
                     <DemoColourGrid {...props} />
+<<<<<<< HEAD
+                  </>
+=======
                   </Box>
+>>>>>>> main
                 );
               } else {
                 return (
                   <>
                   <BusinessDashboard/>
+                  <UserDashboard/>
                   <Box pt={8}>
                     <Typography> user: {user.email}</Typography>
                   </Box>
