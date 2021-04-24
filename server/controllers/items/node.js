@@ -4,10 +4,12 @@ const Node = require("../../models/node")
 const Contract = require("../../models/classes/contract");
 
 function createNode(req, res) {
+  console.log(req.user)
   const contract = Contract.createContract(req.body)
-  // const business = Business.findOne({ id: req.user.id})
+
+  const business = Business.findOne({ _id: req.user._id})
   const campaign = Node.create({
-    _business: 2,
+    _business: business._id,
     name: req.body.campaignName,
     description: req.body.description,
     type: req.body.campaignType,
@@ -20,6 +22,7 @@ function createNode(req, res) {
     expireDate: req.body.expireDate,
     nodeItems: []
   })
+  console.log(campaigns)
 
   res.send({
     success: true,

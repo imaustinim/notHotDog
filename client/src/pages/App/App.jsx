@@ -123,7 +123,7 @@ function App() {
               } else {
                 return (
                   <>
-                  {/* <BusinessDashboard/> */}
+                  <BusinessDashboard/>
                   <UserDashboard/>
                   <Box pt={8}>
                     <Typography> user: {user.email}</Typography>
