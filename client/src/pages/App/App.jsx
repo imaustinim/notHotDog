@@ -15,6 +15,7 @@ import SnackbarHandler from "../../components/SnackbarHandler/SnackbarHandler";
 import Login from "../Login/Login";
 import Signup from "../Signup/Signup";
 import BusinessDashboard from "../BusinessDashboard/BusinessDashboard"
+import UserDashboard from "../UserDashboard/UserDashboard"
 import LoginButtons from "../../components/NavBar/LoginButtons/LoginButtons";
 
 import { getUser, logout, checkExp } from "../../utils/authUtils";
@@ -122,7 +123,8 @@ function App() {
               } else {
                 return (
                   <>
-                  <BusinessDashboard/>
+                  {/* <BusinessDashboard/> */}
+                  <UserDashboard/>
                   <Box pt={8}>
                     <Typography> user: {user.email}</Typography>
                     <Button onClick={logout}>Logout</Button>
