@@ -106,7 +106,6 @@ export default function UserDashboard(props) {
             </Typography>
           </Grid>
         </Grid>
-
       </CardActionArea>
       <Modal
         aria-labelledby="transition-modal-title"
