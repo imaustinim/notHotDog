@@ -3,15 +3,12 @@ import {
   AppBar,
   Toolbar,
   Link,
-  InputBase,
   Input,
   Box,
-  Icon,
-  TextField,
 } from "@material-ui/core";
 
 import SearchIcon from "@material-ui/icons/Search";
-import { fade, makeStyles } from "@material-ui/core/styles";
+import { fade, makeStyles, useTheme } from "@material-ui/core/styles";
 import useAutocomplete from "@material-ui/lab/useAutocomplete";
 
 import BusinessIcon from "@material-ui/icons/Business";
@@ -106,6 +103,7 @@ let options = [
 ];
 export default function NavBar(props) {
   const classes = useStyles();
+  const theme = useTheme();
   const [search, setSearch] = useState("");
   const {
     getRootProps,
@@ -125,7 +123,10 @@ export default function NavBar(props) {
         <Toolbar>
           {props.user ? (
             <>
-              <HotDogMenu toggleLightDark={props.toggleLightDark} />
+              <HotDogMenu
+                toggleLightDark={props.toggleLightDark}
+                user={props.user}
+              />
               <Box display={{ xs: "none", sm: "inline" }}>
                 <Typography
                   variant='h5'
@@ -168,9 +169,8 @@ export default function NavBar(props) {
             </>
           ) : (
             <>
-              <Icon>
-                <HotDogIcon />
-              </Icon>
+              <HotDogIcon color={theme.palette.primary.contrastTest} />
+
               <Box pl={1} display={{ xs: "none", sm: "inline" }}>
                 <Typography
                   variant='h5'

@@ -9,6 +9,7 @@ import {
   IconButton,
   ListItemIcon,
   ListItemText,
+  Icon,
 } from "@material-ui/core";
 import Divider from "@material-ui/core/Divider";
 
@@ -20,6 +21,7 @@ import InvertColorsIcon from "@material-ui/icons/InvertColors";
 import EventSeatIcon from "@material-ui/icons/EventSeat";
 import LoyaltyIcon from "@material-ui/icons/Loyalty";
 import CardGiftcardIcon from "@material-ui/icons/CardGiftcard";
+
 import { logout } from "../../utils/authUtils";
 export default function HotDogMenu(props) {
   const [open, setOpen] = useState(false);
@@ -82,6 +84,18 @@ export default function HotDogMenu(props) {
                       <ExitToAppIcon />
                     </ListItemIcon>
                     <ListItemText primary='Logout' />
+                  </MenuItem>
+                  <Divider />
+                  <MenuItem
+                    onClick={handleClose}
+                    component={RouterLink}
+                    to={
+                      props.user.businessName ? "/business/scan" : "/user/scan"
+                    }>
+                    <ListItemIcon>
+                      <Icon>qr_code_scanner</Icon>
+                    </ListItemIcon>
+                    <ListItemText primary='QR Scanner' />
                   </MenuItem>
                   <Divider />
                   <MenuItem
