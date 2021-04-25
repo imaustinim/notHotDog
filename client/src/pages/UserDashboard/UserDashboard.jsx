@@ -3,7 +3,7 @@ import Container from "@material-ui/core/Container";
 import List from "@material-ui/core/List";
 import { makeStyles } from "@material-ui/core/styles";
 
-import GiftCard from "../../components/ListItems/Redeemable/Redeemable";
+ import Redeemable from "../../components/ListItems/Redeemable/Redeemable";
 
 // import { CreateCampaign } from "../../utils/userUtils";
 
@@ -133,7 +133,7 @@ export default function UserDashboard(props) {
     <Container className={classes.root}>
       <List className={classes.root}>
         {dataSet.map((item, idx) => (
-          <GiftCard key={idx} data={item} />
+          <Redeemable key={idx} data={item} />
         ))}
       </List>
     </Container>

@@ -7,7 +7,7 @@ import Avatar from "@material-ui/core/Avatar";
 import { makeStyles, useTheme } from "@material-ui/core/styles";
 import RedeemModal from "../RedeemModal/RedeemModal";
 import { useEffect, useState } from "react";
-import { ParseData } from "./Redeemable";
+import { ParseData } from "./RedeemableUtil";
 
 export default function Redeemable(props) {
   const mytheme = useTheme();
@@ -23,7 +23,7 @@ export default function Redeemable(props) {
   }));
   const classes = useStyles();
   return (
-    <RedeemModal data={props.data}>
+    <RedeemModal data={parsedData}>
       <ListItem button className={classes.listItem} alignItems='flex-start'>
         <ListItemAvatar>
           <Avatar alt={parsedData.businessName} src={parsedData.avatar} />
