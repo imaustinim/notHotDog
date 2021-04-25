@@ -16,6 +16,7 @@ import Login from "../Login/Login";
 import Signup from "../Signup/Signup";
 import BusinessDashboard from "../BusinessDashboard/BusinessDashboard";
 import UserDashboard from "../UserDashboard/UserDashboard";
+import QrScannerPage from "../QrScannerPage/QrScannerPage";
 import LoadingPage from "../../components/LoadingPage/LoadingPage";
 import { getUser, checkExp } from "../../utils/authUtils";
 
@@ -47,9 +48,18 @@ function App() {
 
   const theme = createMuiTheme({
     palette: {
-      giftcard: "#FEDD9C",
-      ticket: "#F4D6E1",
-      coupon: "#C8D0F2",
+      giftcard: {
+        light: "#FEDD9C",
+        dark: "#684601",
+      },
+      ticket: {
+        light: "#F4D6E1",
+        dark: "#7F2345",
+      },
+      coupon: {
+        light: "#C8D0F2",
+        dark: "#1C2C74",
+      },
       type: darkMode ? "dark" : "light",
       secondary: {
         main: "#000080",
@@ -107,6 +117,12 @@ function App() {
             path='/:type/login'
             render={(props) => (
               <Login setSnack={setSnack} setUser={setUser} {...props} />
+            )}
+          />
+          <Route
+            path='/:type/scan'
+            render={(props) => (
+              <QrScannerPage setSnack={setSnack} user={user} {...props} />
             )}
           />
           <Route

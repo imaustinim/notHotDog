@@ -2,8 +2,7 @@ import React from "react";
 import Container from "@material-ui/core/Container";
 import List from "@material-ui/core/List";
 import { makeStyles } from "@material-ui/core/styles";
-
- import Redeemable from "../../components/ListItems/Redeemable/Redeemable";
+import Redeemable from "../../components/ListItems/Redeemable/Redeemable";
 
 // import { CreateCampaign } from "../../utils/userUtils";
 

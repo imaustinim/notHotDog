@@ -60,7 +60,7 @@ export function ParseData(data, theme) {
       );
       break;
     default:
-      parsedData.background = theme.palette.error.light;
+      parsedData.background = theme.palette.error;
       parsedData.secondary = (
         <>
           <strong>Activated:</strong>
