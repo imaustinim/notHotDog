@@ -20,6 +20,7 @@ async function createNode(req, res) {
     expireDate: req.body.expireDate,
     nodeItems: []
   })
+  console.log(campaign)
 
   res.send({
     success: true,
