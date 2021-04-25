@@ -1,5 +1,5 @@
-import React, { createRef, useEffect, useState } from "react";
-import { makeStyles } from "@material-ui/core/styles";
+import React, { useEffect, useState } from "react";
+
 import Button from "@material-ui/core/Button";
 import Avatar from "@material-ui/core/Avatar";
 import DialogTitle from "@material-ui/core/DialogTitle";
@@ -18,30 +18,20 @@ import AccordionSummary from "@material-ui/core/AccordionSummary";
 import AccordionDetails from "@material-ui/core/AccordionDetails";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import QRCode from "qrcode.react";
-import { Link as RouterLink } from "react-router-dom";
 import Link from "@material-ui/core/Link";
-
-const useStyles = makeStyles({
-  grow: {
-    flexGrow: 1,
-  },
-});
 
 function SimpleDialog(props) {
   const theme = useTheme();
-  const classes = useStyles();
   const { data, onClose, open } = props;
   const [qrSize, setQrSize] = useState(128);
   let xsMatch = useMediaQuery(theme.breakpoints.down("xs"));
   let smMatch = useMediaQuery(theme.breakpoints.up("sm"));
   let mdMatch = useMediaQuery(theme.breakpoints.up("md"));
-  let lgMatch = useMediaQuery(theme.breakpoints.up("lg"));
   useEffect(() => {
-    if (lgMatch) console.log("0");
-    else if (mdMatch) setQrSize(512);
+    if (mdMatch) setQrSize(512);
     else if (smMatch) setQrSize(400);
     else if (xsMatch) setQrSize(200);
-  }, [lgMatch, mdMatch, smMatch, xsMatch]);
+  }, [mdMatch, smMatch, xsMatch]);
 
   return (
     <Dialog

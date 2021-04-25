@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { Route, Switch } from "react-router";
 
 /* Material */
-import { Typography, useMediaQuery, Box } from "@material-ui/core";
+import { useMediaQuery } from "@material-ui/core";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import { ThemeProvider, createMuiTheme } from "@material-ui/core/styles";
 /* Custom Components */
@@ -16,15 +16,10 @@ import Login from "../Login/Login";
 import Signup from "../Signup/Signup";
 import BusinessDashboard from "../BusinessDashboard/BusinessDashboard";
 import UserDashboard from "../UserDashboard/UserDashboard";
-import LoginButtons from "../../components/NavBar/LoginButtons/LoginButtons";
 import LoadingPage from "../../components/LoadingPage/LoadingPage";
 import { getUser, checkExp } from "../../utils/authUtils";
 
 function App() {
-  let [darkMode, setDarkMode] = useState(
-    useMediaQuery("(prefers-color-scheme: dark)")
-  );
-
   let [user, setUser] = useState(null);
 
   let [snack, setSnack] = useState({
@@ -32,6 +27,10 @@ function App() {
     message: "",
     severity: "error",
   });
+
+  let [darkMode, setDarkMode] = useState(
+    useMediaQuery("(prefers-color-scheme: dark)")
+  );
 
   let setOpen = () => {
     let thisSnack = { ...snack };
@@ -45,9 +44,12 @@ function App() {
       setUser(getUser(token));
     }
   }, []);
-  /* Custom Colour palette, this is a global theme */
+
   const theme = createMuiTheme({
     palette: {
+      giftcard: "#FEDD9C",
+      ticket: "#F4D6E1",
+      coupon: "#C8D0F2",
       type: darkMode ? "dark" : "light",
       secondary: {
         main: "#000080",
@@ -81,6 +83,8 @@ function App() {
       },
     },
   });
+
+  /* Custom Colour palette, this is a global theme */
 
   const toggleLightDark = () => {
     setDarkMode(darkMode ? false : true);
@@ -140,8 +144,8 @@ function App() {
           message={snack.message}
           severity={snack.severity}
         />
-        <Footer />
       </main>
+      <Footer />
     </ThemeProvider>
   );
 }

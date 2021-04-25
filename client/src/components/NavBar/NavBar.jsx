@@ -3,11 +3,9 @@ import {
   AppBar,
   Toolbar,
   Link,
-  InputBase,
   Input,
   Box,
   Icon,
-  TextField,
 } from "@material-ui/core";
 
 import SearchIcon from "@material-ui/icons/Search";
