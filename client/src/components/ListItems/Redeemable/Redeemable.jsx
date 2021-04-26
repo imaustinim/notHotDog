@@ -26,7 +26,6 @@ export default function Redeemable(props) {
     <RedeemModal
       data={parsedData}
       user={props.user}
-      URL={props.URL}
       setDataSet={props.setDataSet}
       setSnack={props.setSnack}
     >

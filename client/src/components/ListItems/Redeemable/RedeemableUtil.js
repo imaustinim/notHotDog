@@ -96,7 +96,6 @@ export function ParseUserData(data, theme) {
 
 
 export function ParseData(data, theme) {
-  console.log(data);
   let startDate = new Date(data.activeDate);
   let endDate = new Date(data.expireDate);
   let parsedData = {
