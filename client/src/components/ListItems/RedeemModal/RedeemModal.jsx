@@ -20,7 +20,6 @@ import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import Slide from "@material-ui/core/Slide";
 
 import QRCode from "qrcode.react";
-import Link from "@material-ui/core/Link";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction='up' ref={ref} {...props} />;
@@ -89,9 +88,7 @@ function SimpleDialog(props) {
         </AccordionSummary>
         <AccordionDetails>
           <Box display='block' style={{ overflowX: "scroll" }}>
-            <Link href={data.address}>
-              <code>{data.address}</code>
-            </Link>
+            <code>{data.address}</code>
             <Typography color='textSecondary' variant='body2'>
               <br />
               Start Date:
