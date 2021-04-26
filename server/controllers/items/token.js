@@ -5,16 +5,43 @@ const Node = require("../../models/node");
 const NodeItem = require("../../models/nodeItem");
 const Token = require("../../models/token");
 const Contract = require("../../models/classes/contract");
+const ObjectID = require("mongodb").Types.ObjectID;
+const node = require("../../models/node");
 
 module.exports = {
   createToken,
   redeemToken,
 };
 
+function isNodeIdValid(nodeId) {
+  try {
+    if (!ObjectID.isValid(req.params.nodeId)) {
+      throw new Error("nodeId provided is not a valid format");
+    } else if (new ObjectId(nodeId).toString !== nodeId) {
+      throw new Error("nodeId provided is not a valid address");
+    } else {
+      let node = Node.findOne({ id: nodeId });
+      if (node.remainingQuantity <= 0) {
+        throw new Error("Sorry, all of this token has been claimed!");
+      }
+      return node;
+    }
+  } catch (err) {
+    console.log(err);
+    return err;
+  }
+}
+
+function createToken(req, res){
+  
+}
+
+
 function createToken(req, res) {
   let node = Node.findOne({ id: req.params.nodeId });
 
   // Edge Case [ No remaining node items ]
+
   if (node.remainingQuantity === 0) {
     res.send({
       message: "Sorry, we are out of this token!",
@@ -76,74 +103,73 @@ function createToken(req, res) {
 }
 
 async function redeemToken(req, res) {
-  let node = Node.findOne({ id: req.params.nodeId })
-  let token = Token.findOne({ id: req.body.tokenId })
-  const now = new Date()
-  
+  let node = Node.findOne({ id: req.params.nodeId });
+  let token = Token.findOne({ id: req.body.tokenId });
+  const now = new Date();
+
   // Check 1: Token exists and key is valid
   try {
-      // Check 2: Current date is between node dates
-      if (node.activeDate >= now && node.expireDate <= now) {
-      } else if (node.activeDate < now) {
-        throw({
-          checkFailed: 2,
-          message: "Campaign not yet started",
-          redeemed: false,
-        })
-        return
-      } else if (node.expireDate < now) {
-        throw({
-          checkFailed: 2,
-          message: "Campaing ended",
-          redeemed: false
-        })
-        return
-      }
+    // Check 2: Current date is between node dates
+    if (node.activeDate >= now && node.expireDate <= now) {
+    } else if (node.activeDate < now) {
+      throw {
+        checkFailed: 2,
+        message: "Campaign not yet started",
+        redeemed: false,
+      };
+      return;
+    } else if (node.expireDate < now) {
+      throw {
+        checkFailed: 2,
+        message: "Campaing ended",
+        redeemed: false,
+      };
+      return;
+    }
 
-    await node.findOne({ "nodeItems.key" : token.key })
-    .then(nodeItem => {
+    await node.findOne({ "nodeItems.key": token.key }).then((nodeItem) => {
       // Check 3: Check if token is redeemed
       if (nodeItem.redeemed) {
-        throw({
+        throw {
           checkFailed: 3,
           message: "Token already redeemed",
           redeemed: false,
-        });
+        };
       }
 
       // Check 4: Check dynamic dates and current date is between nodes
       if (!nodeItem.staticDate) {
         if (nodeItem.activeDate < now) {
-          throw({
+          throw {
             checkFailed: 4,
             message: "Can't redeem token yet",
             redeemed: false,
-          });
+          };
           return;
         } else if (nodeItem.expireDate > now) {
-          throw({
+          throw {
             checkFailed: 4,
             message: "Token expired",
             redeemed: false,
-          });
+          };
           return;
         }
       }
 
       // Redeem token
-      const newPrice = nodeItem.contract.redeem(req.body.tokenValue)
-      throw({
+      const newPrice = nodeItem.contract.redeem(req.body.tokenValue);
+      throw {
         message: "Token Redeemed",
         contract: nodeItem.contract,
         redeemed: true,
-      })
-    })
-  } catch(err) {
-    console.log("Error", err)
-    throw({
+      };
+    });
+  } catch (err) {
+    console.log("Error", err);
+    throw {
       checkFailed: 1,
       message: "Invalid Key",
       redeemed: false,
-    });
+    };
   }
 }
