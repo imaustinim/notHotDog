@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { Route, Switch } from "react-router";
+import { useHistory } from "react-router-dom";
 
 /* Material */
 import { useMediaQuery } from "@material-ui/core";
@@ -22,6 +23,7 @@ import { getUser, checkExp } from "../../utils/authUtils";
 
 function App() {
   let [user, setUser] = useState(null);
+  let history = useHistory();
 
   let [snack, setSnack] = useState({
     open: false,
@@ -132,9 +134,17 @@ function App() {
                 return <LoadingPage />;
               } else {
                 if (user.businessName) {
-                  return <BusinessDashboard setSnack={setSnack} user={user} {...props} />;
+                  return (
+                    <BusinessDashboard
+                      setSnack={setSnack}
+                      user={user}
+                      {...props}
+                    />
+                  );
                 } else {
-                  return <UserDashboard setSnack={setSnack} user={user} {...props} />;
+                  return (
+                    <UserDashboard setSnack={setSnack} user={user} {...props} />
+                  );
                 }
               }
             }}
@@ -142,17 +152,14 @@ function App() {
           <Route
             path='/'
             render={(props) => {
-              if (user === null) {
-                return <DemoColourGrid user={user} {...props} />;
+              if (!user) {
+                return <DemoColourGrid {...props} />;
               } else {
-                if (user.businessName) {
-                  return <BusinessDashboard setSnack={setSnack} user={user} {...props} />;
-                } else {
-                  return <UserDashboard setSnack={setSnack} user={user} {...props} />;
-                }
+                history.push("/dashboard");
               }
             }}
           />
+          
         </Switch>
         <SnackbarHandler
           setOpen={setOpen}

@@ -4,7 +4,6 @@ const Node = require("../../models/node");
 const Contract = require("../../models/classes/contract");
 
 async function createNode(req, res) {
-<<<<<<< HEAD
   const contract = Contract.createContract(req.body)
   let business = await Business.findById(req.user._id)
   const campaign = await Node.create({
@@ -60,36 +59,20 @@ async function editCampaign(req, res) {
 async function deleteCampaign(req, res) {
   const contract = Contract.createContract(req.body)
   let business = await Business.findById(req.user._id)
-=======
-  console.log(req.user);
-  const contract = Contract.createContract(req.body);
-
-  const business = await Business.findOne({ _id: req.user._id });
->>>>>>> userdash
   const campaign = await Node.create({
     _business: business._id,
     name: req.body.campaignName,
     description: req.body.description,
     type: req.body.campaignType,
-<<<<<<< HEAD
     address: path.join(process.env.URL, "api", "tokens", "redeem", business._id.toString()),
-=======
-    address: path.join(process.env.THE_PATH, "api", "tokens", "redeem", "1"),
->>>>>>> userdash
     initialQuantity: req.body.quantity,
     remainingQuantity: req.body.quantity,
     redeemed: 0,
     contract: contract,
     activeDate: req.body.activeDate,
     expireDate: req.body.expireDate,
-<<<<<<< HEAD
     nodeItems: []
   })
-=======
-    nodeItems: [],
-  });
-  console.log(campaign);
->>>>>>> userdash
 
   business.nodes.push(campaign._id)
   business.save()
@@ -115,9 +98,5 @@ async function getData(req, res) {
 
 module.exports = {
   createNode,
-<<<<<<< HEAD
   getData
 }
-=======
-};
->>>>>>> userdash

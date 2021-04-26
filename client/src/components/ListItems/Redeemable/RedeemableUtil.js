@@ -1,6 +1,7 @@
 export function ParseData(data, theme) {
-  let startDate = new Date(data.activeDate.$date);
-  let endDate = new Date(data.expireDate.$date);
+  console.log(data);
+  let startDate = new Date(data.activeDate);
+  let endDate = new Date(data.expireDate);
   let parsedData = {
     id: data._id,
     businessName: data.businessName,

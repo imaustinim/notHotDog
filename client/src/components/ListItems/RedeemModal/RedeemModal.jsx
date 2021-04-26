@@ -12,7 +12,7 @@ import IconButton from '@material-ui/core/IconButton';
 import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
-import { Box, Typography } from "@material-ui/core";
+import { Box, Link, Typography } from "@material-ui/core";
 import { useTheme } from "@material-ui/core/styles";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 import Accordion from "@material-ui/core/Accordion";
@@ -97,7 +97,6 @@ function SimpleDialog(props) {
             />
           </Box>
 
-<<<<<<< HEAD
           <DialogContentText id='alert-dialog-description'>
             <>
               <Box display='flex' justifyContent='center'>
@@ -114,36 +113,6 @@ function SimpleDialog(props) {
             id='panel1a-header'>
             <Typography variant='body2' color='textSecondary'>
               Reveal URL/Code
-=======
-        <DialogContentText id='alert-dialog-description'>
-          <>
-            <Box display='flex' justifyContent='center'>
-              <Typography>{data.secondary}</Typography>
-            </Box>
-            {data.description}
-          </>
-        </DialogContentText>
-      </DialogContent>
-      <Accordion>
-        <AccordionSummary
-          expandIcon={<ExpandMoreIcon />}
-          aria-controls='panel1a-content'
-          id='panel1a-header'>
-          <Typography variant='body2' color='textSecondary'>
-            Reveal URL/Code
-          </Typography>
-        </AccordionSummary>
-        <AccordionDetails>
-          <Box display='block' style={{ overflowX: "scroll" }}>
-            <code>{data.address}</code>
-            <Typography color='textSecondary' variant='body2'>
-              <br />
-              Start Date:
-              {data.startDate.toLocaleDateString("en-us")}
-              <br />
-              End Date:
-              {data.endDate.toLocaleDateString("en-us")}
->>>>>>> userdash
             </Typography>
           </AccordionSummary>
           <AccordionDetails>
