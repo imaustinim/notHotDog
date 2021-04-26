@@ -28,7 +28,7 @@ export default function Redeemable(props) {
     setEdit(!edit)
   }
   return (
-    <RedeemModal data={parsedData} setSnack={props.setSnack} handleEdit={handleEdit}>
+    <RedeemModal data={parsedData} setDataSet={props.setDataSet} setSnack={props.setSnack} handleEdit={handleEdit}>
       <ListItem button className={classes.listItem} alignItems='flex-start'>
         <ListItemAvatar>
           <Avatar alt={parsedData.businessName} src={parsedData.avatar} />

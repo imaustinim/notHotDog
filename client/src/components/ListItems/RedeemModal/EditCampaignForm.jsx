@@ -58,7 +58,6 @@ export default function EditCampaignForm(props) {
 
   const setCampaign = async () => {
     let data = await getCampaign(props.data.id)
-    console.log(data)
     setCampaignName(data.name)
     setCampaignType(data.type)
     setDescription(data.description)
@@ -71,7 +70,7 @@ export default function EditCampaignForm(props) {
     setAccess(data.contract.access)
   }
 
-  useEffect(async () => {
+  useEffect(() => {
     try {
 			setCampaign()
 		} catch (err) {
@@ -95,17 +94,17 @@ export default function EditCampaignForm(props) {
       };
       
       let res = await EditCampaign(formData, props.data.id);
-      setCampaign()
       if (res.status !== 200) {
         throw res;
       } else {
         props.setSnack({
           open: true,
-          message: `Successfully created campaign ${res.campaign.name}!`,
+          message: `Successfully edited ${res.campaign.name}!`,
           severity: "success",
         });
         try {
           let data = await getCampaignData()
+          setCampaign()
           props.setDataSet(data)
         } catch (err) {
           console.log(err)
