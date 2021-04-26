@@ -100,7 +100,7 @@ export default function EditCampaignForm(props) {
       } else {
         props.setSnack({
           open: true,
-          message: `Successfully created campaign ${res.campaign.name}!`,
+          message: `Successfully edited ${res.campaign.name}!`,
           severity: "success",
         });
         try {
