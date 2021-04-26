@@ -51,7 +51,7 @@ export default function UserDashboard(props) {
     <Container className={classes.root}>
       <List className={classes.root}>
         {dataSet.map((item, idx) => (
-          <Redeemable key={idx} data={item} />
+          <Redeemable URL={`${props.URL}/tokens/redeem/`} key={idx} data={item} />
         ))}
       </List>
     </Container>

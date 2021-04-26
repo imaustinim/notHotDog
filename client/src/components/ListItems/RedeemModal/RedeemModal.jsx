@@ -28,7 +28,6 @@ import EditCampaignForm from "./EditCampaignForm";
 
 import QRCode from "qrcode.react";
 
-
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction='up' ref={ref} {...props} />;
 });
@@ -36,6 +35,7 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 function SimpleDialog(props) {
   const theme = useTheme();
   const { data, onClose, open } = props;
+  const URL = props.URL + data.id
   const [qrSize, setQrSize] = useState(128);
   let xsMatch = useMediaQuery(theme.breakpoints.down("xs"));
   let smMatch = useMediaQuery(theme.breakpoints.up("sm"));
@@ -99,7 +99,7 @@ function SimpleDialog(props) {
             justifyContent='center'
             alignItems='center'>
             <QRCode
-              value={data.address}
+              value={URL}
               size={qrSize}
               bgColor={theme.palette.primary.light}
               fgColor={theme.palette.secondary.dark}
@@ -126,8 +126,8 @@ function SimpleDialog(props) {
           </AccordionSummary>
           <AccordionDetails>
             <Box display='block' style={{ overflowX: "scroll" }}>
-              <Link href={data.address}>
-                <code>{data.address}</code>
+              <Link href={URL}>
+                <code>{URL}</code>
               </Link>
               <Typography color='textSecondary' variant='body2'>
                 <br />
@@ -165,7 +165,7 @@ export default function RedeemModal(props) {
   return (
     <>
       <Box onClick={handleClickOpen}>{props.children}</Box>
-      <SimpleDialog data={props.data} handleEdit={props.handleEdit} setDataSet={props.setDataSet} setSnack={props.setSnack} open={open} onClose={handleClose} />
+      <SimpleDialog data={props.data} handleEdit={props.handleEdit} URL={props.URL} setDataSet={props.setDataSet} setSnack={props.setSnack} open={open} onClose={handleClose} />
     </>
   );
 }
