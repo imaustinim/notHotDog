@@ -1,6 +1,6 @@
 const path = require("path");
-const Business = require("../../models/business")
-const Node = require("../../models/node")
+const Business = require("../../models/business");
+const Node = require("../../models/node");
 const Contract = require("../../models/classes/contract");
 const { createContract } = require("../../models/classes/contract");
 
@@ -72,8 +72,8 @@ async function deleteNode(req, res) {
   res.status(200).send({
     status: 200,
     message: "Successfully created node",
-    campaign: campaign
-  })
+    campaign: campaign,
+  });
 }
 
 async function getNodes(req, res) {
@@ -102,8 +102,13 @@ async function getNode(req, res) {
 
 module.exports = {
   createNode,
+<<<<<<< HEAD
   editNode,
   deleteNode,
   getNode,
   getNodes,
 }
+=======
+  getData
+}
+>>>>>>> main

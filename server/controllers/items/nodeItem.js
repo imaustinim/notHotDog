@@ -3,6 +3,8 @@ const User = require("../../models/user");
 const Node = require("../../models/node");
 const NodeItem = require("../../models/nodeItem");
 const Contract = require("../../models/classes/contract");
+const ObjectID = require("mongodb").Types.ObjectID;
+const node = require("../../models/node");
 
 module.exports = {
   getData,
@@ -12,8 +14,7 @@ module.exports = {
 
 async function getData(req, res) {
   try {
-    const user = await User.findById(req.user._id)
-    const tokens = await NodeItem.find({ _user: user._id })
+    const tokens = await NodeItem.find({ _user: req.user._id })
     res.status(200).send({
       tokens: tokens
     })
@@ -22,10 +23,32 @@ async function getData(req, res) {
   }
 }
 
-async function createToken(req, res) {
+function isNodeIdValid(nodeId) {
+  try {
+    if (!ObjectID.isValid(req.params.nodeId)) {
+      throw new Error("nodeId provided is not a valid format");
+    } else if (new ObjectId(nodeId).toString !== nodeId) {
+      throw new Error("nodeId provided is not a valid address");
+    } else {
+      let node = Node.findOne({ id: nodeId });
+      if (node.remainingQuantity <= 0) {
+        throw new Error("Sorry, all of this token has been claimed!");
+      }
+      return node;
+    }
+  } catch (err) {
+    console.log(err);
+    return err;
+  }
+}
+
+
+
+function createToken(req, res) {
   let node = Node.findOne({ id: req.params.nodeId });
 
   // Edge Case [ No remaining node items ]
+
   if (node.remainingQuantity === 0) {
     res.send({
       message: "Sorry, we are out of this token!",
@@ -89,44 +112,44 @@ async function redeemToken(req, res) {
     .then(nodeItem => {
       // Check 3: Check if token is redeemed
       if (nodeItem.redeemed) {
-        throw({
+        throw {
           checkFailed: 3,
           message: "Token already redeemed",
           redeemed: false,
-        });
+        };
       }
 
       // Check 4: Check dynamic dates and current date is between nodes
       if (!nodeItem.staticDate) {
         if (nodeItem.activeDate < now) {
-          throw({
+          throw {
             checkFailed: 4,
             message: "Can't redeem token yet",
             redeemed: false,
-          });
+          };
         } else if (nodeItem.expireDate > now) {
-          throw({
+          throw {
             checkFailed: 4,
             message: "Token expired",
             redeemed: false,
-          });
+          };
         }
       }
 
       // Redeem token
-      const newPrice = nodeItem.contract.redeem(req.body.tokenValue)
-      throw({
+      const newPrice = nodeItem.contract.redeem(req.body.tokenValue);
+      throw {
         message: "Token Redeemed",
         contract: nodeItem.contract,
         redeemed: true,
-      })
-    })
-  } catch(err) {
-    console.log("Error", err)
-    throw({
+      };
+    });
+  } catch (err) {
+    console.log("Error", err);
+    throw {
       checkFailed: 1,
       message: "Invalid Key",
       redeemed: false,
-    });
+    };
   }
 }
