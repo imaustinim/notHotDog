@@ -23,6 +23,9 @@ import Slide from "@material-ui/core/Slide";
 import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
 
+import EditCampaignForm from "./EditCampaignForm";
+
+
 import QRCode from "qrcode.react";
 import Link from "@material-ui/core/Link";
 
@@ -44,6 +47,12 @@ function SimpleDialog(props) {
     else if (xsMatch) setQrSize(200);
   }, [mdMatch, smMatch, xsMatch]);
 
+  const [edit, setEdit] = useState(false)
+
+  const handleEdit = () => {
+    setEdit(!edit)
+  }
+
   return (
     <Dialog
       fullScreen={xsMatch}
@@ -59,7 +68,7 @@ function SimpleDialog(props) {
           <ListItemText primary={data.primary} />
           <ListItemIcon>
             <IconButton edge="end" aria-label="delete">
-              <EditIcon onClick={() => props.editCampaign(data)} />
+              <EditIcon onClick={() => handleEdit()} />
             </IconButton>
           </ListItemIcon>
           {/* <ListItemIcon>
@@ -69,54 +78,62 @@ function SimpleDialog(props) {
           </ListItemIcon> */}
         </ListItem>
       </DialogTitle>
-      <DialogContent>
-        <Box
-          display='flex'
-          flexDirection='column'
-          justifyContent='center'
-          alignItems='center'>
-          <QRCode
-            value={data.address}
-            size={qrSize}
-            bgColor={theme.palette.primary.light}
-            fgColor={theme.palette.secondary.dark}
-          />
-        </Box>
-
-        <DialogContentText id='alert-dialog-description'>
-          <>
-            <Box display='flex' justifyContent='center'>
-              <Typography>{data.secondary}</Typography>
-            </Box>
-            {data.description}
-          </>
-        </DialogContentText>
-      </DialogContent>
-      <Accordion>
-        <AccordionSummary
-          expandIcon={<ExpandMoreIcon />}
-          aria-controls='panel1a-content'
-          id='panel1a-header'>
-          <Typography variant='body2' color='textSecondary'>
-            Reveal URL/Code
-          </Typography>
-        </AccordionSummary>
-        <AccordionDetails>
-          <Box display='block' style={{ overflowX: "scroll" }}>
-            <Link href={data.address}>
-              <code>{data.address}</code>
-            </Link>
-            <Typography color='textSecondary' variant='body2'>
-              <br />
-              Start Date:
-              {data.startDate.toLocaleDateString("en-us")}
-              <br />
-              End Date:
-              {data.endDate.toLocaleDateString("en-us")}
-            </Typography>
+      { edit ? (
+        <>
+          <EditCampaignForm/>
+        </>
+      ) : (
+      <>
+        <DialogContent>
+          <Box
+            display='flex'
+            flexDirection='column'
+            justifyContent='center'
+            alignItems='center'>
+            <QRCode
+              value={data.address}
+              size={qrSize}
+              bgColor={theme.palette.primary.light}
+              fgColor={theme.palette.secondary.dark}
+            />
           </Box>
-        </AccordionDetails>
-      </Accordion>
+
+          <DialogContentText id='alert-dialog-description'>
+            <>
+              <Box display='flex' justifyContent='center'>
+                <Typography>{data.secondary}</Typography>
+              </Box>
+              {data.description}
+            </>
+          </DialogContentText>
+        </DialogContent>
+        <Accordion>
+          <AccordionSummary
+            expandIcon={<ExpandMoreIcon />}
+            aria-controls='panel1a-content'
+            id='panel1a-header'>
+            <Typography variant='body2' color='textSecondary'>
+              Reveal URL/Code
+            </Typography>
+          </AccordionSummary>
+          <AccordionDetails>
+            <Box display='block' style={{ overflowX: "scroll" }}>
+              <Link href={data.address}>
+                <code>{data.address}</code>
+              </Link>
+              <Typography color='textSecondary' variant='body2'>
+                <br />
+                Start Date:
+                {data.startDate.toLocaleDateString("en-us")}
+                <br />
+                End Date:
+                {data.endDate.toLocaleDateString("en-us")}
+              </Typography>
+            </Box>
+          </AccordionDetails>
+        </Accordion>
+      </>
+      )}
       <DialogActions>
         <Button onClick={onClose} color='primary' autoFocus>
           close
@@ -140,7 +157,7 @@ export default function RedeemModal(props) {
   return (
     <>
       <Box onClick={handleClickOpen}>{props.children}</Box>
-      <SimpleDialog data={props.data} editCampaign={props.editCampaign} open={open} onClose={handleClose} />
+      <SimpleDialog data={props.data} handleEdit={props.handleEdit} open={open} onClose={handleClose} />
     </>
   );
 }

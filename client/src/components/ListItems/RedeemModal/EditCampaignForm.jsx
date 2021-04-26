@@ -15,7 +15,7 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
 import clsx from 'clsx';
 import React from "react";
-import { CreateCampaign, getCampaignData } from "../../utils/businessUtils";
+import { CreateCampaign, getCampaignData } from "../../../utils/businessUtils"
 import { useState } from "react";
 import { Link as RouterLink, useParams, useHistory } from "react-router-dom";
 
@@ -63,7 +63,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function CampaignForm(props) {
+export default function EditCampaignForm(props) {
   const classes = useStyles();
   const history = useHistory();
   const { type } = useParams();
