@@ -58,7 +58,7 @@ export default function BusinessDashboard(props) {
       <CampaignForm className={classes.form} setDataSet={setDataSet} setSnack={props.setSnack} user={props.user} {...props}/>
       <List>
         {dataSet.map((item, idx) => (
-          <Redeemable key={idx} data={item} />
+          <Redeemable key={idx} data={item} setSnack={props.setSnack}/>
         ))}
       </List>
     </Container>

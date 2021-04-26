@@ -80,7 +80,15 @@ function SimpleDialog(props) {
       </DialogTitle>
       { edit ? (
         <>
-          <EditCampaignForm/>
+        <DialogContent>
+          <Box
+            display='flex'
+            flexDirection='column'
+            justifyContent='center'
+            alignItems='center'>
+            <EditCampaignForm data={data} setSnack={props.setSnack}/>
+          </Box>
+        </DialogContent>
         </>
       ) : (
       <>
@@ -157,7 +165,7 @@ export default function RedeemModal(props) {
   return (
     <>
       <Box onClick={handleClickOpen}>{props.children}</Box>
-      <SimpleDialog data={props.data} handleEdit={props.handleEdit} open={open} onClose={handleClose} />
+      <SimpleDialog data={props.data} handleEdit={props.handleEdit} setSnack={props.setSnack} open={open} onClose={handleClose} />
     </>
   );
 }
