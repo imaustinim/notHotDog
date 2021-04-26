@@ -13,7 +13,7 @@ export function ParseData(data, theme) {
     endDate: endDate,
     primary: (
       <>
-        {data.name} - {data.businessName} - {data.type.toUpperCase()}
+        {data.name} - {data._node.businessName} - {data._node.type.toUpperCase()}
       </>
     ),
   };

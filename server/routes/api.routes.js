@@ -19,7 +19,7 @@ router.get("/campaigns/:id", nodeCtrl.getNode);
 
 // Tokens
 router.get("/tokens/getData", nodeItemCtrl.getData);
-router.post("/tokens/create/:nodeId", nodeItemCtrl.createToken);
+router.get("/tokens/create/:nodeId", nodeItemCtrl.create);
 router.get("/tokens/redeem/:nodeId", nodeItemCtrl.redeemToken);
 
 router.get("/test", function (req, res, next) {

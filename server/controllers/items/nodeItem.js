@@ -3,7 +3,7 @@ const Node = require("../../models/node");
 const NodeItem = require("../../models/nodeItem");
 const Contract = require("../../models/classes/contract");
 const ObjectID = require("mongodb").ObjectID;
-const node = require("../../models/node");
+// const node = require("../../models/node");
 
 module.exports = {
   getData,
@@ -13,7 +13,13 @@ module.exports = {
 
 async function getData(req, res) {
   try {
-    const tokens = await NodeItem.find({ _user: req.user._id });
+    const tokens = await NodeItem.find({ _user: req.user._id })
+    .populate({
+      path: "_node",
+      populate: {
+        path: "_business",
+      },
+    });
     res.status(200).send({
       tokens: tokens,
     });
@@ -26,13 +32,20 @@ async function isNodeIdValid(nodeId) {
   try {
     if (!ObjectID.isValid(nodeId)) {
       throw "nodeId provided is not a valid format";
-    } else if (new ObjectId(nodeId).toString !== nodeId) {
+    } else if (new ObjectID(nodeId).toString() !== nodeId) {
       throw "nodeId provided is not a valid address";
     } else {
-      let node = await Node.findOne({ id: nodeId });
-      if (node.remainingQuantity <= 0) {
+      let node = await Node.findById(nodeId);
+      let now = new Date();
+      if (node.remainingQuantity === 0) {
         throw "Sorry, all of this token has been claimed!";
+      } else if (
+        new Date(node.activeDate) > now ||
+        new Date(node.expireDate) < now
+      ) {
+        throw "nodeId provided is not within valid date range";
       }
+
       return node;
     }
   } catch (err) {
@@ -43,51 +56,43 @@ async function create(req, res) {
   try {
     let node = await isNodeIdValid(req.params.nodeId);
     if (node.constructor.name === "Error") throw node;
-    res.send("okie doke");
+
+    // Edge Case [ No remaining node items ]
+
+    if (node.remainingQuantity === 0) {
+      res.send({
+        message: "Sorry, we are out of this token!",
+        node: node,
+      });
+      return;
+    }
+
+    // Create & Add Node Item to Node Model
+    let activeDate, expireDate;
+    if (node.contract.staticDate) {
+      activeDate = node.activeDate;
+      expireDate = node.expireDate;
+    } else {
+      activeDate = new Date();
+      expireDate = new Date().setDate(
+        new Date().getDate() + node.contract.duration
+      );
+      if (expireDate > node.expireDate) expireDate = node.expireDate;
+    }
+
+    const nodeItem = await NodeItem.create({
+      _node: node,
+      _user: req.user,
+      redeemed: false,
+      contract: node.contract,
+      activeDate: activeDate,
+      expireDate: expireDate,
+    });
+
+    res.send(nodeItem);
   } catch (err) {
     res.status(400).send(err.message);
   }
-}
-async function createToken(req, res) {
-  let node = Node.findOne({ id: req.params.nodeId });
-
-  // Edge Case [ No remaining node items ]
-
-  if (node.remainingQuantity === 0) {
-    res.send({
-      message: "Sorry, we are out of this token!",
-      node: node,
-    });
-  }
-
-  // Create & Add Node Item to Node Model
-  let activeDate, expireDate;
-  if (contractTemplate.staticDate) {
-    (activeDate = node.activeDate), (expireDate = node.expireDate);
-  } else {
-    (activeDate = new Date()),
-      (expireDate = new Date().setDate(
-        new Date().getDate() + contractTemplate.duration
-      ));
-    if (expireDate > node.expireDate) expireDate = node.expireDate;
-  }
-
-  const contract = await Contract.createContract(req.body);
-  const user = await User.findById(req.user._id);
-  const nodeItem = NodeItem.create({
-    _node: node,
-    _user: user,
-    redeemed: false,
-    contract: contract,
-    activeDate: activeDate,
-    expireDate: expireDate,
-  });
-  node.nodeItems.push(nodeItem);
-
-  res.send({
-    message: "Successfully created added Token",
-    nodeItem: nodeItem,
-  });
 }
 
 async function redeemToken(req, res) {

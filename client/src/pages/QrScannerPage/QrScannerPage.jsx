@@ -46,10 +46,16 @@ export default function QrScanner(props) {
     try {
       if (result) {
         let res = await QrScannerUtil.checkCode(result);
-        if (res.constructor.name === "Error") throw res;
+        if (res.constructor && res.constructor.name === "Error") throw res;
+        let response = JSON.parse(res);
+        console.log(response);
+        props.setSnack({
+          open: true,
+          message: `Added new coupon "${response._node.name}"`,
+          severity: "success",
+        });
       }
     } catch (err) {
-      console.log("err", err);
       props.setSnack({
         open: true,
         message: err.message,
