@@ -3,8 +3,6 @@ const User = require("../../models/user");
 const Node = require("../../models/node");
 const NodeItem = require("../../models/nodeItem");
 const Contract = require("../../models/classes/contract");
-const ObjectID = require("mongodb").Types.ObjectID;
-const node = require("../../models/node");
 
 module.exports = {
   getData,
@@ -42,9 +40,7 @@ function isNodeIdValid(nodeId) {
   }
 }
 
-
-
-function createToken(req, res) {
+async function createToken(req, res) {
   let node = Node.findOne({ id: req.params.nodeId });
 
   // Edge Case [ No remaining node items ]

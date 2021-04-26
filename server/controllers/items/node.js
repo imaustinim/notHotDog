@@ -102,13 +102,8 @@ async function getNode(req, res) {
 
 module.exports = {
   createNode,
-<<<<<<< HEAD
   editNode,
   deleteNode,
   getNode,
   getNodes,
 }
-=======
-  getData
-}
->>>>>>> main
