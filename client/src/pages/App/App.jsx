@@ -132,9 +132,9 @@ function App() {
                 return <LoadingPage />;
               } else {
                 if (user.businessName) {
-                  return <BusinessDashboard user={user} {...props} />;
+                  return <BusinessDashboard setSnack={setSnack} user={user} {...props} />;
                 } else {
-                  return <UserDashboard user={user} {...props} />;
+                  return <UserDashboard setSnack={setSnack} user={user} {...props} />;
                 }
               }
             }}
@@ -146,9 +146,9 @@ function App() {
                 return <DemoColourGrid user={user} {...props} />;
               } else {
                 if (user.businessName) {
-                  return <BusinessDashboard user={user} {...props} />;
+                  return <BusinessDashboard setSnack={setSnack} user={user} {...props} />;
                 } else {
-                  return <UserDashboard user={user} {...props} />;
+                  return <UserDashboard setSnack={setSnack} user={user} {...props} />;
                 }
               }
             }}

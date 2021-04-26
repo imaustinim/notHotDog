@@ -19,8 +19,12 @@ export default function Redeemable(props) {
     },
   }));
   const classes = useStyles();
+
+  const editCampaign = (id) => {
+    console.log(id)
+  }
   return (
-    <RedeemModal data={parsedData}>
+    <RedeemModal data={parsedData} editCampaign={editCampaign}>
       <ListItem button className={classes.listItem} alignItems='flex-start'>
         <ListItemAvatar>
           <Avatar alt={parsedData.businessName} src={parsedData.avatar} />
