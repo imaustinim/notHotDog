@@ -15,3 +15,20 @@ export async function getTokenData() {
     return err;
   }
 }
+
+export async function deleteToken(id) {
+  try {
+    let url = `/api/tokens/${id}/delete`;
+    let jwt = localStorage.getItem('token')
+    if (!jwt) throw new Error();
+    const fetchResponse = await fetch(url, {
+      method: "GET",
+      headers: { "Content-Type": "application/json", 'Authorization': 'Bearer ' + jwt },
+    })
+    let token = await fetchResponse.json();
+    if (!fetchResponse.ok) throw token;
+    return token;
+  } catch (err) {
+    return err;
+  }
+}

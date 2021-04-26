@@ -22,6 +22,7 @@ import LoadingPage from "../../components/LoadingPage/LoadingPage";
 import { getUser, checkExp } from "../../utils/authUtils";
 
 function App() {
+  const URL="http://localhost:3000/api/"
   let [user, setUser] = useState(null);
   let history = useHistory();
 
@@ -136,6 +137,7 @@ function App() {
                 if (user.businessName) {
                   return (
                     <BusinessDashboard
+                      URL={URL}
                       setSnack={setSnack}
                       user={user}
                       {...props}
@@ -143,7 +145,12 @@ function App() {
                   );
                 } else {
                   return (
-                    <UserDashboard setSnack={setSnack} user={user} {...props} />
+                    <UserDashboard
+                      URL={URL}
+                      setSnack={setSnack}
+                      user={user}
+                      {...props} 
+                    />
                   );
                 }
               }
