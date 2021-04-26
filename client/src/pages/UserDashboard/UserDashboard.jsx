@@ -5,6 +5,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import { useState, useEffect } from "react";
 import { getTokenData } from "../../utils/userUtils";
 import Redeemable from "../../components/ListItems/Redeemable/Redeemable";
+import { setDate } from "date-fns";
 
 // import { CreateCampaign } from "../../utils/userUtils";
 
@@ -35,13 +36,12 @@ const useStyles = makeStyles((theme) => ({
 export default function UserDashboard(props) {
   const classes = useStyles();
 
-  let [dataSet, setDataSet] = useState([])
-
-	useEffect(async () => {
+  let [dataSet, setDataSet] = useState()
+  
+	useEffect(() => {
 		try {
-			let data = await getTokenData()
-			setDataSet(data)
-      console.log(data)
+			getTokenData()
+      .then(data => setDataSet(data))
 		} catch (err) {
 			console.log(err)
 		}

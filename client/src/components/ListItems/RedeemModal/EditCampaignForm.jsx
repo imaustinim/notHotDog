@@ -58,7 +58,6 @@ export default function EditCampaignForm(props) {
 
   const setCampaign = async () => {
     let data = await getCampaign(props.data.id)
-    console.log(data)
     setCampaignName(data.name)
     setCampaignType(data.type)
     setDescription(data.description)
@@ -71,7 +70,7 @@ export default function EditCampaignForm(props) {
     setAccess(data.contract.access)
   }
 
-  useEffect(async () => {
+  useEffect(() => {
     try {
 			setCampaign()
 		} catch (err) {

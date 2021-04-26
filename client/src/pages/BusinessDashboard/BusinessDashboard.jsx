@@ -44,10 +44,10 @@ export default function BusinessDashboard(props) {
 	
   let [dataSet, setDataSet] = useState([])
 
-	useEffect(async () => {
+	useEffect(() => {
 		try {
-			let data = await getCampaignData()
-			setDataSet(data)
+			getCampaignData()
+      .then(data => setDataSet(data))
 		} catch (err) {
 			console.log(err)
 		}
@@ -58,7 +58,7 @@ export default function BusinessDashboard(props) {
       <CampaignForm className={classes.form} setDataSet={setDataSet} setSnack={props.setSnack} user={props.user} {...props}/>
       <List>
         {dataSet.map((item, idx) => (
-          <Redeemable key={idx} data={item} setSnack={props.setSnack}/>
+          <Redeemable key={idx} data={item} setDataSet={setDataSet} setSnack={props.setSnack}/>
         ))}
       </List>
     </Container>
