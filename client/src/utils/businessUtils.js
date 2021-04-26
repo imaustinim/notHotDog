@@ -31,7 +31,7 @@ export async function EditCampaign(formData, id) {
     })
     let token = await fetchResponse.json();
     if (!fetchResponse.ok) throw token;
-    return token.node;
+    return token;
   } catch (err) {
     return err;
   }

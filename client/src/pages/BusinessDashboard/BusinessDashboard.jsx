@@ -41,12 +41,11 @@ const useStyles = makeStyles((theme) => ({
 
 export default function BusinessDashboard(props) {
   const classes = useStyles();
-
   let [dataSet, setDataSet] = useState([]);
 
   useEffect(() => {
     try {
-      getCampaignData().then((res) => setDataSet(res));
+      getCampaignData().then((data) => setDataSet(data));
     } catch (err) {
       console.log(err);
     }
@@ -62,11 +61,14 @@ export default function BusinessDashboard(props) {
         {...props}
       />
       <List>
-        {dataSet.length ? (
-          dataSet.map((item, idx) => <Redeemable key={idx} data={item} />)
-        ) : (
-          <>No Campaigns Yet! Go add one, ya dork</>
-        )}
+        {dataSet.map((item, idx) => (
+          <Redeemable
+            key={idx}
+            data={item}
+            setDataSet={setDataSet}
+            setSnack={props.setSnack}
+          />
+        ))}
       </List>
     </Container>
   );
