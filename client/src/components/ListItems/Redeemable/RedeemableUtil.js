@@ -36,28 +36,45 @@ export function ParseData(data, theme) {
       parsedData.secondary = (
         <>
           <strong>Start date:</strong>
-          {parsedData.startDate.toDateString()} @ [
-          {parsedData.startDate.toLocaleTimeString("en-us")}]
+          {parsedData.startDate.toDateString()} @
+          {parsedData.startDate.toLocaleTimeString("en-us")}
           <br />
           <strong>End date:</strong>
-          {parsedData.endDate.toDateString()} @ [
-          {parsedData.endDate.toLocaleTimeString("en-us")}]
+          {parsedData.endDate.toDateString()} @
+          {parsedData.endDate.toLocaleTimeString("en-us")}
           <br />
         </>
       );
       break;
     case "coupon":
       parsedData.background = theme.palette.coupon;
-      parsedData.secondary = (
-        <>
-          <strong>Activated:</strong>
-          {parsedData.startDate.toDateString()}
-          <br />
-          <strong>Expires:</strong>
-          {parsedData.endDate.toDateString()}
-          <br />
-        </>
-      );
+      if (data.contract.unit === "percent") {
+        parsedData.secondary = (
+          <>
+            {data.contract.value}% Off
+            <br />
+            <strong>Activated:</strong>
+            {parsedData.startDate.toDateString()}
+            <br />
+            <strong>Expires:</strong>
+            {parsedData.endDate.toDateString()}
+            <br />
+          </>
+        );
+      } else {
+        parsedData.secondary = (
+          <>
+            ${parseFloat(data.contract.value).toFixed(2)} Off
+            <br />
+            <strong>Activated:</strong>
+            {parsedData.startDate.toDateString()}
+            <br />
+            <strong>Expires:</strong>
+            {parsedData.endDate.toDateString()}
+            <br />
+          </>
+        );
+      }
       break;
     default:
       parsedData.background = theme.palette.error;
