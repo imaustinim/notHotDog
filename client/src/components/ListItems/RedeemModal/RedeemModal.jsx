@@ -64,7 +64,7 @@ function SimpleDialog(props) {
         getTokenData().then((data) => props.setDataSet(data));
         props.setSnack({
           open: true,
-          message: `Successfully deleted ${res.token.name}!`,
+          message: `Successfully deleted ${res.token._node.name}!`,
           severity: "success",
         });
       }

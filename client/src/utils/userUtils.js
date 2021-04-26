@@ -1,12 +1,15 @@
 export async function getTokenData() {
   try {
     let url = `/api/tokens/getData`;
-    let jwt = localStorage.getItem('token')
+    let jwt = localStorage.getItem("token");
     if (!jwt) throw new Error();
     const fetchResponse = await fetch(url, {
       method: "GET",
-      headers: { "Content-Type": "application/json", 'Authorization': 'Bearer ' + jwt },
-    })
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + jwt,
+      },
+    });
     // 2. Check "fetchResponse.ok". False means status code was 4xx from the server/controller action
     let token = await fetchResponse.json();
     if (!fetchResponse.ok) throw token;
@@ -19,14 +22,19 @@ export async function getTokenData() {
 export async function deleteToken(id) {
   try {
     let url = `/api/tokens/${id}/delete`;
-    let jwt = localStorage.getItem('token')
+    let jwt = localStorage.getItem("token");
     if (!jwt) throw new Error();
     const fetchResponse = await fetch(url, {
       method: "GET",
-      headers: { "Content-Type": "application/json", 'Authorization': 'Bearer ' + jwt },
-    })
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + jwt,
+      },
+    });
+
     let token = await fetchResponse.json();
     if (!fetchResponse.ok) throw token;
+    console.log(token);
     return token;
   } catch (err) {
     return err;
