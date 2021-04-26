@@ -23,16 +23,14 @@ function createToken(req, res) {
   }
 
   // Generate Key
-  const key =
-    node.remainingQuantity > 0
-      ? (key = generator.generate({
+  const key = node.remainingQuantity > 0 ? (key = generator.generate({
           length: 16,
           numbers: true,
           symbols: true,
           exclude: "0",
           strict: true,
-        }))
-      : null;
+        })) : null;
+
 
   // Create & Add Node Item to Node Model
   let activeDate, expireDate;

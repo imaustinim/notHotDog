@@ -9,13 +9,63 @@ export async function CreateCampaign(formData) {
       headers: { "Content-Type": "application/json", 'Authorization': 'Bearer ' + jwt },
       body: JSON.stringify(formData),
     });
+    let token = await fetchResponse.json();
+    // 2. Check "fetchResponse.ok". False means status code was 4xx from the server/controller action
+    if (!fetchResponse.ok) throw token;
+    return token;
+  } catch (err) {
+    return err;
+  }
+}
 
+
+export async function editCampaign() {
+  try {
+    let url = `/api/campaigns/edit`;
+    let jwt = localStorage.getItem('token')
+    if (!jwt) throw new Error();
+    const fetchResponse = await fetch(url, {
+      method: "POST",
+      headers: { "Content-Type": "application/json", 'Authorization': 'Bearer ' + jwt },
+    })
+    let token = await fetchResponse.json();
+    if (!fetchResponse.ok) throw token;
+    return token.nodes;
+  } catch (err) {
+    return err;
+  }
+}
+
+export async function deleteCampaign() {
+  try {
+    let url = `/api/campaigns/delete`;
+    let jwt = localStorage.getItem('token')
+    if (!jwt) throw new Error();
+    const fetchResponse = await fetch(url, {
+      method: "POST",
+      headers: { "Content-Type": "application/json", 'Authorization': 'Bearer ' + jwt },
+    })
+    let token = await fetchResponse.json();
+    if (!fetchResponse.ok) throw token;
+    return token.nodes;
+  } catch (err) {
+    return err;
+  }
+}
+
+export async function getCampaignData() {
+  try {
+    let url = `/api/campaigns/getData`;
+    let jwt = localStorage.getItem('token')
+    if (!jwt) throw new Error();
+    const fetchResponse = await fetch(url, {
+      method: "GET",
+      headers: { "Content-Type": "application/json", 'Authorization': 'Bearer ' + jwt },
+    })
     // 2. Check "fetchResponse.ok". False means status code was 4xx from the server/controller action
     let token = await fetchResponse.json();
     if (!fetchResponse.ok) throw token;
-    //get error code
-
-    return token;
+    return token.nodes;
   } catch (err) {
     return err;
   }

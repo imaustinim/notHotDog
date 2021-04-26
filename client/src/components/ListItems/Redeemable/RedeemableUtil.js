@@ -1,8 +1,8 @@
 export function ParseData(data, theme) {
   let startDate = new Date(data.activeDate.$date);
   let endDate = new Date(data.expireDate.$date);
-
   let parsedData = {
+    id: data._id,
     businessName: data.businessName,
     avatar: data.avatar,
     name: data.name,
