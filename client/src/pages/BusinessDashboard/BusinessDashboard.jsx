@@ -41,35 +41,36 @@ const useStyles = makeStyles((theme) => ({
 
 export default function BusinessDashboard(props) {
   const classes = useStyles();
-  let [dataSet, setDataSet] = useState([]);
+  let [dataSet, setDataSet] = useState([])
 
-  useEffect(() => {
-    try {
-      getCampaignData().then((data) => setDataSet(data));
-    } catch (err) {
-      console.log(err);
-    }
-  }, []);
+	useEffect(() => {
+		try {
+			getCampaignData()
+      .then(data => {
+        setDataSet(data)
+      })
+		} catch (err) {
+			console.log(err)
+		}
+	}, [])
 
   return (
     <Container className={classes.root}>
-      <CampaignForm
-        className={classes.form}
-        setDataSet={setDataSet}
-        setSnack={props.setSnack}
-        user={props.user}
-        {...props}
-      />
+      <CampaignForm className={classes.form} setDataSet={setDataSet} setSnack={props.setSnack} user={props.user} {...props}/>
+      {dataSet ?
       <List>
         {dataSet.map((item, idx) => (
           <Redeemable
-            key={idx}
-            data={item}
-            setDataSet={setDataSet}
-            setSnack={props.setSnack}
+          URL={props.URL + "tokens/create/"}
+          key={idx} 
+          data={item} 
+          setDataSet={setDataSet} 
+          setSnack={props.setSnack}
+          user={props.user}
           />
-        ))}
+        ))} 
       </List>
+      : <></>}
     </Container>
   );
 }

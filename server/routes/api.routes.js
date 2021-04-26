@@ -13,13 +13,14 @@ router.use(checkLogin);
 // Nodes
 router.post("/campaigns/create", nodeCtrl.createNode);
 router.post("/campaigns/:id/edit", nodeCtrl.editNode);
-router.post("/campaigns/:id/delete", nodeCtrl.deleteNode);
+router.get("/campaigns/:id/delete", nodeCtrl.deleteNode);
 router.get("/campaigns/getNodes", nodeCtrl.getNodes);
 router.get("/campaigns/:id", nodeCtrl.getNode);
 
 // Tokens
 router.get("/tokens/getData", nodeItemCtrl.getData);
-router.get("/tokens/create/:nodeId", nodeItemCtrl.create);
+router.get("/tokens/:id/delete", nodeItemCtrl.deleteToken);
+router.post("/tokens/create/:nodeId", nodeItemCtrl.create);
 router.get("/tokens/redeem/:nodeId", nodeItemCtrl.redeemToken);
 
 router.get("/test", function (req, res, next) {

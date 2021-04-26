@@ -47,13 +47,15 @@ export default function UserDashboard(props) {
 
   return (
     <Container className={classes.root}>
+      {dataSet? 
       <List className={classes.root}>
         {dataSet.length ? (
-          dataSet.map((item, idx) => <Redeemable key={idx} data={item} />)
+          dataSet.map((item, idx) => <Redeemable URL={`${props.URL}/tokens/redeem/`} user={props.user} key={idx} data={item} />)
         ) : (
           <>No Campaigns Yet! Go add one, ya dork</>
         )}
       </List>
+      : <></> }
     </Container>
   );
 }

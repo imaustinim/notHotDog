@@ -50,29 +50,12 @@ async function editNode(req, res) {
 }
 
 async function deleteNode(req, res) {
-  const contract = Contract.createContract(req.body);
-  let business = await Business.findById(req.user._id);
-  const campaign = await Node.create({
-    _business: business._id,
-    name: req.body.campaignName,
-    description: req.body.description,
-    type: req.body.campaignType,
-    initialQuantity: req.body.quantity,
-    remainingQuantity: req.body.quantity,
-    redeemed: 0,
-    contract: contract,
-    activeDate: req.body.activeDate,
-    expireDate: req.body.expireDate,
-    nodeItems: [],
-  });
-
-  business.nodes.push(campaign._id);
-  business.save();
-
+  const node = await Node.findOneAndDelete({ _id: req.params.id})
+  console.log(node)
   res.status(200).send({
     status: 200,
-    message: "Successfully created node",
-    campaign: campaign,
+    message: "Successfully delete campaign",
+    node: node,
   });
 }
 
@@ -105,4 +88,4 @@ module.exports = {
   deleteNode,
   getNode,
   getNodes,
-};
+}
