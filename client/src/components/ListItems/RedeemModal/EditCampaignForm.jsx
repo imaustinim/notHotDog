@@ -97,15 +97,16 @@ export default function EditCampaignForm(props) {
       if (res.status !== 200) {
         throw res;
       } else {
-        props.setSnack({
-          open: true,
-          message: `Successfully edited ${res.campaign.name}!`,
-          severity: "success",
-        });
+        props.handleEdit()
         try {
           let data = await getCampaignData()
           setCampaign()
           props.setDataSet(data)
+          props.setSnack({
+            open: true,
+            message: `Successfully edited ${res.campaign.name}!`,
+            severity: "success",
+          });
         } catch (err) {
           console.log(err)
         }
@@ -136,7 +137,7 @@ export default function EditCampaignForm(props) {
           {/* <Card className={classes.card}> */}
             <CardContent>
               <Typography component='h1' variant='h5' align="center">
-                Edit Campaign&nbsp;
+                Edit Campaign
               </Typography>
             </CardContent>
             <CardContent className={classes.cardcontent}>

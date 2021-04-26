@@ -137,7 +137,7 @@ function App() {
                 if (user.businessName) {
                   return (
                     <BusinessDashboard
-                    URL={URL}
+                      URL={URL}
                       setSnack={setSnack}
                       user={user}
                       {...props}
@@ -145,7 +145,12 @@ function App() {
                   );
                 } else {
                   return (
-                    <UserDashboard URL={URL} setSnack={setSnack} user={user} {...props} />
+                    <UserDashboard
+                      URL={URL}
+                      setSnack={setSnack}
+                      user={user}
+                      {...props} 
+                    />
                   );
                 }
               }

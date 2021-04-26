@@ -37,18 +37,19 @@ export async function EditCampaign(formData, id) {
   }
 }
 
-export async function DeleteCampaign(id) {
+export async function deleteCampaign(id) {
   try {
     let url = `/api/campaigns/${id}/delete`;
     let jwt = localStorage.getItem('token')
     if (!jwt) throw new Error();
     const fetchResponse = await fetch(url, {
-      method: "POST",
+      method: "GET",
       headers: { "Content-Type": "application/json", 'Authorization': 'Bearer ' + jwt },
     })
+
     let token = await fetchResponse.json();
     if (!fetchResponse.ok) throw token;
-    return token.nodes;
+    return token;
   } catch (err) {
     return err;
   }
@@ -63,7 +64,6 @@ export async function getCampaign(id) {
       method: "GET",
       headers: { "Content-Type": "application/json", 'Authorization': 'Bearer ' + jwt },
     })
-    // 2. Check "fetchResponse.ok". False means status code was 4xx from the server/controller action
     let token = await fetchResponse.json();
     if (!fetchResponse.ok) throw token;
     return token.node;
@@ -81,7 +81,6 @@ export async function getCampaignData() {
       method: "GET",
       headers: { "Content-Type": "application/json", 'Authorization': 'Bearer ' + jwt },
     })
-    // 2. Check "fetchResponse.ok". False means status code was 4xx from the server/controller action
     let token = await fetchResponse.json();
     if (!fetchResponse.ok) throw token;
     return token.nodes;

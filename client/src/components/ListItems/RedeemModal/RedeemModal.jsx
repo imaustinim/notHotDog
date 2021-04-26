@@ -24,7 +24,8 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
 
 import EditCampaignForm from "./EditCampaignForm";
-
+import { deleteCampaign, getCampaignData } from "../../../utils/businessUtils"
+import { deleteToken, getTokenData } from "../../../utils/userUtils";
 
 import QRCode from "qrcode.react";
 
@@ -40,18 +41,43 @@ function SimpleDialog(props) {
   let xsMatch = useMediaQuery(theme.breakpoints.down("xs"));
   let smMatch = useMediaQuery(theme.breakpoints.up("sm"));
   let mdMatch = useMediaQuery(theme.breakpoints.up("md"));
-  
-  useEffect(() => {
-    if (mdMatch) setQrSize(512);
-    else if (smMatch) setQrSize(400);
-    else if (xsMatch) setQrSize(200);
-  }, [mdMatch, smMatch, xsMatch]);
 
   const [edit, setEdit] = useState(false)
 
   const handleEdit = () => {
     setEdit(!edit)
   }
+
+  const handleDelete = async () => {
+    try {
+      let res;
+      if (props.user.businessName) {
+        res = await deleteCampaign(data.id)
+        getCampaignData().then(data => props.setDataSet(data))
+        props.setSnack({
+          open: true,
+          message: `Successfully deleted ${res.node.name}!`,
+          severity: "success",
+        });
+      } else {
+        res = await deleteToken(data.id)
+        getTokenData().then(data => props.setDataSet(data))
+        props.setSnack({
+          open: true,
+          message: `Successfully deleted ${res.token.name}!`,
+          severity: "success",
+        });
+      }        
+    } catch (err) {
+      console.log(err)
+    }
+  }
+  
+  useEffect(() => {
+    if (mdMatch) setQrSize(512);
+    else if (smMatch) setQrSize(400);
+    else if (xsMatch) setQrSize(200);
+  }, [mdMatch, smMatch, xsMatch]);
 
   return (
     <Dialog
@@ -66,16 +92,19 @@ function SimpleDialog(props) {
             <Avatar alt={data.businessName} src={data.avatar} />
           </ListItemAvatar>
           <ListItemText primary={data.primary} />
+          { props.user.businessName ? (
+            <ListItemIcon>
+              <IconButton onClick={() => handleEdit()} edge="end" aria-label="delete">
+                <EditIcon />
+              </IconButton>
+            </ListItemIcon>
+            ) : <></>
+          }
           <ListItemIcon>
-            <IconButton edge="end" aria-label="delete">
-              <EditIcon onClick={() => handleEdit()} />
+            <IconButton onClick={() => handleDelete()} edge="end" aria-label="delete">
+              <DeleteIcon/>
             </IconButton>
           </ListItemIcon>
-          {/* <ListItemIcon>
-            <IconButton edge="end" aria-label="delete">
-              <DeleteIcon />
-            </IconButton>
-          </ListItemIcon> */}
         </ListItem>
       </DialogTitle>
       { edit ? (
@@ -86,7 +115,7 @@ function SimpleDialog(props) {
             flexDirection='column'
             justifyContent='center'
             alignItems='center'>
-            <EditCampaignForm data={data} setDataSet={props.setDataSet} setSnack={props.setSnack}/>
+            <EditCampaignForm data={data} handleEdit={props.handleEdit} setDataSet={props.setDataSet} setSnack={props.setSnack}/>
           </Box>
         </DialogContent>
         </>
@@ -165,7 +194,14 @@ export default function RedeemModal(props) {
   return (
     <>
       <Box onClick={handleClickOpen}>{props.children}</Box>
-      <SimpleDialog data={props.data} handleEdit={props.handleEdit} URL={props.URL} setDataSet={props.setDataSet} setSnack={props.setSnack} open={open} onClose={handleClose} />
+      <SimpleDialog
+        data={props.data}
+        URL={props.URL}
+        setDataSet={props.setDataSet}
+        setSnack={props.setSnack}
+        user={props.user}
+        open={open}
+        onClose={handleClose} />
     </>
   );
 }

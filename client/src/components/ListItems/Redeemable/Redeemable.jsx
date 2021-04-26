@@ -22,13 +22,14 @@ export default function Redeemable(props) {
   }));
   const classes = useStyles();
 
-  const [edit, setEdit] = useState(false)
-
-  const handleEdit = () => {
-    setEdit(!edit)
-  }
   return (
-    <RedeemModal data={parsedData} URL={props.URL} setDataSet={props.setDataSet} setSnack={props.setSnack} handleEdit={handleEdit}>
+    <RedeemModal
+      data={parsedData}
+      user={props.user}
+      URL={props.URL}
+      setDataSet={props.setDataSet}
+      setSnack={props.setSnack}
+    >
       <ListItem button className={classes.listItem} alignItems='flex-start'>
         <ListItemAvatar>
           <Avatar alt={parsedData.businessName} src={parsedData.avatar} />

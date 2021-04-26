@@ -44,7 +44,6 @@ export default function BusinessDashboard(props) {
   let [dataSet, setDataSet] = useState([])
 
 	useEffect(() => {
-    console.log(props)
 		try {
 			getCampaignData()
       .then(data => {
@@ -61,7 +60,14 @@ export default function BusinessDashboard(props) {
       {dataSet ?
       <List>
         {dataSet.map((item, idx) => (
-          <Redeemable URL={props.URL + "tokens/create/"} key={idx} data={item} setDataSet={setDataSet} setSnack={props.setSnack}/>
+          <Redeemable
+          URL={props.URL + "tokens/create/"}
+          key={idx} 
+          data={item} 
+          setDataSet={setDataSet} 
+          setSnack={props.setSnack}
+          user={props.user}
+          />
         ))} 
       </List>
       : <></>}

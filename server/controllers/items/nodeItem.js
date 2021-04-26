@@ -8,6 +8,7 @@ module.exports = {
   getData,
   createToken,
   redeemToken,
+  deleteToken
 };
 
 async function getData(req, res) {
@@ -147,5 +148,18 @@ async function redeemToken(req, res) {
       message: "Invalid Key",
       redeemed: false,
     };
+  }
+}
+
+async function deleteToken(req, res) {
+  try {
+    const token = await NodeItem.findOneAndDelete({ _id: req.params._id})
+    res.status(200).send({
+      status: 200,
+      message: "Successfully delete token",
+      token: token,
+    })
+  } catch(err) {
+    res.status(400).json(err);
   }
 }
