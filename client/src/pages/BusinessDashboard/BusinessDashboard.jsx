@@ -10,8 +10,6 @@ import Redeemable from "../../components/ListItems/Redeemable/Redeemable";
 const useStyles = makeStyles((theme) => ({
   root: {
     marginTop: theme.spacing(12),
-    width: "100%",
-    backgroundColor: theme.palette.background.paper,
   },
   form: {
     width: "100%", // Fix IE 11 issue.
@@ -41,36 +39,43 @@ const useStyles = makeStyles((theme) => ({
 
 export default function BusinessDashboard(props) {
   const classes = useStyles();
-  let [dataSet, setDataSet] = useState([])
+  let [dataSet, setDataSet] = useState([]);
 
-	useEffect(() => {
-		try {
-			getCampaignData()
-      .then(data => {
-        setDataSet(data)
-      })
-		} catch (err) {
-			console.log(err)
-		}
-	}, [])
+  useEffect(() => {
+    try {
+      getCampaignData().then((data) => {
+        setDataSet(data);
+      });
+    } catch (err) {
+      console.log(err);
+    }
+  }, []);
 
   return (
     <Container className={classes.root}>
-      <CampaignForm className={classes.form} setDataSet={setDataSet} setSnack={props.setSnack} user={props.user} {...props}/>
-      {dataSet ?
-      <List>
-        {dataSet.map((item, idx) => (
-          <Redeemable
-          URL={props.URL + "tokens/create/"}
-          key={idx} 
-          data={item} 
-          setDataSet={setDataSet} 
-          setSnack={props.setSnack}
-          user={props.user}
-          />
-        ))} 
-      </List>
-      : <></>}
+      <CampaignForm
+        className={classes.form}
+        setDataSet={setDataSet}
+        setSnack={props.setSnack}
+        user={props.user}
+        {...props}
+      />
+      {dataSet ? (
+        <List>
+          {dataSet.map((item, idx) => (
+            <Redeemable
+              URL={props.URL + "tokens/create/"}
+              key={idx}
+              data={item}
+              setDataSet={setDataSet}
+              setSnack={props.setSnack}
+              user={props.user}
+            />
+          ))}
+        </List>
+      ) : (
+        <></>
+      )}
     </Container>
   );
 }

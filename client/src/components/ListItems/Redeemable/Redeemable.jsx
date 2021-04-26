@@ -21,6 +21,7 @@ export default function Redeemable(props) {
     },
     listItem: {
       backgroundColor: parsedData.background[mytheme.palette.type],
+      width: "100%",
     },
   }));
   const classes = useStyles();
