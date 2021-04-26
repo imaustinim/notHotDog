@@ -1,23 +1,22 @@
 export function ParseData(data, theme) {
-  console.log(data);
   let startDate = new Date(data.activeDate);
   let endDate = new Date(data.expireDate);
   let parsedData = {
     id: data._id,
-    businessName: data.businessName,
-    avatar: data.avatar,
-    name: data.name,
-    address: data.address,
-    description: data.description,
+    businessName: data._node._business.businessName,
+    avatar: data._node._business.avatar,
+    name: data._node.name,
+    description: data._node.description,
     startDate: startDate,
     endDate: endDate,
     primary: (
       <>
-        {data.name} - {data._node.businessName} - {data._node.type.toUpperCase()}
+        {data._node.name} - {data._node._business.businessName} -{" "}
+        {data._node.type.toUpperCase()}
       </>
     ),
   };
-  switch (data.type) {
+  switch (data._node.type) {
     case "gift card":
       parsedData.background = theme.palette.giftcard;
       parsedData.secondary = (
@@ -26,7 +25,7 @@ export function ParseData(data, theme) {
             2
           )} / $${parseFloat(data.contract.value).toFixed(2)}`}
           <br />
-          <strong>Expires:</strong>
+          Expires:
           {parsedData.endDate.toDateString()}
           <br />
         </>
@@ -49,15 +48,14 @@ export function ParseData(data, theme) {
       break;
     case "coupon":
       parsedData.background = theme.palette.coupon;
+
       if (data.contract.unit === "percent") {
         parsedData.secondary = (
           <>
-            {data.contract.value}% Off
-            <br />
-            <strong>Activated:</strong>
+            Start date:
             {parsedData.startDate.toDateString()}
             <br />
-            <strong>Expires:</strong>
+            End date:
             {parsedData.endDate.toDateString()}
             <br />
           </>
