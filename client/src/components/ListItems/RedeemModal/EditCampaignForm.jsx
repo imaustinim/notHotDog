@@ -95,7 +95,6 @@ export default function EditCampaignForm(props) {
       };
       
       let res = await EditCampaign(formData, props.data.id);
-      setCampaign()
       if (res.status !== 200) {
         throw res;
       } else {
@@ -106,6 +105,7 @@ export default function EditCampaignForm(props) {
         });
         try {
           let data = await getCampaignData()
+          setCampaign()
           props.setDataSet(data)
         } catch (err) {
           console.log(err)

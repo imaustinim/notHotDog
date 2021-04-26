@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const nodeCtrl = require("../controllers/items/node")
-const tokenCtrl = require("../controllers/items/token")
+const nodeItemCtrl = require("../controllers/items/nodeItem")
 const authCtrl = require("../controllers/api/auth");
 const checkLogin = require("../controllers/api/auth").checkLogin;
 
@@ -14,13 +14,16 @@ router.use(checkLogin);
 
 // Nodes
 router.post("/campaigns/create", nodeCtrl.createNode);
-router.get("/campaigns/getData", nodeCtrl.getData);
+router.post("/campaigns/:id/edit", nodeCtrl.editNode);
+router.post("/campaigns/:id/delete", nodeCtrl.deleteNode);
+router.get("/campaigns/getNodes", nodeCtrl.getNodes);
+router.get("/campaigns/:id", nodeCtrl.getNode);
 
 
 // Tokens
-router.get("/tokens/getData", tokenCtrl.getData);
-router.post("/tokens/create/:nodeId", tokenCtrl.createToken);
-router.get("/tokens/redeem/:nodeId", tokenCtrl.redeemToken);
+router.get("/tokens/getData", nodeItemCtrl.getData);
+router.post("/tokens/create/:nodeId", nodeItemCtrl.createToken);
+router.get("/tokens/redeem/:nodeId", nodeItemCtrl.redeemToken);
 
 
 
