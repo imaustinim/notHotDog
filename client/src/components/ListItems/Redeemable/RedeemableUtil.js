@@ -1,6 +1,7 @@
 export function ParseUserData(data, theme) {
   let startDate = new Date(data.activeDate);
   let endDate = new Date(data.expireDate);
+  console.log(data);
   let parsedData = {
     id: data._id,
     businessName: data._node._business.businessName,
@@ -93,7 +94,6 @@ export function ParseUserData(data, theme) {
   }
   return parsedData;
 }
-
 
 export function ParseData(data, theme) {
   console.log(data);

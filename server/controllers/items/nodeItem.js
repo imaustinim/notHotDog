@@ -165,7 +165,9 @@ async function redeemToken(req, res) {
 
 async function deleteToken(req, res) {
   try {
-    const token = await NodeItem.findOneAndDelete({ _id: req.params._id });
+    const token = await NodeItem.findOneAndDelete({
+      _id: req.params.id,
+    }).populate("_node");
     res.status(200).send({
       status: 200,
       message: "Successfully delete token",

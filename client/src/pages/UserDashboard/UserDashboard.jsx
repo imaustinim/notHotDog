@@ -51,9 +51,11 @@ export default function UserDashboard(props) {
             dataSet.map((item, idx) => (
               <Redeemable
                 URL={`${props.URL}/tokens/redeem/`}
-                user={props.user}
                 key={idx}
                 data={item}
+                setDataSet={setDataSet}
+                setSnack={props.setSnack}
+                user={props.user}
               />
             ))
           ) : (
