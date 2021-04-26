@@ -14,6 +14,7 @@ router.use(checkLogin);
 
 // Nodes
 router.post("/campaigns/create", nodeCtrl.createNode);
+router.get("/campaigns/getData", nodeCtrl.getData);
 
 
 // Tokens
