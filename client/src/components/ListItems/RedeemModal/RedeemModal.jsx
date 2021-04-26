@@ -7,8 +7,8 @@ import Dialog from "@material-ui/core/Dialog";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
 import ListItemAvatar from "@material-ui/core/ListItemAvatar";
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import IconButton from '@material-ui/core/IconButton';
+import ListItemIcon from "@material-ui/core/ListItemIcon";
+import IconButton from "@material-ui/core/IconButton";
 import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
@@ -20,8 +20,8 @@ import AccordionSummary from "@material-ui/core/AccordionSummary";
 import AccordionDetails from "@material-ui/core/AccordionDetails";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import Slide from "@material-ui/core/Slide";
-import DeleteIcon from '@material-ui/icons/Delete';
-import EditIcon from '@material-ui/icons/Edit';
+import DeleteIcon from "@material-ui/icons/Delete";
+import EditIcon from "@material-ui/icons/Edit";
 
 import EditCampaignForm from "./EditCampaignForm";
 import { deleteCampaign, getCampaignData } from "../../../utils/businessUtils"
@@ -42,11 +42,11 @@ function SimpleDialog(props) {
   let smMatch = useMediaQuery(theme.breakpoints.up("sm"));
   let mdMatch = useMediaQuery(theme.breakpoints.up("md"));
 
-  const [edit, setEdit] = useState(false)
+  const [edit, setEdit] = useState(false);
 
   const handleEdit = () => {
-    setEdit(!edit)
-  }
+    setEdit(!edit);
+  };
 
   const handleDelete = async () => {
     try {
@@ -107,69 +107,73 @@ function SimpleDialog(props) {
           </ListItemIcon>
         </ListItem>
       </DialogTitle>
-      { edit ? (
+      {edit ? (
         <>
-        <DialogContent>
-          <Box
-            display='flex'
-            flexDirection='column'
-            justifyContent='center'
-            alignItems='center'>
-            <EditCampaignForm data={data} handleEdit={props.handleEdit} setDataSet={props.setDataSet} setSnack={props.setSnack}/>
-          </Box>
-        </DialogContent>
+          <DialogContent>
+            <Box
+              display='flex'
+              flexDirection='column'
+              justifyContent='center'
+              alignItems='center'>
+              <EditCampaignForm
+                data={data}
+                setDataSet={props.setDataSet}
+                setSnack={props.setSnack}
+              />
+            </Box>
+          </DialogContent>
         </>
       ) : (
-      <>
-        <DialogContent>
-          <Box
-            display='flex'
-            flexDirection='column'
-            justifyContent='center'
-            alignItems='center'>
-            <QRCode
-              value={URL}
-              size={qrSize}
-              bgColor={theme.palette.primary.light}
-              fgColor={theme.palette.secondary.dark}
-            />
-          </Box>
-
-          <DialogContentText id='alert-dialog-description'>
-            <>
-              <Box display='flex' justifyContent='center'>
-                <Typography>{data.secondary}</Typography>
-              </Box>
-              {data.description}
-            </>
-          </DialogContentText>
-        </DialogContent>
-        <Accordion>
-          <AccordionSummary
-            expandIcon={<ExpandMoreIcon />}
-            aria-controls='panel1a-content'
-            id='panel1a-header'>
-            <Typography variant='body2' color='textSecondary'>
-              Reveal URL/Code
-            </Typography>
-          </AccordionSummary>
-          <AccordionDetails>
-            <Box display='block' style={{ overflowX: "scroll" }}>
-              <Link href={URL}>
-                <code>{URL}</code>
-              </Link>
-              <Typography color='textSecondary' variant='body2'>
-                <br />
-                Start Date:
-                {data.startDate.toLocaleDateString("en-us")}
-                <br />
-                End Date:
-                {data.endDate.toLocaleDateString("en-us")}
-              </Typography>
+        <>
+          <DialogContent>
+            <Box
+              display='flex'
+              flexDirection='column'
+              justifyContent='center'
+              alignItems='center'>
+              <QRCode
+                value={data.id}
+                size={qrSize}
+                bgColor={theme.palette.primary.light}
+                fgColor={theme.palette.secondary.dark}
+              />
             </Box>
-          </AccordionDetails>
-        </Accordion>
-      </>
+
+            <DialogContentText id='alert-dialog-description'>
+              <>
+                <Box display='flex' justifyContent='center'>
+                  <Typography>{data.secondary}</Typography>
+                </Box>
+                {data.description}
+              </>
+            </DialogContentText>
+          </DialogContent>
+          <Accordion>
+            <AccordionSummary
+              expandIcon={<ExpandMoreIcon />}
+              aria-controls='panel1a-content'
+              id='panel1a-header'>
+              <Typography variant='body2' color='textSecondary'>
+                Reveal URL/Code
+              </Typography>
+            </AccordionSummary>
+            <AccordionDetails>
+              <Box display='block' style={{ overflowX: "scroll" }}>
+                <Link href={data.address}>
+                  <code>{data.address}</code>
+                </Link>
+                <Typography color='textSecondary' variant='body2'>
+                  <br />
+                  Start Date:
+                  {data.startDate.toLocaleDateString("en-us")}
+                  <br />
+                  End Date:
+                  {data.endDate.toLocaleDateString("en-us")}
+                </Typography>
+              </Box>
+            </AccordionDetails>
+          </Accordion>
+        </>
       )}
       <DialogActions>
         <Button onClick={onClose} color='primary' autoFocus>

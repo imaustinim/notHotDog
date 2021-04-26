@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
-const nodeCtrl = require("../controllers/items/node")
-const nodeItemCtrl = require("../controllers/items/nodeItem")
+const nodeCtrl = require("../controllers/items/node");
+const nodeItemCtrl = require("../controllers/items/nodeItem");
 const authCtrl = require("../controllers/api/auth");
 const checkLogin = require("../controllers/api/auth").checkLogin;
 
@@ -20,7 +20,7 @@ router.get("/campaigns/:id", nodeCtrl.getNode);
 // Tokens
 router.get("/tokens/getData", nodeItemCtrl.getData);
 router.get("/tokens/:id/delete", nodeItemCtrl.deleteToken);
-router.post("/tokens/create/:nodeId", nodeItemCtrl.createToken);
+router.post("/tokens/create/:nodeId", nodeItemCtrl.create);
 router.get("/tokens/redeem/:nodeId", nodeItemCtrl.redeemToken);
 
 router.get("/test", function (req, res, next) {

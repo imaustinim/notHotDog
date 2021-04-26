@@ -5,8 +5,8 @@ const Contract = require("../../models/classes/contract");
 const { createContract } = require("../../models/classes/contract");
 
 async function createNode(req, res) {
-  const contract = createContract(req.body)
-  let business = await Business.findById(req.user._id)
+  const contract = createContract(req.body);
+  let business = await Business.findById(req.user._id);
   const campaign = await Node.create({
     _business: business._id,
     name: req.body.campaignName,
@@ -18,35 +18,35 @@ async function createNode(req, res) {
     contract: contract,
     activeDate: req.body.activeDate,
     expireDate: req.body.expireDate,
-    nodeItems: []
-  })
+    nodeItems: [],
+  });
 
-  business.nodes.push(campaign._id)
-  business.save()
+  business.nodes.push(campaign._id);
+  business.save();
 
   res.status(200).send({
     status: 200,
     message: "Successfully created node",
-    campaign: campaign
-  })
+    campaign: campaign,
+  });
 }
 
 async function editNode(req, res) {
-  let node = await Node.findById(req.params.id)
-  node.name = req.body.campaignName
-  node.description = req.body.description
+  let node = await Node.findById(req.params.id);
+  node.name = req.body.campaignName;
+  node.description = req.body.description;
   // campaign.initialQuantity = req.body.initialQuantity,
   // campaign.remainingQuantity = req.body.remainingQuantity,
-  node.activeDate = req.body.activeDate
-  node.expireDate = req.body.expireDate
-  node.contract = createContract(req.body)
-  node.save()
+  node.activeDate = req.body.activeDate;
+  node.expireDate = req.body.expireDate;
+  node.contract = createContract(req.body);
+  node.save();
 
   res.status(200).send({
     status: 200,
     message: "Successfully edited campaign",
-    campaign: node
-  })
+    campaign: node,
+  });
 }
 
 async function deleteNode(req, res) {
@@ -61,23 +61,23 @@ async function deleteNode(req, res) {
 
 async function getNodes(req, res) {
   try {
-    const business = await Business.findById(req.user._id)
-    const nodes = await Node.find({ _business: business._id })
+    const business = await Business.findById(req.user._id);
+    const nodes = await Node.find({ _business: business._id });
     res.status(200).send({
-      nodes: nodes
-    })
-  } catch(err) {
+      nodes: nodes,
+    });
+  } catch (err) {
     res.status(400).json(err);
   }
 }
 
 async function getNode(req, res) {
   try {
-    const node = await Node.findById(req.params.id)
+    const node = await Node.findById(req.params.id);
     res.status(200).send({
-      node: node
-    })
-  } catch(err) {
+      node: node,
+    });
+  } catch (err) {
     res.status(400).json(err);
   }
 }
