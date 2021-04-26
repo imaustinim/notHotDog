@@ -11,7 +11,10 @@ import { ParseData, ParseUserData } from "./RedeemableUtil";
 
 export default function Redeemable(props) {
   const mytheme = useTheme();
-  let parsedData = ParseData(props.data, mytheme);
+
+  let parsedData = props.user.businessName
+    ? ParseData(props.data, mytheme)
+    : ParseUserData(props.data, mytheme);
   const useStyles = makeStyles((theme) => ({
     inline: {
       display: "inline",
@@ -28,8 +31,7 @@ export default function Redeemable(props) {
       user={props.user}
       URL={props.URL}
       setDataSet={props.setDataSet}
-      setSnack={props.setSnack}
-    >
+      setSnack={props.setSnack}>
       <ListItem button className={classes.listItem} alignItems='flex-start'>
         <ListItemAvatar>
           <Avatar alt={parsedData.businessName} src={parsedData.avatar} />

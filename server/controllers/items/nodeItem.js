@@ -2,18 +2,18 @@ const User = require("../../models/user");
 const Node = require("../../models/node");
 const NodeItem = require("../../models/nodeItem");
 const Contract = require("../../models/classes/contract");
+var ObjectID = require("mongodb").ObjectID;
 
 module.exports = {
   getData,
   create,
   redeemToken,
-  deleteToken
+  deleteToken,
 };
 
 async function getData(req, res) {
   try {
-    const tokens = await NodeItem.find({ _user: req.user._id })
-    .populate({
+    const tokens = await NodeItem.find({ _user: req.user._id }).populate({
       path: "_node",
       populate: {
         path: "_business",
@@ -35,6 +35,7 @@ async function isNodeIdValid(nodeId) {
       throw "nodeId provided is not a valid address";
     } else {
       let node = await Node.findById(nodeId);
+      console.log(node);
       let now = new Date();
       if (node.remainingQuantity === 0) {
         throw "Sorry, all of this token has been claimed!";
@@ -54,6 +55,7 @@ async function isNodeIdValid(nodeId) {
 async function create(req, res) {
   try {
     let node = await isNodeIdValid(req.params.nodeId);
+    console.log(node);
     if (node.constructor.name === "Error") throw node;
 
     // Edge Case [ No remaining node items ]
@@ -163,13 +165,13 @@ async function redeemToken(req, res) {
 
 async function deleteToken(req, res) {
   try {
-    const token = await NodeItem.findOneAndDelete({ _id: req.params._id})
+    const token = await NodeItem.findOneAndDelete({ _id: req.params._id });
     res.status(200).send({
       status: 200,
       message: "Successfully delete token",
       token: token,
-    })
-  } catch(err) {
+    });
+  } catch (err) {
     res.status(400).json(err);
   }
 }
