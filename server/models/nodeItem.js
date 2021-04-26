@@ -4,7 +4,9 @@ const nodeItemSchema = new mongoose.Schema({
   _node: {
     type: mongoose.Schema.Types.ObjectId, ref: "Node",
   },
-  key: String,
+  _user: {
+    type: mongoose.Schema.Types.ObjectId, ref: "User",
+  },
   amount: Number,
   type: {
     type: String,
@@ -29,4 +31,4 @@ const nodeItemSchema = new mongoose.Schema({
   timestamps: true,
 })
 
-module.exports = mongoose.model("NodeItem", nodeItemSchema);
+module.exports = mongoose.model("Node Item", nodeItemSchema);

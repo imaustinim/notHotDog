@@ -18,6 +18,7 @@ router.get("/campaigns/getData", nodeCtrl.getData);
 
 
 // Tokens
+router.get("/tokens/getData", tokenCtrl.getData);
 router.post("/tokens/create/:nodeId", tokenCtrl.createToken);
 router.get("/tokens/redeem/:nodeId", tokenCtrl.redeemToken);
 

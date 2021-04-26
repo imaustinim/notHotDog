@@ -1,17 +1,28 @@
-const generator = require("generate-password");
 
 const User = require("../../models/user");
 const Node = require("../../models/node");
 const NodeItem = require("../../models/nodeItem");
-const Token = require("../../models/token");
 const Contract = require("../../models/classes/contract");
 
 module.exports = {
+  getData,
   createToken,
   redeemToken,
 };
 
-function createToken(req, res) {
+async function getData(req, res) {
+  try {
+    const user = await User.findById(req.user._id)
+    const tokens = await NodeItem.find({ _user: user._id })
+    res.status(200).send({
+      tokens: tokens
+    })
+  } catch(err) {
+    res.status(400).json(err);
+  }
+}
+
+async function createToken(req, res) {
   let node = Node.findOne({ id: req.params.nodeId });
 
   // Edge Case [ No remaining node items ]
@@ -21,16 +32,6 @@ function createToken(req, res) {
       node: node,
     });
   }
-
-  // Generate Key
-  const key = node.remainingQuantity > 0 ? (key = generator.generate({
-          length: 16,
-          numbers: true,
-          symbols: true,
-          exclude: "0",
-          strict: true,
-        })) : null;
-
 
   // Create & Add Node Item to Node Model
   let activeDate, expireDate;
@@ -44,28 +45,17 @@ function createToken(req, res) {
     if (expireDate > node.expireDate) expireDate = node.expireDate;
   }
 
-  const contract = Contract.createContract(req.body);
+  const contract = await Contract.createContract(req.body);
+  const user = await User.findById(req.user._id)
   const nodeItem = NodeItem.create({
     _node: node,
-    key: key || null,
+    _user: user,
     redeemed: false,
     contract: contract,
     activeDate: activeDate,
     expireDate: expireDate,
   });
   node.nodeItems.push(nodeItem);
-
-  // Create & Add Token to User Model
-  let user = User.findOne({ id: req.user.id });
-
-  const token = Token.create({
-    _user: user,
-    address: node.address,
-    key: key || null,
-    avatar: req.body.token.avatar,
-    redeemed: false,
-  });
-  user.tokens.push(token);
 
   res.send({
     message: "Successfully created added Token",
@@ -74,8 +64,8 @@ function createToken(req, res) {
 }
 
 async function redeemToken(req, res) {
-  let node = Node.findOne({ id: req.params.nodeId })
-  let token = Token.findOne({ id: req.body.tokenId })
+  let node = Node.findById(req.params.nodeId)
+  let nodeItem = nodeItem.findById(req.body.tokenId)
   const now = new Date()
   
   // Check 1: Token exists and key is valid
@@ -88,17 +78,14 @@ async function redeemToken(req, res) {
           message: "Campaign not yet started",
           redeemed: false,
         })
-        return
       } else if (node.expireDate < now) {
         throw({
           checkFailed: 2,
           message: "Campaing ended",
           redeemed: false
         })
-        return
       }
-
-    await node.findOne({ "nodeItems.key" : token.key })
+    await node.findOne({ "nodeItems._id" : nodeItem._id })
     .then(nodeItem => {
       // Check 3: Check if token is redeemed
       if (nodeItem.redeemed) {
@@ -117,14 +104,12 @@ async function redeemToken(req, res) {
             message: "Can't redeem token yet",
             redeemed: false,
           });
-          return;
         } else if (nodeItem.expireDate > now) {
           throw({
             checkFailed: 4,
             message: "Token expired",
             redeemed: false,
           });
-          return;
         }
       }
 

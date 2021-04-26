@@ -1,27 +1,21 @@
 import React from "react";
-import CssBaseline from "@material-ui/core/CssBaseline";
 import Container from "@material-ui/core/Container";
 import List from "@material-ui/core/List";
-
 import { makeStyles } from "@material-ui/core/styles";
-
 import { useState, useEffect } from "react";
-import { Link as RouterLink, useParams, useHistory } from "react-router-dom";
-
 import { getCampaignData } from "../../utils/businessUtils";
 import CampaignForm from "./CampaignForm"
 import Redeemable from "../../components/ListItems/Redeemable/Redeemable";
 
 const useStyles = makeStyles((theme) => ({
-  paper: {
-    marginTop: theme.spacing(8),
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
+  root: {
+    marginTop: theme.spacing(12),
+    width: "100%",
+    backgroundColor: theme.palette.background.paper,
   },
   form: {
     width: "100%", // Fix IE 11 issue.
-    marginTop: theme.spacing(3),
+    marginTop: theme.spacing(12),
   },
   cardcontent: {
     "&:last-child": {
@@ -47,8 +41,6 @@ const useStyles = makeStyles((theme) => ({
 
 export default function BusinessDashboard(props) {
   const classes = useStyles();
-  const history = useHistory();
-  const { type } = useParams();
 	
   let [dataSet, setDataSet] = useState([])
 
@@ -62,16 +54,13 @@ export default function BusinessDashboard(props) {
 	}, [])
 
   return (
-    <Container component='main' maxWidth='sm'>
-      <CssBaseline />
-      <div className={classes.paper}>
-				<CampaignForm setDataSet={setDataSet} setSnack={props.setSnack} user={props.user} {...props}/>
-				<List >
+    <Container className={classes.root}>
+      <CampaignForm className={classes.form} setDataSet={setDataSet} setSnack={props.setSnack} user={props.user} {...props}/>
+      <List>
         {dataSet.map((item, idx) => (
-        	<Redeemable key={idx} data={item} />
+          <Redeemable key={idx} data={item} />
         ))}
-      	</List>
-      </div>
+      </List>
     </Container>
   );
 }
