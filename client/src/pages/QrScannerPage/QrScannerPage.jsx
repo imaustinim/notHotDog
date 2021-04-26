@@ -16,7 +16,6 @@ import QrReader from "react-qr-reader";
 import FlipCameraIosIcon from "@material-ui/icons/FlipCameraIos";
 import RedoIcon from "@material-ui/icons/Redo";
 import * as QrScannerUtil from "./QrScannerUtil";
-import { propTypes } from "qrcode.react";
 
 export default function QrScanner(props) {
   const useStyles = makeStyles((theme) => ({
@@ -43,14 +42,18 @@ export default function QrScanner(props) {
     else setFacingMode("environment");
   };
 
-  let handleSubmit = () => {
-    if (result) {
-      QrScannerUtil.checkCode(result);
-    } else {
+  let handleSubmit = async () => {
+    try {
+      if (result) {
+        let res = await QrScannerUtil.checkCode(result);
+        if (res.constructor.name === "Error") throw res;
+      }
+    } catch (err) {
+      console.log("err", err);
       props.setSnack({
         open: true,
-        message: `Please scan or input a barcode!`,
-        severity: "warning",
+        message: err.message,
+        severity: "error",
       });
     }
   };

@@ -35,24 +35,24 @@ const useStyles = makeStyles((theme) => ({
 export default function UserDashboard(props) {
   const classes = useStyles();
 
-  let [dataSet, setDataSet] = useState([])
+  let [dataSet, setDataSet] = useState([]);
 
-	useEffect(async () => {
-		try {
-			let data = await getTokenData()
-			setDataSet(data)
-      console.log(data)
-		} catch (err) {
-			console.log(err)
-		}
-	}, [])
+  useEffect(() => {
+    try {
+      getTokenData().then((res) => setDataSet(res));
+    } catch (err) {
+      console.log(err);
+    }
+  }, []);
 
   return (
     <Container className={classes.root}>
       <List className={classes.root}>
-        {dataSet.map((item, idx) => (
-          <Redeemable key={idx} data={item} />
-        ))}
+        {dataSet.length ? (
+          dataSet.map((item, idx) => <Redeemable key={idx} data={item} />)
+        ) : (
+          <>No Campaigns Yet! Go add one, ya dork</>
+        )}
       </List>
     </Container>
   );

@@ -4,7 +4,7 @@ import List from "@material-ui/core/List";
 import { makeStyles } from "@material-ui/core/styles";
 import { useState, useEffect } from "react";
 import { getCampaignData } from "../../utils/businessUtils";
-import CampaignForm from "./CampaignForm"
+import CampaignForm from "./CampaignForm";
 import Redeemable from "../../components/ListItems/Redeemable/Redeemable";
 
 const useStyles = makeStyles((theme) => ({
@@ -19,8 +19,8 @@ const useStyles = makeStyles((theme) => ({
   },
   cardcontent: {
     "&:last-child": {
-      paddingBottom: theme.spacing(1)
-    }
+      paddingBottom: theme.spacing(1),
+    },
   },
   submit: {
     margin: theme.spacing(3, 0, 2),
@@ -28,38 +28,45 @@ const useStyles = makeStyles((theme) => ({
   expand: {
     display: "inline-block",
     verticalAlign: "middle",
-    transform: 'rotate(0deg)',
-    marginLeft: 'auto',
-    transition: theme.transitions.create('transform', {
+    transform: "rotate(0deg)",
+    marginLeft: "auto",
+    transition: theme.transitions.create("transform", {
       duration: theme.transitions.duration.shortest,
     }),
   },
   expandOpen: {
-    transform: 'rotate(180deg)',
+    transform: "rotate(180deg)",
   },
 }));
 
 export default function BusinessDashboard(props) {
   const classes = useStyles();
-	
-  let [dataSet, setDataSet] = useState([])
 
-	useEffect(async () => {
-		try {
-			let data = await getCampaignData()
-			setDataSet(data)
-		} catch (err) {
-			console.log(err)
-		}
-	}, [])
+  let [dataSet, setDataSet] = useState([]);
+
+  useEffect(() => {
+    try {
+      getCampaignData().then((res) => setDataSet(res));
+    } catch (err) {
+      console.log(err);
+    }
+  }, []);
 
   return (
     <Container className={classes.root}>
-      <CampaignForm className={classes.form} setDataSet={setDataSet} setSnack={props.setSnack} user={props.user} {...props}/>
+      <CampaignForm
+        className={classes.form}
+        setDataSet={setDataSet}
+        setSnack={props.setSnack}
+        user={props.user}
+        {...props}
+      />
       <List>
-        {dataSet.map((item, idx) => (
-          <Redeemable key={idx} data={item} setSnack={props.setSnack}/>
-        ))}
+        {dataSet.length ? (
+          dataSet.map((item, idx) => <Redeemable key={idx} data={item} />)
+        ) : (
+          <>No Campaigns Yet! Go add one, ya dork</>
+        )}
       </List>
     </Container>
   );

@@ -1,50 +1,54 @@
-
 const User = require("../../models/user");
 const Node = require("../../models/node");
 const NodeItem = require("../../models/nodeItem");
 const Contract = require("../../models/classes/contract");
-const ObjectID = require("mongodb").Types.ObjectID;
+const ObjectID = require("mongodb").ObjectID;
 const node = require("../../models/node");
 
 module.exports = {
   getData,
-  createToken,
+  create,
   redeemToken,
 };
 
 async function getData(req, res) {
   try {
-    const tokens = await NodeItem.find({ _user: req.user._id })
+    const tokens = await NodeItem.find({ _user: req.user._id });
     res.status(200).send({
-      tokens: tokens
-    })
-  } catch(err) {
+      tokens: tokens,
+    });
+  } catch (err) {
     res.status(400).json(err);
   }
 }
 
-function isNodeIdValid(nodeId) {
+async function isNodeIdValid(nodeId) {
   try {
-    if (!ObjectID.isValid(req.params.nodeId)) {
-      throw new Error("nodeId provided is not a valid format");
+    if (!ObjectID.isValid(nodeId)) {
+      throw "nodeId provided is not a valid format";
     } else if (new ObjectId(nodeId).toString !== nodeId) {
-      throw new Error("nodeId provided is not a valid address");
+      throw "nodeId provided is not a valid address";
     } else {
-      let node = Node.findOne({ id: nodeId });
+      let node = await Node.findOne({ id: nodeId });
       if (node.remainingQuantity <= 0) {
-        throw new Error("Sorry, all of this token has been claimed!");
+        throw "Sorry, all of this token has been claimed!";
       }
       return node;
     }
   } catch (err) {
-    console.log(err);
-    return err;
+    return new Error(err);
   }
 }
-
-
-
-function createToken(req, res) {
+async function create(req, res) {
+  try {
+    let node = await isNodeIdValid(req.params.nodeId);
+    if (node.constructor.name === "Error") throw node;
+    res.send("okie doke");
+  } catch (err) {
+    res.status(400).send(err.message);
+  }
+}
+async function createToken(req, res) {
   let node = Node.findOne({ id: req.params.nodeId });
 
   // Edge Case [ No remaining node items ]
@@ -69,7 +73,7 @@ function createToken(req, res) {
   }
 
   const contract = await Contract.createContract(req.body);
-  const user = await User.findById(req.user._id)
+  const user = await User.findById(req.user._id);
   const nodeItem = NodeItem.create({
     _node: node,
     _user: user,
@@ -87,29 +91,28 @@ function createToken(req, res) {
 }
 
 async function redeemToken(req, res) {
-  let node = Node.findById(req.params.nodeId)
-  let nodeItem = nodeItem.findById(req.body.tokenId)
-  const now = new Date()
-  
+  let node = Node.findById(req.params.nodeId);
+  let nodeItem = nodeItem.findById(req.body.tokenId);
+  const now = new Date();
+
   // Check 1: Token exists and key is valid
   try {
-      // Check 2: Current date is between node dates
-      if (node.activeDate >= now && node.expireDate <= now) {
-      } else if (node.activeDate < now) {
-        throw({
-          checkFailed: 2,
-          message: "Campaign not yet started",
-          redeemed: false,
-        })
-      } else if (node.expireDate < now) {
-        throw({
-          checkFailed: 2,
-          message: "Campaing ended",
-          redeemed: false
-        })
-      }
-    await node.findOne({ "nodeItems._id" : nodeItem._id })
-    .then(nodeItem => {
+    // Check 2: Current date is between node dates
+    if (node.activeDate >= now && node.expireDate <= now) {
+    } else if (node.activeDate < now) {
+      throw {
+        checkFailed: 2,
+        message: "Campaign not yet started",
+        redeemed: false,
+      };
+    } else if (node.expireDate < now) {
+      throw {
+        checkFailed: 2,
+        message: "Campaing ended",
+        redeemed: false,
+      };
+    }
+    await node.findOne({ "nodeItems._id": nodeItem._id }).then((nodeItem) => {
       // Check 3: Check if token is redeemed
       if (nodeItem.redeemed) {
         throw {
