@@ -1,11 +1,9 @@
 const express = require("express");
 const router = express.Router();
-const nodeCtrl = require("../controllers/items/node")
-const tokenCtrl = require("../controllers/items/token")
+const nodeCtrl = require("../controllers/items/node");
+const tokenCtrl = require("../controllers/items/nodeItem");
 const authCtrl = require("../controllers/api/auth");
 const checkLogin = require("../controllers/api/auth").checkLogin;
-
-
 
 router.post("/signup", authCtrl.create);
 router.post("/login", authCtrl.login);
@@ -16,15 +14,10 @@ router.use(checkLogin);
 router.post("/campaigns/create", nodeCtrl.createNode);
 router.get("/campaigns/getData", nodeCtrl.getData);
 
-
 // Tokens
 router.get("/tokens/getData", tokenCtrl.getData);
-router.post("/tokens/create/:nodeId", tokenCtrl.createToken);
+router.get("/tokens/create/:nodeId", tokenCtrl.createToken);
 router.get("/tokens/redeem/:nodeId", tokenCtrl.redeemToken);
-
-
-
-router.use(checkLogin);
 
 router.get("/test", function (req, res, next) {
   console.log(req.user);
