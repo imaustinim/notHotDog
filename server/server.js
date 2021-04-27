@@ -6,6 +6,7 @@ const logger = require("morgan");
 const dotenv = require("dotenv");
 const session = require("express-session");
 const MongoDBStore = require("connect-mongodb-session")(session);
+var http = require("http");
 const app = express();
 // Config
 dotenv.config({ path: "./config/config.env" });
@@ -43,5 +44,8 @@ app.listen(port, function () {
 app.get("/*", function (req, res) {
   res.sendFile(path.join(__dirname, "..", "client", "build", "index.html"));
 });
+var server = http.createServer(app);
+var io = require("./config/socketio");
+io.attach(server);
 
 module.exports = app;
