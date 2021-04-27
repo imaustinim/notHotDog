@@ -12,6 +12,16 @@ import MenuItem from '@material-ui/core/MenuItem';
 import Select from '@material-ui/core/Select';
 import { makeStyles } from "@material-ui/core/styles";
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import OutlinedInput from '@material-ui/core/OutlinedInput';
+import InputAdornment from '@material-ui/core/InputAdornment';
+
+
+import FormatAlignLeftIcon from '@material-ui/icons/FormatAlignLeft';
+import FormatAlignCenterIcon from '@material-ui/icons/FormatAlignCenter';
+import FormatAlignRightIcon from '@material-ui/icons/FormatAlignRight';
+import FormatAlignJustifyIcon from '@material-ui/icons/FormatAlignJustify';
+import ToggleButton from '@material-ui/lab/ToggleButton';
+import ToggleButtonGroup from '@material-ui/lab/ToggleButtonGroup';
 
 import clsx from 'clsx';
 import React from "react";
@@ -77,6 +87,7 @@ export default function CampaignForm(props) {
   let [quantity, setQuantity] = useState("");
   let [value, setValue] = useState("");
   let [unit, setUnit] = useState("");
+  let [symbol, setSymbol] = useState("$");
   let [access, setAccess] = useState("");
   let [numUses, setNumUses] = useState("");
   
@@ -225,7 +236,7 @@ export default function CampaignForm(props) {
                       }}
                     />
                   </Grid>
-                  <Grid item xs={6} sm={6}>
+                  <Grid item xs={12} sm={6}>
                     <TextField
                       fullWidth
                       id="activeDate"
@@ -240,7 +251,7 @@ export default function CampaignForm(props) {
                       }
                     />
                   </Grid>
-                  <Grid item xs={6} sm={6}>
+                  <Grid item xs={12} sm={6}>
                     <TextField
                       fullWidth
                       id="expireDate"
@@ -255,7 +266,7 @@ export default function CampaignForm(props) {
                       }
                     />
                   </Grid>
-                  <Grid item xs={12} sm={6}>
+                  <Grid item xs={6} sm={6}>
                     <TextField
                       variant='outlined'
                       required
@@ -272,36 +283,21 @@ export default function CampaignForm(props) {
                       }}
                     />
                   </Grid>
-                  <Grid item xs={12} sm={6}>
-                    <TextField
-                      variant='outlined'
-                      required
-                      fullWidth
-                      id='numUses'
-                      label='Number of Uses'
-                      name='numUses'
-                      type="number"
-                      helperText="Use -1 for unlimited"
-                      InputProps={{ inputProps: { min: -1 } }}
-                      value={numUses}
-                      onChange={(e) => {
-                        setNumUses(e.target.value);
-                      }}
-                    />
-                  </Grid>
                   {campaignType === "gift card" ? (
-                    <Grid item xs={12} sm={6}>
+                    <Grid item xs={6} sm={6}>
                       <TextField
                         variant='outlined'
                         required
                         fullWidth
-                        id='value'
-                        label='Value'
-                        name='value'
+                        id="outlined-adornment-amount"
                         value={value}
-                        onChange={(e) => {
-                          setValue(e.target.value);
+                        label="Amount"
+                        type="number"
+                        InputProps={{ 
+                          inputProps: { min: 0 }, 
+                          startAdornment: <InputAdornment position="start">{symbol}</InputAdornment>
                         }}
+                        onChange={(e) => {setValue(e.target.value)}}
                       />
                     </Grid>
                   ) : (
@@ -309,38 +305,68 @@ export default function CampaignForm(props) {
                   )}
                   {campaignType === "coupon" ? (
                     <>
-                    <Grid item xs={8} sm={8}>
+                    <Grid item xs={6} sm={6}>
                       <TextField
                         variant='outlined'
                         required
                         fullWidth
-                        id='value'
-                        label='Value'
-                        name='value'
-                        value={value}
+                        id='numUses'
+                        label='Number of Uses'
+                        name='numUses'
+                        type="number"
+                        helperText="Use -1 for unlimited"
+                        InputProps={{ inputProps: { min: -1 } }}
+                        value={numUses}
                         onChange={(e) => {
-                          setValue(e.target.value);
+                          setNumUses(e.target.value);
                         }}
                       />
                     </Grid>
-                    <Grid item xs={4} sm={4}>
+                    <Grid item xs={6} sm={6}>
                       <TextField
+                        variant='outlined'
                         required
+                        fullWidth
+                        id="outlined-adornment-amount"
+                        value={value}
+                        label="Amount"
+                        type="number"
+                        InputProps={{ 
+                          inputProps: { min: 0 }, 
+                          startAdornment: <InputAdornment position="start">{symbol}</InputAdornment>
+                        }}
+                        onChange={(e) => {setValue(e.target.value)}}
+                      />
+                    </Grid>
+                    <Grid item xs={6} sm={6}>
+                      <TextField
                         fullWidth
                         id="unit"
                         select
                         label="Unit"
                         value={unit}
+                        defaultValue={unit}
                         onChange={(e) => {
                           setUnit(e.target.value)
+                          if (e.target.value === "percent") {
+                            setSymbol("%")
+                          } else {
+                            setSymbol("$")
+                          }
                         }}
                         variant="outlined"
                       >
-                        {symbols.map((option) => (
-                          <MenuItem key={option.value} value={option.value}>
-                            {option.label}
-                          </MenuItem>
-                        ))}
+                        {symbols.map((option) => {
+                          return option.label === "$" ? (
+                            <MenuItem selected key={option.label} value={option.value}>
+                             {option.label}
+                            </MenuItem>
+                            ) :
+                            <MenuItem selected key={option.label} value={option.value}>
+                              {option.label}
+                            </MenuItem>
+                          }
+                        )}
                       </TextField>
                     </Grid>
                     </>
@@ -349,6 +375,23 @@ export default function CampaignForm(props) {
                   )}
                   {campaignType === "ticket" ? (
                     <>
+                    <Grid item xs={6} sm={6}>
+                      <TextField
+                        variant='outlined'
+                        required
+                        fullWidth
+                        id='numUses'
+                        label='Number of Uses'
+                        name='numUses'
+                        type="number"
+                        helperText="Use -1 for unlimited"
+                        InputProps={{ inputProps: { min: -1 } }}
+                        value={numUses}
+                        onChange={(e) => {
+                          setNumUses(e.target.value);
+                        }}
+                      />
+                    </Grid>
                     <Grid item xs={6} sm={6}>
                       <TextField
                         variant='outlined'

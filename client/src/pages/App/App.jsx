@@ -22,7 +22,6 @@ import LoadingPage from "../../components/LoadingPage/LoadingPage";
 import { getUser, checkExp } from "../../utils/authUtils";
 
 function App() {
-  const URL="http://localhost:3000/api/"
   let [user, setUser] = useState(null);
   let history = useHistory();
 
@@ -65,17 +64,17 @@ function App() {
       },
       type: darkMode ? "dark" : "light",
       secondary: {
-        main: "#000080",
+        main: "#3D348B",
         light: "#2F60E5",
-        dark: "#102F85",
+        dark: "#3D348B",
       },
       primary: {
-        main: "#F0A202",
-        light: "#FDBB36",
+        main: "#FFE066",
+        light: "#FFE066",
         dark: "#B27702",
       },
       error: {
-        main: "#d92110",
+        main: "#F25F5C",
         light: "#F14E3F",
         dark: "#A4190C",
       },
@@ -90,7 +89,7 @@ function App() {
         dark: "#CDF247",
       },
       success: {
-        main: "#85FFC7",
+        main: "#70C1B3",
         light: "#A3FFD4",
         dark: "#24FF99",
       },

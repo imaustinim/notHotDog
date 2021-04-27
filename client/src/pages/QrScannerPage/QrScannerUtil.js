@@ -2,7 +2,7 @@ export let checkCode = async (code) => {
   try {
     let jwt = localStorage.getItem("token");
     let url = `${window.location.protocol}//${window.location.hostname}:${window.location.port}/api/tokens/create/${code}`;
-
+    console.log(code)
     let options = {
       method: "GET",
       headers: {
