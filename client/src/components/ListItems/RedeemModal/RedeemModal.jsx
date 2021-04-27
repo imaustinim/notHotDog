@@ -165,18 +165,12 @@ function SimpleDialog(props) {
               </Typography>
             </AccordionSummary>
             <AccordionDetails>
-              <Box display='block' style={{ overflowX: "scroll" }}>
-                <code>{data.id}</code>
-
-                <Typography color='textSecondary' variant='body2'>
-                  <br />
-                  Start Date:
-                  {data.startDate.toLocaleDateString("en-us")}
-                  <br />
-                  End Date:
-                  {data.endDate.toLocaleDateString("en-us")}
-                </Typography>
-              </Box>
+              <code>{data.id}</code>&nbsp;&nbsp;&nbsp;
+              <Typography color='textSecondary' variant='body2'>
+                Start Date:
+                {data.startDate.toLocaleDateString("en-us")} | End Date:
+                {data.endDate.toLocaleDateString("en-us")}
+              </Typography>
             </AccordionDetails>
           </Accordion>
         </>
