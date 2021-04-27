@@ -198,7 +198,7 @@ export default function RedeemModal(props) {
   return (
     <>
       <Box onClick={handleClickOpen}>{props.children}</Box>
-      <SimpleDialog
+      {/* <SimpleDialog
         handleEdit={handleEdit}
         edit={edit}
         data={props.data}
@@ -208,7 +208,7 @@ export default function RedeemModal(props) {
         user={props.user}
         open={open}
         onClose={handleClose}
-      />
+      /> */}
     </>
   );
 }

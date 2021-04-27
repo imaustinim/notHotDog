@@ -36,8 +36,8 @@ export function ParseData(data, theme) {
 function createMessage(data, theme, parsedData) {
   parsedData.primary = (
     <>
-      {parsedData.name} - {parsedData.businessName} -{" "}
-      {data.contract.type.toUpperCase()}
+      {parsedData.name} - {parsedData.businessName}
+       {/* - {data.contract.type.toUpperCase()} */}
     </>
   );
   switch (data.contract.type) {
@@ -48,27 +48,36 @@ function createMessage(data, theme, parsedData) {
           {`$${parseFloat(data.contract.remainingValue).toFixed(
             2
           )} / $${parseFloat(data.contract.value).toFixed(2)}`}
-          <br />
-          <strong>Expires:</strong>
-          {parsedData.endDate.toDateString()}
-          <br />
         </>
       );
+      parsedData.date = (
+        <>
+          <strong>Expires:</strong>{" "}
+          {parsedData.endDate.toDateString()}
+        </>
+      )
       break;
     case "ticket":
       parsedData.background = theme.palette.ticket;
       parsedData.secondary = (
         <>
-          <strong>Start date:</strong>
-          {parsedData.startDate.toDateString()} @
-          {parsedData.startDate.toLocaleTimeString("en-us")}
-          <br />
-          <strong>End date:</strong>
-          {parsedData.endDate.toDateString()} @
-          {parsedData.endDate.toLocaleTimeString("en-us")}
-          <br />
+          
         </>
       );
+      parsedData.date = (
+        <>
+          <strong>Start date: </strong>{" "}
+          {parsedData.startDate.toDateString()} @ {" "}
+          {parsedData.startDate.toLocaleTimeString("en-us").split(":00")[0]}
+          {parsedData.startDate.toLocaleTimeString("en-us").split(":00")[1]}
+          <br />
+          <strong>End date: </strong>{" "}
+          {parsedData.endDate.toDateString()} @ {" "}
+          {parsedData.endDate.toLocaleTimeString("en-us").split(":00")[0]}
+          {parsedData.endDate.toLocaleTimeString("en-us").split(":00")[1]}
+          <br />
+        </>
+      )
       break;
     case "coupon":
       parsedData.background = theme.palette.coupon;
@@ -76,44 +85,53 @@ function createMessage(data, theme, parsedData) {
         parsedData.secondary = (
           <>
             {data.contract.value}% Off
-            <br />
-            <strong>Activated:</strong>
-            {parsedData.startDate.toDateString()}
-            <br />
-            <strong>Expires:</strong>
-            {parsedData.endDate.toDateString()}
-            <br />
           </>
         );
+        parsedData.date = (
+          <>
+            <strong>Activated:</strong>{" "}
+            {parsedData.startDate.toDateString()}
+            <br />
+            <strong>Expires:</strong>{" "}
+            {parsedData.endDate.toDateString()}
+          </>
+        )
       } else {
         parsedData.secondary = (
           <>
             ${parseFloat(data.contract.value).toFixed(2)} Off
-            <br />
-            <strong>Activated:</strong>
-            {parsedData.startDate.toDateString()}
-            <br />
-            <strong>Expires:</strong>
-            {parsedData.endDate.toDateString()}
-            <br />
           </>
         );
+        parsedData.date = (
+          <>
+            <strong>Activated:</strong>{" "}
+            {parsedData.startDate.toDateString()}
+            <br />
+            <strong>Expires:</strong>{" "}
+            {parsedData.endDate.toDateString()}
+          </>
+        )
       }
       break;
     default:
       parsedData.background = theme.palette.error;
       parsedData.secondary = (
         <>
-          <strong>Activated:</strong>
+          
+        </>
+      );
+      parsedData.date = (
+        <>
+          <strong>Activated:</strong>{" "}
           {parsedData.startDate.toDateString()} @ [
           {parsedData.startDate.toLocaleTimeString("en-us")}]
           <br />
-          <strong>Expires:</strong>
+          <strong>Expires:</strong>{" "}
           {parsedData.endDate.toDateString()} @ [
           {parsedData.endDate.toLocaleTimeString("en-us")}]
           <br />
         </>
-      );
+      )
       break;
   }
   return parsedData;

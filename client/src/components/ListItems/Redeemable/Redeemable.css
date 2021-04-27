@@ -1,0 +1,27 @@
+.card {
+  position: relative;
+  transition: 0.5s ease-in-out;
+  box-shadow: 5%;
+  min-width: 344px;
+  min-height: 196.57px;
+}
+
+.card:not(:first-child) {
+  margin-top: -144px;
+}
+
+.card:hover {
+  transition: filter .2s ease-in-out;
+  transition: transform .5s ease-in-out;
+  filter: blur(0px) grayscale(0%);  
+  cursor: pointer;
+}
+
+.card:hover ~ .card {
+  transition: 0.5s ease-in-out;
+  /* transform: translateY(144px); */
+}
+
+.clicked-card ~ .card{
+  transform: translateY(100px);
+}

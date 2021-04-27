@@ -15,11 +15,6 @@ const useStyles = makeStyles((theme) => ({
     width: "100%", // Fix IE 11 issue.
     marginTop: theme.spacing(12),
   },
-  cardcontent: {
-    "&:last-child": {
-      paddingBottom: theme.spacing(1),
-    },
-  },
   submit: {
     margin: theme.spacing(3, 0, 2),
   },
@@ -52,7 +47,7 @@ export default function BusinessDashboard(props) {
   }, []);
 
   return (
-    <Container className={classes.root}>
+    <Container maxWidth="sm" className={classes.root}>
       <CampaignForm
         className={classes.form}
         setDataSet={setDataSet}
@@ -61,10 +56,13 @@ export default function BusinessDashboard(props) {
         {...props}
       />
       {dataSet ? (
-        <List>
+        <List className={classes.list}>
           {dataSet.map((item, idx) => (
             <Redeemable
+              expanded={props.expanded}
+              handleAccordian={props.handleAccordian}
               URL={props.URL + "tokens/create/"}
+              idx={idx}
               key={idx}
               data={item}
               setDataSet={setDataSet}

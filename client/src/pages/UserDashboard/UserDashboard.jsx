@@ -44,13 +44,16 @@ export default function UserDashboard(props) {
   }, []);
 
   return (
-    <Container className={classes.root}>
+    <Container maxWidth="sm" className={classes.root}>
       {dataSet ? (
         <List className={classes.root}>
           {dataSet.length ? (
             dataSet.map((item, idx) => (
               <Redeemable
+                expanded={props.expanded}
+                handleAccordian={props.handleAccordian}
                 URL={`${props.URL}/tokens/redeem/`}
+                idx={idx}
                 key={idx}
                 data={item}
                 setDataSet={setDataSet}

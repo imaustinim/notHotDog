@@ -48,6 +48,11 @@ function App() {
     }
   }, []);
 
+  const [expanded, setExpanded] = useState(false);
+  const handleAccordian = (panel) => (e, isExpanded) => {
+    setExpanded(isExpanded ? panel : false);
+  };
+
   const theme = createMuiTheme({
     palette: {
       giftcard: {
@@ -139,6 +144,8 @@ function App() {
                 if (user.businessName) {
                   return (
                     <BusinessDashboard
+                      handleAccordian={handleAccordian}
+                      expanded={expanded}
                       URL={URL}
                       setSnack={setSnack}
                       user={user}
@@ -148,6 +155,8 @@ function App() {
                 } else {
                   return (
                     <UserDashboard
+                      handleAccordian={handleAccordian}
+                      expanded={expanded}
                       URL={URL}
                       setSnack={setSnack}
                       user={user}
