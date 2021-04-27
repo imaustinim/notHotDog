@@ -8,6 +8,7 @@ import FormControl from '@material-ui/core/FormControl';
 import MenuItem from '@material-ui/core/MenuItem';
 import Select from '@material-ui/core/Select';
 import { makeStyles } from "@material-ui/core/styles";
+import InputAdornment from '@material-ui/core/InputAdornment';
 
 import moment from "moment"
 import React from "react";
@@ -53,6 +54,7 @@ export default function EditCampaignForm(props) {
   let [quantity, setQuantity] = useState("");
   let [value, setValue] = useState("");
   let [unit, setUnit] = useState("");
+  let [symbol, setSymbol] = useState("$");
   let [access, setAccess] = useState("");
   let [numUses, setNumUses] = useState("");
 
@@ -67,6 +69,11 @@ export default function EditCampaignForm(props) {
     setNumUses(data.contract.numUses)
     setValue(data.contract.value)
     setUnit(data.contract.unit)
+    if (data.contract.unit === "dollar") {
+      setSymbol("$")
+    } else {
+      setSymbol("%")
+    }
     setAccess(data.contract.access)
   }
 
@@ -161,6 +168,7 @@ export default function EditCampaignForm(props) {
                   <FormControl fullWidth required variant="outlined" className={classes.formControl}>
                     <InputLabel htmlFor="outlined-age-native-simple">Campaign Type</InputLabel>
                     <Select
+                      disabled
                       native
                       value={campaignType}
                       onChange={(e) => {
@@ -243,23 +251,6 @@ export default function EditCampaignForm(props) {
                     }}
                   />
                 </Grid>
-                <Grid item xs={12} sm={6}>
-                  <TextField
-                    variant='outlined'
-                    required
-                    fullWidth
-                    id='numUses'
-                    label='Number of Uses'
-                    name='numUses'
-                    type="number"
-                    helperText="Use -1 for unlimited"
-                    InputProps={{ inputProps: { min: -1 } }}
-                    value={numUses}
-                    onChange={(e) => {
-                      setNumUses(e.target.value);
-                    }}
-                  />
-                </Grid>
                 {campaignType === "gift card" ? (
                   <Grid item xs={12} sm={6}>
                     <TextField
@@ -280,38 +271,68 @@ export default function EditCampaignForm(props) {
                 )}
                 {campaignType === "coupon" ? (
                   <>
-                  <Grid item xs={8} sm={8}>
+                  <Grid item xs={12} sm={6}>
                     <TextField
                       variant='outlined'
                       required
                       fullWidth
-                      id='value'
-                      label='Value'
-                      name='value'
-                      value={value}
+                      id='numUses'
+                      label='Number of Uses'
+                      name='numUses'
+                      type="number"
+                      helperText="Use -1 for unlimited"
+                      InputProps={{ inputProps: { min: -1 } }}
+                      value={numUses}
                       onChange={(e) => {
-                        setValue(e.target.value);
+                        setNumUses(e.target.value);
                       }}
                     />
                   </Grid>
-                  <Grid item xs={4} sm={4}>
+                  <Grid item xs={6} sm={6}>
                     <TextField
+                      variant='outlined'
                       required
+                      fullWidth
+                      id="outlined-adornment-amount"
+                      value={value}
+                      label="Amount"
+                      type="number"
+                      InputProps={{ 
+                        inputProps: { min: 0 }, 
+                        startAdornment: <InputAdornment position="start">{symbol}</InputAdornment>
+                      }}
+                      onChange={(e) => {setValue(e.target.value)}}
+                    />
+                  </Grid>
+                  <Grid item xs={6} sm={6}>
+                    <TextField
                       fullWidth
                       id="unit"
                       select
                       label="Unit"
                       value={unit}
+                      defaultValue={unit}
                       onChange={(e) => {
                         setUnit(e.target.value)
+                        if (e.target.value === "percent") {
+                          setSymbol("%")
+                        } else {
+                          setSymbol("$")
+                        }
                       }}
                       variant="outlined"
                     >
-                      {symbols.map((option) => (
-                        <MenuItem key={option.value} value={option.value}>
-                          {option.label}
-                        </MenuItem>
-                      ))}
+                      {symbols.map((option) => {
+                        return option.label === "$" ? (
+                          <MenuItem selected key={option.label} value={option.value}>
+                            {option.label}
+                          </MenuItem>
+                          ) :
+                          <MenuItem selected key={option.label} value={option.value}>
+                            {option.label}
+                          </MenuItem>
+                        }
+                      )}
                     </TextField>
                   </Grid>
                   </>
@@ -320,6 +341,23 @@ export default function EditCampaignForm(props) {
                 )}
                 {campaignType === "ticket" ? (
                   <>
+                  <Grid item xs={12} sm={6}>
+                    <TextField
+                      variant='outlined'
+                      required
+                      fullWidth
+                      id='numUses'
+                      label='Number of Uses'
+                      name='numUses'
+                      type="number"
+                      helperText="Use -1 for unlimited"
+                      InputProps={{ inputProps: { min: -1 } }}
+                      value={numUses}
+                      onChange={(e) => {
+                        setNumUses(e.target.value);
+                      }}
+                    />
+                  </Grid>
                   <Grid item xs={6} sm={6}>
                     <TextField
                       variant='outlined'

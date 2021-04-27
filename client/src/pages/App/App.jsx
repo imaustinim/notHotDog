@@ -7,7 +7,6 @@ import { useMediaQuery } from "@material-ui/core";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import { ThemeProvider, createMuiTheme } from "@material-ui/core/styles";
 /* Custom Components */
-import "./App.css";
 import NavBar from "../../components/NavBar/NavBar";
 import Footer from "../../components/Footer/Footer";
 import DemoColourGrid from "../../components/DemoColourGrid/DemoColourGrid";
@@ -20,6 +19,7 @@ import UserDashboard from "../UserDashboard/UserDashboard";
 import QrScannerPage from "../QrScannerPage/QrScannerPage";
 import LoadingPage from "../../components/LoadingPage/LoadingPage";
 import { getUser, checkExp } from "../../utils/authUtils";
+import "./App.css";
 
 function App() {
   let [user, setUser] = useState(null);
@@ -94,6 +94,9 @@ function App() {
         dark: "#24FF99",
       },
     },
+    typography: {
+      fontFamily: "'Libre Franklin', sans-serif",
+    }
   });
 
   /* Custom Colour palette, this is a global theme */

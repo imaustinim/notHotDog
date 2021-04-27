@@ -12,22 +12,13 @@ import MenuItem from '@material-ui/core/MenuItem';
 import Select from '@material-ui/core/Select';
 import { makeStyles } from "@material-ui/core/styles";
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import OutlinedInput from '@material-ui/core/OutlinedInput';
 import InputAdornment from '@material-ui/core/InputAdornment';
-
-
-import FormatAlignLeftIcon from '@material-ui/icons/FormatAlignLeft';
-import FormatAlignCenterIcon from '@material-ui/icons/FormatAlignCenter';
-import FormatAlignRightIcon from '@material-ui/icons/FormatAlignRight';
-import FormatAlignJustifyIcon from '@material-ui/icons/FormatAlignJustify';
-import ToggleButton from '@material-ui/lab/ToggleButton';
-import ToggleButtonGroup from '@material-ui/lab/ToggleButtonGroup';
 
 import clsx from 'clsx';
 import React from "react";
 import { CreateCampaign, getCampaignData } from "../../utils/businessUtils";
 import { useState } from "react";
-import { Link as RouterLink, useParams, useHistory } from "react-router-dom";
+import { useParams, useHistory } from "react-router-dom";
 
 const symbols = [
   {
