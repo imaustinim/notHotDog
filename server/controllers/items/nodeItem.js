@@ -22,6 +22,7 @@ async function getData(req, res) {
         path: "_business",
       },
     });
+    console.log(tokens);
     res.status(200).send({
       tokens: tokens,
     });
@@ -148,7 +149,10 @@ async function redeemToken(req, res) {
     thisItem.markModified("contract");
 
     await thisItem.save();
-    socket.emit("business-redeem", { id: thisItem._user, name: thisItem._node.name });
+    socket.emit("business-redeem", {
+      id: thisItem._user,
+      name: thisItem._node.name,
+    });
 
     res.send(`Successfully Redeemed Coupon: ${thisItem._node.name}`);
   } catch (err) {

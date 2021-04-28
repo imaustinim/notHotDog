@@ -46,7 +46,9 @@ export function getUser(token) {
 
 //given token/check if expired
 export function checkExp(token) {
+  if (!token) return false;
   let res = jwt_decode(token);
+
   let now = new Date();
   if (now.getTime() < new Date(res.exp).getTime()) {
     localStorage.removeItem("token");

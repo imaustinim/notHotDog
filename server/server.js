@@ -41,7 +41,7 @@ let server = app.listen(port, function () {
 
 const options = {
   cors: {
-    origin: "http://localhost:5000",
+    origin: "http://localhost:3000",
     methods: ["GET", "POST"],
   },
 };

@@ -1,32 +1,22 @@
-import React, { useState, useEffect } from 'react';
-import ListItem from "@material-ui/core/ListItem";
-import ListItemText from "@material-ui/core/ListItemText";
-import ListItemAvatar from "@material-ui/core/ListItemAvatar";
+import React, { useState } from 'react';
 import Avatar from "@material-ui/core/Avatar";
+<<<<<<< HEAD
 import { makeStyles, useTheme, withStyles } from "@material-ui/core/styles";
 import RedeemModal from "../RedeemModal/RedeemModal";
+=======
+import { makeStyles, useTheme } from "@material-ui/core/styles";
+
+>>>>>>> redeem
 import Card from '@material-ui/core/Card';
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
-import Hidden from '@material-ui/core/Hidden';
 import Modal from '@material-ui/core/Modal';
 import Backdrop from '@material-ui/core/Backdrop';
 import Fade from '@material-ui/core/Fade';
 import Container from '@material-ui/core/Container';
 import MuiAccordian from "@material-ui/core/Accordion"
 
-
-import Button from "@material-ui/core/Button";
-import DialogTitle from "@material-ui/core/DialogTitle";
-import Dialog from "@material-ui/core/Dialog";
-import ListItemIcon from "@material-ui/core/ListItemIcon";
 import IconButton from "@material-ui/core/IconButton";
-import DialogActions from "@material-ui/core/DialogActions";
-import DialogContent from "@material-ui/core/DialogContent";
-import DialogContentText from "@material-ui/core/DialogContentText";
-import useMediaQuery from "@material-ui/core/useMediaQuery";
-import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
-import Slide from "@material-ui/core/Slide";
 import DeleteIcon from "@material-ui/icons/Delete";
 import EditIcon from "@material-ui/icons/Edit";
 
@@ -143,6 +133,7 @@ export default function Redeemable(props) {
 
   return (
     <>
+<<<<<<< HEAD
       <Accordion
         style={{background: parsedData.background}}
         className={classes.accordion}
@@ -151,6 +142,32 @@ export default function Redeemable(props) {
         className={parsedData.expired ? classes.expired : classes.null}
         expanded={props.expanded === props.idx} 
         onChange={props.handleAccordian(props.idx)}
+=======
+    <Accordion
+      square={false}
+      className={classes.accordion}
+      expanded={props.expanded === props.idx} 
+      onChange={props.handleAccordian(props.idx)}
+      >
+      <AccordionSummary 
+        className={classes.accordionSummary}
+        id={props.idx}
+        // IconButtonProps={{edge: 'start'}}
+        expandIcon={campaignIcon(props.data.contract.type)}>
+        <Box my="auto">
+          <Avatar alt="..." src={parsedData.avatar} /> 
+        </Box>
+        <Box my="auto" ml={2}>
+          <Typography variant="h6" className={classes.heading}>{parsedData.businessName}</Typography>
+        </Box>
+        <Box my="auto" ml="auto">
+          <Typography variant="subtitle1" className={classes.heading}>{parsedData.secondary}</Typography>
+        </Box>
+      </AccordionSummary>
+      <AccordionDetails
+        className={classes.accordianDetails}
+        onClick={props.handleAccordian(props.idx)}
+>>>>>>> redeem
         >
         <AccordionSummary 
           className={classes.accordionSummary}
@@ -264,10 +281,40 @@ export default function Redeemable(props) {
                 setDataSet={props.setDataSet}
                 setSnack={props.setSnack}
               />
+<<<<<<< HEAD
             </Container>
           </Card>
         </Fade>
       </Modal>
+=======
+            </Box>
+          </DialogContent> */}
+        </>
+    ) : <></> }
+    <Modal
+      aria-labelledby="transition-modal-title"
+      aria-describedby="transition-modal-description"
+      open={open}
+      className={classes.modal}
+      onClose={handleClose}
+      closeAfterTransition
+      BackdropComponent={Backdrop}
+      BackdropProps={{timeout: 100}}
+    >
+      <Fade in={open}>
+        <Card>
+          <Container maxWidth="sm" className={classes.paper}>
+            <EditCampaignForm
+              handleClose={handleClose}
+              data={parsedData}
+              setDataSet={props.setDataSet}
+              setSnack={props.setSnack}
+            />
+          </Container>
+        </Card>
+      </Fade>
+    </Modal>
+>>>>>>> redeem
     </>
   );
 }
