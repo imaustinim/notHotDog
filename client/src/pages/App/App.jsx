@@ -68,8 +68,8 @@ function App() {
         dark: "#F1856A",
       },
       coupon: {
-        light: "#1FB7EA",
-        dark: "#44C3EE",
+        light: "#0AC2FF",
+        dark: "#70DBFF",
       },
       type: darkMode ? "dark" : "light",
       secondary: {

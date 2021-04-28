@@ -101,7 +101,7 @@ export default function Redeemable(props) {
       filter: "brightness(100%)"
     },
     active: {
-      filter: "grayscale(15%)",
+      // filter: "grayscale(15%)",
     },
     inactive: {
       filter: "grayscale(100%)",
