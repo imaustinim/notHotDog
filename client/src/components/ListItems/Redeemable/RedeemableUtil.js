@@ -148,6 +148,5 @@ function createMessage(data, theme, parsedData) {
       );
       break;
   }
-  console.log(parsedData.background)
   return parsedData;
 }
