@@ -11,7 +11,7 @@ function Copyright() {
 
 export default function Footer(props) {
   return (
-    <Box my={8}>
+    <Box mt="auto" mb="0">
       <Copyright />
     </Box>
   );

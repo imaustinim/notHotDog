@@ -10,6 +10,7 @@ import { ThemeProvider, createMuiTheme } from "@material-ui/core/styles";
 import NavBar from "../../components/NavBar/NavBar";
 import Footer from "../../components/Footer/Footer";
 import DemoColourGrid from "../../components/DemoColourGrid/DemoColourGrid";
+import SplashPage from "../../components/SplashPage/SplashPage";
 import SnackbarHandler from "../../components/SnackbarHandler/SnackbarHandler";
 
 import Login from "../Login/Login";
@@ -56,48 +57,52 @@ function App() {
   const theme = createMuiTheme({
     palette: {
       giftcard: {
-        light: "#FEDD9C",
-        dark: "#684601",
+        light: "#EF476F",
+        dark: "#F47C98",
       },
       ticket: {
-        light: "#F4D6E1",
-        dark: "#7F2345",
+        light: "#EE6644",
+        dark: "#F1856A",
       },
       coupon: {
-        light: "#C8D0F2",
-        dark: "#1C2C74",
+        light: "#1FB7EA",
+        dark: "#44C3EE",
       },
       type: darkMode ? "dark" : "light",
       secondary: {
-        main: "#3D348B",
-        light: "#2F60E5",
-        dark: "#3D348B",
+        main: "#3d5a80",
+        light: "#354E6E",
+        dark: "#5075A5",
       },
       primary: {
         main: "#FFE066",
-        light: "#FFE066",
-        dark: "#B27702",
+        light: "#FFDA47",
+        dark: "#FFEB99",
       },
       error: {
-        main: "#F25F5C",
-        light: "#F14E3F",
-        dark: "#A4190C",
+        main: "#F04542",
+        light: "#ED201D",
+        dark: "#F36A68",
       },
       warning: {
-        main: "#edafb8",
-        light: "#F2C4CB",
-        dark: "#DA5C6F",
+        main: "#F04542",
+        light: "#ED201D",
+        dark: "#F36A68",
       },
       info: {
-        main: "#E7F9A9",
-        light: "#EEFBBF",
-        dark: "#CDF247",
+        main: "#8D99AE",
+        light: "#7C8AA2",
+        dark: "#ABB4C4",
       },
       success: {
-        main: "#70C1B3",
-        light: "#A3FFD4",
-        dark: "#24FF99",
+        main: "#04A777",
+        light: "#048B63",
+        dark: "#06DB9B",
       },
+      background: {
+        default: darkMode ? "#303030" : "#FFFBEB",
+        paper: darkMode ? "#303030" : "#FFFBEB",
+      }
     },
     typography: {
       fontFamily: "'Libre Franklin', sans-serif",
@@ -171,7 +176,7 @@ function App() {
             path='/'
             render={(props) => {
               if (!user) {
-                return <DemoColourGrid {...props} />;
+                return <SplashPage {...props} />;
               } else {
                 history.push("/dashboard");
               }
@@ -186,7 +191,7 @@ function App() {
           severity={snack.severity}
         />
       </main>
-      <Footer />
+      <Footer className="footer" />
     </ThemeProvider>
   );
 }

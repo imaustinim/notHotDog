@@ -1,5 +1,9 @@
 .MuiAccordion-root.Mui-expanded {
   margin-top: 0px !important;
   margin-bottom: 0px !important;
+}
 
+.MuiButtonBase-root {
+  padding-top: 0;
+  padding-bottom: 0;
 }
