@@ -55,7 +55,6 @@ async function login(req, res) {
     res.status(400).json({ message: err.message });
   }
 }
-
 function checkLogin(req, res, next) {
   // Check for the token being sent in three different ways
   let token = req.get("Authorization") || req.query.token || req.body.token;
