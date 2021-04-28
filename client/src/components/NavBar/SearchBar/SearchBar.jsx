@@ -91,16 +91,17 @@ export default function SearchBar(props) {
     options: searchList,
     getOptionLabel: (option) =>
       `${option.type} - ${option.title} - ${option.value}`,
-    onChange: (evt, val) => {
-      console.log(val.id);
+    onChange: async (evt, val) => {
       handleExpandAccordian(val.id);
-      window.location.href = `#${val.id}`;
     },
     getOptionSelected: (option, value) => option.id === value.id,
   });
 
   async function handleExpandAccordian(id) {
     await props.setExpanded(id);
+    setTimeout(() => {
+      window.location.href = `#${id}`;
+    }, 300);
   }
   let updateSearchList = async () => {
     let options = await SearchBarUtil.handleSearchList(props.user);

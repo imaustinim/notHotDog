@@ -11,7 +11,7 @@ export function ParseUserData(data, theme) {
     endDate: endDate,
     expired: new Date() > endDate,
     redeemed: data.redeemed,
-    active: !data.redeemed && new Date() < endDate
+    active: !data.redeemed && new Date() < endDate,
   };
   parsedData = createMessage(data, theme, parsedData);
   return parsedData;
@@ -30,7 +30,7 @@ export function ParseData(data, theme) {
     startDate: startDate,
     endDate: endDate,
     expired: new Date() > endDate,
-    active: new Date() < endDate
+    active: new Date() < endDate,
   };
   parsedData = createMessage(data, theme, parsedData);
   return parsedData;
@@ -135,6 +135,7 @@ function createMessage(data, theme, parsedData) {
           
         </>
       );
+
       parsedData.date = (
         <>
           <strong>Activated:</strong> {parsedData.startDate.toDateString()} @ [
