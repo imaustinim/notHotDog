@@ -1,3 +1,11 @@
+a {
+  text-decoration: none;
+}
+
+a:visited, a, a:active {
+  background-color: inherit !important;
+}
+
 .card {
   position: relative;
   transition: 0.5s ease-in-out;
@@ -24,4 +32,20 @@
 
 .clicked-card ~ .card{
   transform: translateY(100px);
+}
+
+.MuiAccordion-rounded {
+  /* border-radius: 7.5px !important;
+  margin-bottom: -5px; */
+  box-shadow: 1px 1px 5px grey !important;
+}
+
+.MuiAccordion-root:before {
+  /* opacity: 0 !important; */
+}
+
+.MuiAccordion-root.Mui-expanded {
+  margin-top: 0px !important;
+  margin-bottom: 0px !important;
+
 }

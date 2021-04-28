@@ -1,3 +1,5 @@
+import { setDate } from "date-fns/esm";
+
 export function ParseUserData(data, theme) {
   let startDate = new Date(data.activeDate);
   let endDate = new Date(data.expireDate);
@@ -43,21 +45,27 @@ function createMessage(data, theme, parsedData) {
   switch (data.contract.type) {
     case "gift card":
       parsedData.background = theme.palette.giftcard;
+      let gcDateArr = parsedData.endDate.toDateString().split(" ")
+      let gcEndDate = gcDateArr[1] + " " + gcDateArr[2] + ", " + gcDateArr[3]
       parsedData.secondary = (
         <>
-          {`$${parseFloat(data.contract.remainingValue).toFixed(
-            2
-          )} / $${parseFloat(data.contract.value).toFixed(2)}`}
+          {`$${parseFloat(data.contract.remainingValue).toFixed(2)}`}
+          {/* // / $${parseFloat(data.contract.value).toFixed(2)}`} */}
         </>
       );
       parsedData.date = (
         <>
           <strong>Expires:</strong>{" "}
-          {parsedData.endDate.toDateString()}
+          {gcEndDate}
         </>
       )
       break;
     case "ticket":
+      let tStartDateArr = parsedData.startDate.toDateString().split(" ")
+      let tEndDateArr = parsedData.startDate.toDateString().split(" ")
+      let tStartDate = tStartDateArr[1] + " " + tStartDateArr[2] + ", " + tStartDateArr[3]
+      let tEndDate = tEndDateArr[1] + " " + tEndDateArr[2] + ", " + tEndDateArr[3]
+
       parsedData.background = theme.palette.ticket;
       parsedData.secondary = (
         <>
@@ -66,20 +74,25 @@ function createMessage(data, theme, parsedData) {
       );
       parsedData.date = (
         <>
-          <strong>Start date: </strong>{" "}
-          {parsedData.startDate.toDateString()} @ {" "}
+          <strong>Time: </strong>{" "}
           {parsedData.startDate.toLocaleTimeString("en-us").split(":00")[0]}
           {parsedData.startDate.toLocaleTimeString("en-us").split(":00")[1]}
           <br />
-          <strong>End date: </strong>{" "}
-          {parsedData.endDate.toDateString()} @ {" "}
+          <strong>Date: </strong>{" "}
+          {tStartDate} 
+          {/* <strong>End date: </strong>{" "}
+          {tEndDate} @ {" "}
           {parsedData.endDate.toLocaleTimeString("en-us").split(":00")[0]}
           {parsedData.endDate.toLocaleTimeString("en-us").split(":00")[1]}
-          <br />
+          <br /> */}
         </>
       )
       break;
     case "coupon":
+      let cStartDateArr = parsedData.startDate.toDateString().split(" ")
+      let cEndDateArr = parsedData.startDate.toDateString().split(" ")
+      let cStartDate = cStartDateArr[1] + " " + cStartDateArr[2] + ", " + cStartDateArr[3]
+      let cEndDate = cEndDateArr[1] + " " + cEndDateArr[2] + ", " + cEndDateArr[3]
       parsedData.background = theme.palette.coupon;
       if (data.contract.unit === "percent") {
         parsedData.secondary = (
@@ -90,10 +103,10 @@ function createMessage(data, theme, parsedData) {
         parsedData.date = (
           <>
             <strong>Activated:</strong>{" "}
-            {parsedData.startDate.toDateString()}
+            {cStartDate}
             <br />
             <strong>Expires:</strong>{" "}
-            {parsedData.endDate.toDateString()}
+            {cEndDate}
           </>
         )
       } else {
@@ -105,10 +118,10 @@ function createMessage(data, theme, parsedData) {
         parsedData.date = (
           <>
             <strong>Activated:</strong>{" "}
-            {parsedData.startDate.toDateString()}
+            {cStartDate}
             <br />
             <strong>Expires:</strong>{" "}
-            {parsedData.endDate.toDateString()}
+            {cEndDate}
           </>
         )
       }
