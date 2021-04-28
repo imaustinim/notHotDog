@@ -105,7 +105,57 @@ function App() {
       background: {
         default: darkMode ? "#303030" : "#FFFBEB",
         paper: darkMode ? "#303030" : "#FFFBEB",
-      }
+      },
+      month: [
+        {
+          light: "#CCDBFD",
+          dark: "#ABC4FF"
+        },
+        {
+          light: "#A9D6E5",
+          dark: "#468FAF"
+        },
+        {
+          light: "#D69F7E",
+          dark: "#9D6B53"
+        },
+        {
+          light: "#D0D1FF",
+          dark: "#E2AFFF"
+        },
+        {
+          light: "#FF85A1",
+          dark: "#FF477E"
+        },
+        {
+          light: "#FFEA00",
+          dark: "#FFD000"
+        },
+        {
+          light: "#FF9100",
+          dark: "#FF6000"
+        },
+        {
+          light: "#E95D70",
+          dark: "#E01E37"
+        },
+        {
+          light: "#CFE1B9",
+          dark: "#718355"
+        },
+        {
+          light: "#95D5B2",
+          dark: "#40916C"
+        },
+        {
+          light: "#A9D6E5",
+          dark: "#2C7DA0"
+        },
+        {
+          light: "#E0AAFF",
+          dark: "#9D4EDD"
+        },
+      ]
     },
     typography: {
       fontFamily: "'Libre Franklin', sans-serif",
