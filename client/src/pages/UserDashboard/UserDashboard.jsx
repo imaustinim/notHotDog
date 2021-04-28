@@ -46,7 +46,7 @@ export default function UserDashboard(props) {
   useEffect(() => {
     try {
       socket.on("client-redeem", (data) => {
-        console.log("CLIENT SIDE RECIEVED REDEEM HOOK", data.name);
+        console.log("Client Side Redemption", data.name);
         handleEmit(data);
       });
       getTokenData().then((res) => setDataSet(res));
