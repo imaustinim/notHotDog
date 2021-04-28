@@ -75,9 +75,9 @@ export default function DemoColourGrid(props) {
         </Typography>
       </Box>
       </Grid>
-      <Box display="flex" mt={1}>
+      <Box display="flex" mt={3}>
         <Typography align="center" variant="h5">
-          Your favourite 
+          The ultimate loyalty rewards manager!
         </Typography>
       </Box>
       <Grid>
