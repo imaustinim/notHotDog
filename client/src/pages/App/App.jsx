@@ -45,10 +45,13 @@ function App() {
     let token = localStorage.getItem("token");
     if (token && checkExp(token)) {
       setUser(getUser(token));
+    } else {
+      history.push("/");
     }
-  }, []);
+  }, [history]);
 
   const [expanded, setExpanded] = useState(false);
+
   const handleAccordian = (panel) => (e, isExpanded) => {
     setExpanded(isExpanded ? panel : false);
   };
@@ -101,7 +104,7 @@ function App() {
     },
     typography: {
       fontFamily: "'Libre Franklin', sans-serif",
-    }
+    },
   });
 
   /* Custom Colour palette, this is a global theme */
@@ -115,7 +118,12 @@ function App() {
       <CssBaseline />
 
       <main className='App'>
-        <NavBar toggleLightDark={toggleLightDark} user={user} />
+        <NavBar
+          toggleLightDark={toggleLightDark}
+          user={user}
+          handleAccordian={handleAccordian}
+          setExpanded={setExpanded}
+        />
         <Switch>
           <Route
             path='/:type/signup/'
@@ -160,7 +168,7 @@ function App() {
                       URL={URL}
                       setSnack={setSnack}
                       user={user}
-                      {...props} 
+                      {...props}
                     />
                   );
                 }
@@ -177,7 +185,6 @@ function App() {
               }
             }}
           />
-          
         </Switch>
         <SnackbarHandler
           setOpen={setOpen}

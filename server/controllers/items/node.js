@@ -50,8 +50,8 @@ async function editNode(req, res) {
 }
 
 async function deleteNode(req, res) {
-  const node = await Node.findOneAndDelete({ _id: req.params.id})
-  console.log(node)
+  const node = await Node.findOneAndDelete({ _id: req.params.id });
+  console.log(node);
   res.status(200).send({
     status: 200,
     message: "Successfully delete campaign",
@@ -61,8 +61,9 @@ async function deleteNode(req, res) {
 
 async function getNodes(req, res) {
   try {
-    const business = await Business.findById(req.user._id);
-    const nodes = await Node.find({ _business: business._id });
+    const nodes = await Node.find({ _business: req.user._id }).populate(
+      "_business"
+    );
     res.status(200).send({
       nodes: nodes,
     });
@@ -88,4 +89,4 @@ module.exports = {
   deleteNode,
   getNode,
   getNodes,
-}
+};

@@ -1,31 +1,16 @@
-import React, { useState, useEffect } from 'react';
-import ListItem from "@material-ui/core/ListItem";
-import ListItemText from "@material-ui/core/ListItemText";
-import ListItemAvatar from "@material-ui/core/ListItemAvatar";
+import React, { useState } from 'react';
 import Avatar from "@material-ui/core/Avatar";
-import { makeStyles, ThemeProvider, useTheme } from "@material-ui/core/styles";
-import RedeemModal from "../RedeemModal/RedeemModal";
+import { makeStyles, useTheme } from "@material-ui/core/styles";
+
 import Card from '@material-ui/core/Card';
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
-import Hidden from '@material-ui/core/Hidden';
 import Modal from '@material-ui/core/Modal';
 import Backdrop from '@material-ui/core/Backdrop';
 import Fade from '@material-ui/core/Fade';
 import Container from '@material-ui/core/Container';
 
-
-import Button from "@material-ui/core/Button";
-import DialogTitle from "@material-ui/core/DialogTitle";
-import Dialog from "@material-ui/core/Dialog";
-import ListItemIcon from "@material-ui/core/ListItemIcon";
 import IconButton from "@material-ui/core/IconButton";
-import DialogActions from "@material-ui/core/DialogActions";
-import DialogContent from "@material-ui/core/DialogContent";
-import DialogContentText from "@material-ui/core/DialogContentText";
-import useMediaQuery from "@material-ui/core/useMediaQuery";
-import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
-import Slide from "@material-ui/core/Slide";
 import DeleteIcon from "@material-ui/icons/Delete";
 import EditIcon from "@material-ui/icons/Edit";
 
@@ -48,8 +33,6 @@ import QRCode from "qrcode.react";
 
 
 export default function Redeemable(props) {
-  const { data, onClose } = props;
-  const [edit, setEdit] = useState(false);
   const [qrSize, setQrSize] = useState(256);
   const [open, setOpen] = React.useState(false);
 
@@ -143,7 +126,6 @@ export default function Redeemable(props) {
     <Accordion
       square={false}
       className={classes.accordion}
-      className="accordian"
       expanded={props.expanded === props.idx} 
       onChange={props.handleAccordian(props.idx)}
       >
@@ -278,52 +260,6 @@ export default function Redeemable(props) {
         </Card>
       </Fade>
     </Modal>
-
-
-    {/* <Card
-      className="card"
-      >
-      <RedeemModal
-        data={parsedData}
-        user={props.user}
-        setDataSet={props.setDataSet}
-        setSnack={props.setSnack}>
-        <ListItem className={classes.listItem} alignItems='flex-start'>
-          <ListItemAvatar>
-            <Avatar alt={parsedData.businessName} src={parsedData.avatar} /> 
-          </ListItemAvatar>
-          <ListItemText
-            primary={
-              <React.Fragment>
-                <Box display="flex">
-                  <Box flexGrow={1}>
-                    <Typography
-                      component="span"
-                      variant="h6"
-                      color="textPrimary"
-                    >
-                    {parsedData.primary}
-                  </Typography>
-                  </Box>
-                  <Box display="flex" alignSelf="center" justifyContent="flex-end">
-                  </Box>
-                </Box>
-              </React.Fragment>
-            }
-            secondary={
-            <React.Fragment>
-              <Typography
-                component="span"
-                variant="body2"
-                color="textPrimary">
-              {parsedData.secondary}
-              </Typography>
-            </React.Fragment>
-            }
-          />
-        </ListItem>
-      </RedeemModal>
-    </Card> */}
     </>
   );
 }
