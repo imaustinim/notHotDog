@@ -1,4 +1,5 @@
 import { useState, useRef } from "react";
+import clsx from "clsx"
 import {
   Grow,
   Paper,
@@ -10,6 +11,7 @@ import {
   ListItemIcon,
   ListItemText,
   Icon,
+  makeStyles,
 } from "@material-ui/core";
 import Divider from "@material-ui/core/Divider";
 
@@ -37,6 +39,17 @@ export default function HotDogMenu(props) {
     setOpen(false);
   };
 
+  const useStyles = makeStyles((theme) => ({
+    hotdog: {
+      transform: "rotate(180deg)",
+      transition: ".7s ease-in-out",
+    },
+    icon: {
+      transition: ".7s ease-in-out",
+    }
+  }));
+  const classes = useStyles();
+
   return (
     <>
       <IconButton
@@ -46,6 +59,9 @@ export default function HotDogMenu(props) {
         aria-haspopup='true'
         aria-label={"login" + props.type}
         onClick={handleToggle}
+        className={clsx(classes.icon, {
+          [classes.hotdog]: open,
+        })}
         color='inherit'>
         <HotDogIcon />
       </IconButton>

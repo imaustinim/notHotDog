@@ -61,14 +61,13 @@ export default function LoginButtons(props) {
                     onClick={handleClose}
                     to={`/${props.type}/login`}
                     component={RouterLink}>
-                    Login {props.type[0].toUpperCase() + props.type.slice(1)}
+                    {props.type[0].toUpperCase() + props.type.slice(1)} Login
                   </MenuItem>
                   <MenuItem
                     onClick={handleClose}
                     to={`/${props.type}/signup`}
                     component={RouterLink}>
-                    Create Profile for{" "}
-                    {props.type[0].toUpperCase() + props.type.slice(1)}
+                    Create {props.type[0].toUpperCase() + props.type.slice(1)} Profile
                   </MenuItem>
                 </MenuList>
               </ClickAwayListener>

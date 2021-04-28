@@ -68,7 +68,6 @@ const useStyles = makeStyles((theme) => ({
 export default function CampaignForm(props) {
   const classes = useStyles();
   const history = useHistory();
-  const { type } = useParams();
 
   let [expanded, setExpanded] = useState(false);
   let [campaignName, setCampaignName] = useState("");
@@ -159,7 +158,8 @@ export default function CampaignForm(props) {
               aria-label="show more"
             >
               <CardContent>
-                <Typography component='h1' variant='h5' align="center">
+                <Typography component='h1' variant='h5' align="center"
+                >
                   Create New Campaign&nbsp;
                   <ExpandMoreIcon
                     color="inherit"
