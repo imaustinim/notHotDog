@@ -6,6 +6,7 @@ import { useState, useEffect } from "react";
 import { getCampaignData } from "../../utils/businessUtils";
 import CampaignForm from "./CampaignForm";
 import Redeemable from "../../components/ListItems/Redeemable/Redeemable";
+import DemoColourGrid from "../../components/DemoColourGrid/DemoColourGrid";
 
 export default function BusinessDashboard(props) {
   const useStyles = makeStyles((theme) => ({
@@ -68,6 +69,7 @@ export default function BusinessDashboard(props) {
         user={props.user}
         {...props}
       />
+      <DemoColourGrid/>
     </Container>
   );
 }

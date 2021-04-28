@@ -3,7 +3,7 @@ import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
 import ListItemAvatar from "@material-ui/core/ListItemAvatar";
 import Avatar from "@material-ui/core/Avatar";
-import { makeStyles, ThemeProvider, useTheme } from "@material-ui/core/styles";
+import { makeStyles, useTheme, withStyles } from "@material-ui/core/styles";
 import RedeemModal from "../RedeemModal/RedeemModal";
 import Card from '@material-ui/core/Card';
 import Typography from '@material-ui/core/Typography';
@@ -13,6 +13,7 @@ import Modal from '@material-ui/core/Modal';
 import Backdrop from '@material-ui/core/Backdrop';
 import Fade from '@material-ui/core/Fade';
 import Container from '@material-ui/core/Container';
+import MuiAccordian from "@material-ui/core/Accordion"
 
 
 import Button from "@material-ui/core/Button";
@@ -48,8 +49,6 @@ import QRCode from "qrcode.react";
 
 
 export default function Redeemable(props) {
-  const { data, onClose } = props;
-  const [edit, setEdit] = useState(false);
   const [qrSize, setQrSize] = useState(256);
   const [open, setOpen] = React.useState(false);
 
@@ -60,9 +59,6 @@ export default function Redeemable(props) {
   const handleClose = () => {
     setOpen(false);
   };
-  // const handleEdit = () => {
-  //   setEdit(!edit);
-  // };
 
   const handleDelete = async () => {
     try {
@@ -100,30 +96,37 @@ export default function Redeemable(props) {
       alignItems: 'center',
       justifyContent: 'center',
     },
-    paper: {
-      backgroundColor: theme.palette.background.paper,
-    },
-    inline: {
-      display: "inline",
-    },
-    listItem: {
-      backgroundColor: parsedData.background[theme.palette.type],
-    },
     accordian: {
       paddingBottom: theme.spacing(5),
-      marginBottom: theme.spacing(5)
+      marginBottom: theme.spacing(5),
     },
     accordionSummary: {
       height: "64px",
     },
     accordianDetails: {
+      display: "block",
       "&:hover": {
         cursor: "pointer",
+        filter: "grayscale(0%)",
+        transition: ".5s ease-in-out"
       },
-      minHeight: "156px"
+      paddingTop: "0px",
+      minHeight: "146px",
+      transition: ".3s ease-in-out"
     },
     icon: {
-      color: parsedData.background[theme.palette.type]
+      color: "white",
+      filter: "brightness(98%)"
+    },
+    active: {
+    },
+    redeemed: {
+      filter: "grayscale(80%)",
+      transition: ".3s ease-in-out"
+    },
+    expired: {
+      filter: "grayscale(80%)",
+      transition: ".3s ease-in-out"
     }
   }));
   const classes = useStyles();
@@ -140,190 +143,131 @@ export default function Redeemable(props) {
 
   return (
     <>
-    <Accordion
-      square={false}
-      className={classes.accordion}
-      className="accordian"
-      expanded={props.expanded === props.idx} 
-      onChange={props.handleAccordian(props.idx)}
-      >
-      <AccordionSummary 
-        className={classes.accordionSummary}
-        id={props.idx}
-        // IconButtonProps={{edge: 'start'}}
-        expandIcon={campaignIcon(props.data.contract.type)}>
-        <Box my="auto">
-          <Avatar alt="..." src={parsedData.avatar} /> 
-        </Box>
-        <Box my="auto" ml={2}>
-          <Typography variant="h6" className={classes.heading}>{parsedData.businessName}</Typography>
-        </Box>
-        <Box my="auto" ml="auto">
-          <Typography variant="subtitle1" className={classes.heading}>{parsedData.secondary}</Typography>
-        </Box>
-      </AccordionSummary>
-      <AccordionDetails
-        className={classes.accordianDetails}
-        onClick={props.handleAccordian(props.idx)}
+      <Accordion
+        style={{background: parsedData.background}}
+        className={classes.accordion}
+        className={parsedData.active ? classes.active : classes.null}
+        className={parsedData.redeemed ? classes.redeemed : classes.null}
+        className={parsedData.expired ? classes.expired : classes.null}
+        expanded={props.expanded === props.idx} 
+        onChange={props.handleAccordian(props.idx)}
         >
-        <Box display="block">
-          <Box>
-            <Typography
-            variant="subtitle1"
-            className={classes.heading}>{parsedData.name}
-            </Typography>
-            <Typography
-            variant="body2"
-            className={classes.heading}>{parsedData.description}
-            </Typography>
+        <AccordionSummary 
+          className={classes.accordionSummary}
+          id={props.idx}
+          IconButtonProps={{edge: 'end'}}
+          expandIcon={campaignIcon(props.data.contract.type)}>
+          <Box my="auto">
+            <Avatar alt="..." src={parsedData.avatar} /> 
           </Box>
-          <Box display="flex" mt={3}>
-            <Box mt="auto" mr="auto" align="right">
-              <Typography
-              variant="body2"
-              className={classes.heading}>
-                <strong>Status:&nbsp;</strong>{(parsedData.redeemed) ? "Redeemed" : "Active"}</Typography>
+          <Box my="auto" ml={2}>
+            <Typography variant="h6" className={classes.heading}>{parsedData.businessName}</Typography>
+          </Box>
+          <Box my="auto" ml="auto">
+            <Typography variant="subtitle1" className={classes.heading}>{parsedData.secondary}</Typography>
+          </Box>
+        </AccordionSummary>
+        <AccordionDetails
+          className={classes.accordianDetails}
+          onClick={props.handleAccordian(props.idx)}
+          >
+          <Box display="flex" flexDirection="column">
+            <Box display="flex" flexDirection="column" >
+              <Box display="flex">
+                <Box>
+                  <Typography variant="h6">{parsedData.name}</Typography>
+                </Box>
+                <Box display="flex" ml="auto">
+                  {props.user.businessName ? (
+                  <Box>
+                    <IconButton
+                      onClick={handleOpen}
+                      edge='end'
+                      aria-label='edit'>
+                      <EditIcon />
+                    </IconButton>
+                  </Box>
+                  ) : <></> }
+                  <Box>
+                    <IconButton
+                      onClick={handleDelete}
+                      edge='end'
+                      aria-label='delete'>
+                      <DeleteIcon />
+                    </IconButton>
+                  </Box> 
+                </Box>
+              </Box>
+              <Box minHeight="50px">
+                <Typography variant="body2">{parsedData.description}</Typography>
+              </Box>
+              <Box display="flex" mt="auto" mb={0} pt={1}>
+                <Box mt="auto" mr="auto" align="left">
+                  <Typography variant="body2">
+                    <strong>Status:&nbsp;</strong>
+                    {props.user.businessName ? parsedData.expired ? "Finished" : "Active" : parsedData.redeemed ? "Redeemed" : parsedData.expired ? "Expired" : "Active"}
+                  </Typography>
+                </Box>
+                <Box mt="auto" ml="auto" mr={0} align="right">
+                  <Typography
+                  variant="body2"
+                  className={classes.heading}>{parsedData.date}</Typography>
+                </Box>
+              </Box>
             </Box>
-            <Box mt="auto" ml="0" align="right">
-              <Typography
-              variant="body2"
-              className={classes.heading}>{parsedData.date}</Typography>
+            {parsedData.active ? (
+            <>
+            <Box mt={2} mb={3}>
+              <hr color="white" style={{filter: "brightness(85%)"}}/>
             </Box>
-          </Box>
-        </Box>
-      </AccordionDetails>
-      <Box mx={1}>
-        <hr color="lightgrey"/>
-      </Box>
-      <Box display="flex" justifyContent="flex-end" mr={.5}>
-      {props.user.businessName ? (
-        <Box display="flex">
-          <IconButton
-            onClick={handleOpen}
-            edge='start'
-            aria-label='edit'>
-            <EditIcon />
-          </IconButton>
-        </Box>
-      ) : <></> }
-        <Box display="flex">
-          <IconButton
-            onClick={handleDelete}
-            edge='start'
-            aria-label='delete'>
-            <DeleteIcon />
-          </IconButton>
-        </Box> 
-      </Box>
-      <AccordionDetails className={classes.accordianDetails} >
-        <Box
-          mx="auto"
-          display="block"
-          justifyContent='center'
-          alignItems='center'
-        >
-          <Box>
-          <QRCode
-            value={parsedData.id}
-            size={qrSize}
-            bgColor={theme.palette.primary.main}
-            fgColor={theme.palette.secondary.main}
-          />
-          </Box>
-          <Box mt={1}>
-            <Typography variant="subtitle1" align="center">
-              Id: {parsedData.id}
-            </Typography>
-          </Box>
-        </Box>
-      </AccordionDetails>
-    </Accordion>
-    {props.edit ? (
-        <>
-          {/* <DialogContent>
             <Box
-              display='flex'
-              flexDirection='column'
+              mx="auto"
+              display="block"
               justifyContent='center'
-              alignItems='center'>
+              alignItems='center'
+            >
+              <Box>
+                <QRCode
+                  value={parsedData.id}
+                  size={qrSize}
+                  bgColor={theme.palette.primary.main}
+                  fgColor={theme.palette.secondary.main}
+                />
+              </Box>
+              <Box mt={1}>
+                <Typography variant="subtitle1" align="center">
+                  Id: {parsedData.id}
+                </Typography>
+              </Box>
+            </Box>
+            </>
+            ) : <></>}
+          </Box>
+        </AccordionDetails>
+      </Accordion>
+      <Modal
+        aria-labelledby="transition-modal-title"
+        aria-describedby="transition-modal-description"
+        open={open}
+        className={classes.modal}
+        onClose={handleClose}
+        closeAfterTransition
+        BackdropComponent={Backdrop}
+        BackdropProps={{timeout: 100}}
+      >
+        <Fade in={open}>
+          <Card>
+            <Container maxWidth="sm" className={classes.paper}>
               <EditCampaignForm
-                data={data}
+                handleClose={handleClose}
+                data={parsedData}
                 setDataSet={props.setDataSet}
                 setSnack={props.setSnack}
               />
-            </Box>
-          </DialogContent> */}
-        </>
-    ) : <></> }
-    <Modal
-      aria-labelledby="transition-modal-title"
-      aria-describedby="transition-modal-description"
-      open={open}
-      className={classes.modal}
-      onClose={handleClose}
-      closeAfterTransition
-      BackdropComponent={Backdrop}
-      BackdropProps={{timeout: 100}}
-    >
-      <Fade in={open}>
-        <Card>
-          <Container maxWidth="sm" className={classes.paper}>
-            <EditCampaignForm
-              handleClose={handleClose}
-              data={parsedData}
-              setDataSet={props.setDataSet}
-              setSnack={props.setSnack}
-            />
-          </Container>
-        </Card>
-      </Fade>
-    </Modal>
-
-
-    {/* <Card
-      className="card"
-      >
-      <RedeemModal
-        data={parsedData}
-        user={props.user}
-        setDataSet={props.setDataSet}
-        setSnack={props.setSnack}>
-        <ListItem className={classes.listItem} alignItems='flex-start'>
-          <ListItemAvatar>
-            <Avatar alt={parsedData.businessName} src={parsedData.avatar} /> 
-          </ListItemAvatar>
-          <ListItemText
-            primary={
-              <React.Fragment>
-                <Box display="flex">
-                  <Box flexGrow={1}>
-                    <Typography
-                      component="span"
-                      variant="h6"
-                      color="textPrimary"
-                    >
-                    {parsedData.primary}
-                  </Typography>
-                  </Box>
-                  <Box display="flex" alignSelf="center" justifyContent="flex-end">
-                  </Box>
-                </Box>
-              </React.Fragment>
-            }
-            secondary={
-            <React.Fragment>
-              <Typography
-                component="span"
-                variant="body2"
-                color="textPrimary">
-              {parsedData.secondary}
-              </Typography>
-            </React.Fragment>
-            }
-          />
-        </ListItem>
-      </RedeemModal>
-    </Card> */}
+            </Container>
+          </Card>
+        </Fade>
+      </Modal>
     </>
   );
 }
