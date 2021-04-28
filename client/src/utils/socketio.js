@@ -1,18 +1,18 @@
-var io = require("socket.io")();
-
-
-io.on("connection", function (socket) {
-  socket.on("user-connect", function (data) {
-    io.emit("user-connect", data);
-  });
-
-  socket.on("business-connect", function (data) {
-    io.emit("business-connect", data);
-  });
-
-  socket.on("disconnect", function (data) {
-    io.emit("disconnect", data);
-  });
+const io = require("socket.io-client");
+const socket = io("http://127.0.0.1:3000/", {
+  // withCredentials: true,
+  // transports: ["websocket"],
 });
 
-module.exports = io;
+// client-side
+socket.on("connect", () => {
+  console.log(socket.id);
+});
+
+
+function pairNow() {
+  let token = localStorage.getItem("token");
+  socket.emit("new-pair", { token: token, id: socket.id });
+}
+
+export { socket, pairNow };

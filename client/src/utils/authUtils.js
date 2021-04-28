@@ -48,8 +48,8 @@ export function getUser(token) {
 export function checkExp(token) {
   let res = jwt_decode(token);
   let now = new Date();
-  if (now.getTime() < res.exp) {
-    localStorage.setItem("token", "");
+  if (now.getTime() < new Date(res.exp).getTime()) {
+    localStorage.removeItem("token");
     return false;
   } else return true;
 }

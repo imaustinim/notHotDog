@@ -40,7 +40,7 @@ function createMessage(data, theme, parsedData) {
   parsedData.primary = (
     <>
       {parsedData.name} - {parsedData.businessName}
-       {/* - {data.contract.type.toUpperCase()} */}
+      {/* - {data.contract.type.toUpperCase()} */}
     </>
   );
 
@@ -64,10 +64,9 @@ function createMessage(data, theme, parsedData) {
       );
       parsedData.date = (
         <>
-          <strong>Expires:</strong>{" "}
-          {gcEndDate}
+          <strong>Expires:</strong> {gcEndDate}
         </>
-      )
+      );
       break;
     case "ticket":
       let tStartDateArr = parsedData.startDate.toDateString().split(" ")
@@ -87,15 +86,14 @@ function createMessage(data, theme, parsedData) {
           {parsedData.startDate.toLocaleTimeString("en-us").split(":00")[0]}
           {parsedData.startDate.toLocaleTimeString("en-us").split(":00")[1]}
           <br />
-          <strong>Date: </strong>{" "}
-          {tStartDate} 
+          <strong>Date: </strong> {tStartDate}
           {/* <strong>End date: </strong>{" "}
           {tEndDate} @ {" "}
           {parsedData.endDate.toLocaleTimeString("en-us").split(":00")[0]}
           {parsedData.endDate.toLocaleTimeString("en-us").split(":00")[1]}
           <br /> */}
         </>
-      )
+      );
       break;
     case "coupon":
       let cStartDateArr = parsedData.startDate.toDateString().split(" ")
@@ -105,35 +103,25 @@ function createMessage(data, theme, parsedData) {
       parsedData.color = theme.palette.coupon;
       parsedData.background = `linear-gradient(${degree}deg, ${theme.palette.coupon.light} ${startPercent}%, ${theme.palette.coupon.dark} ${endPercent}%)`
       if (data.contract.unit === "percent") {
-        parsedData.secondary = (
-          <>
-            {data.contract.value}% Off
-          </>
-        );
+        parsedData.secondary = <>{data.contract.value}% Off</>;
         parsedData.date = (
           <>
-            <strong>Activated:</strong>{" "}
-            {cStartDate}
+            <strong>Activated:</strong> {cStartDate}
             <br />
-            <strong>Expires:</strong>{" "}
-            {cEndDate}
+            <strong>Expires:</strong> {cEndDate}
           </>
-        )
+        );
       } else {
         parsedData.secondary = (
-          <>
-            ${parseFloat(data.contract.value).toFixed(2)} Off
-          </>
+          <>${parseFloat(data.contract.value).toFixed(2)} Off</>
         );
         parsedData.date = (
           <>
-            <strong>Activated:</strong>{" "}
-            {cStartDate}
+            <strong>Activated:</strong> {cStartDate}
             <br />
-            <strong>Expires:</strong>{" "}
-            {cEndDate}
+            <strong>Expires:</strong> {cEndDate}
           </>
-        )
+        );
       }
       break;
     default:
@@ -146,16 +134,14 @@ function createMessage(data, theme, parsedData) {
       );
       parsedData.date = (
         <>
-          <strong>Activated:</strong>{" "}
-          {parsedData.startDate.toDateString()} @ [
+          <strong>Activated:</strong> {parsedData.startDate.toDateString()} @ [
           {parsedData.startDate.toLocaleTimeString("en-us")}]
           <br />
-          <strong>Expires:</strong>{" "}
-          {parsedData.endDate.toDateString()} @ [
+          <strong>Expires:</strong> {parsedData.endDate.toDateString()} @ [
           {parsedData.endDate.toLocaleTimeString("en-us")}]
           <br />
         </>
-      )
+      );
       break;
   }
   console.log(parsedData)
