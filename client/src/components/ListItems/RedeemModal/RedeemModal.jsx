@@ -12,7 +12,7 @@ import IconButton from "@material-ui/core/IconButton";
 import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
-import { Box, Link, Typography } from "@material-ui/core";
+import { Box, Typography } from "@material-ui/core";
 import { useTheme } from "@material-ui/core/styles";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 import Accordion from "@material-ui/core/Accordion";
@@ -41,12 +41,6 @@ function SimpleDialog(props) {
   let xsMatch = useMediaQuery(theme.breakpoints.down("xs"));
   let smMatch = useMediaQuery(theme.breakpoints.up("sm"));
   let mdMatch = useMediaQuery(theme.breakpoints.up("md"));
-
-  const [edit, setEdit] = useState(false);
-
-  const handleEdit = () => {
-    setEdit(!edit);
-  };
 
   const handleDelete = async () => {
     try {
@@ -107,7 +101,7 @@ function SimpleDialog(props) {
           {props.user.businessName ? (
             <ListItemIcon>
               <IconButton
-                onClick={() => handleEdit()}
+                onClick={() => props.handleEdit()}
                 edge='end'
                 aria-label='delete'>
                 <EditIcon />
@@ -126,7 +120,7 @@ function SimpleDialog(props) {
           </ListItemIcon>
         </ListItem>
       </DialogTitle>
-      {edit ? (
+      {props.edit ? (
         <>
           <DialogContent>
             <Box
@@ -206,12 +200,21 @@ export default function RedeemModal(props) {
 
   const handleClose = (value) => {
     setOpen(false);
+    handleEdit();
+  };
+
+  const [edit, setEdit] = useState(false);
+
+  const handleEdit = () => {
+    setEdit(!edit);
   };
 
   return (
     <>
       <Box onClick={handleClickOpen}>{props.children}</Box>
-      <SimpleDialog
+      {/* <SimpleDialog
+        handleEdit={handleEdit}
+        edit={edit}
         data={props.data}
         URL={props.URL}
         setDataSet={props.setDataSet}
@@ -219,7 +222,7 @@ export default function RedeemModal(props) {
         user={props.user}
         open={open}
         onClose={handleClose}
-      />
+      /> */}
     </>
   );
 }

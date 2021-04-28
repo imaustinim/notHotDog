@@ -18,6 +18,7 @@ const nodeItemSchema = new mongoose.Schema({
   },
   contract: {
     type: Object,
+    immutable: false,
   },
   activeDate: {
     type: Date,
