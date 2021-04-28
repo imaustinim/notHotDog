@@ -17,8 +17,8 @@ export default function DemoColourGrid(props) {
       alignItems: "center",
     },
     icon: {
-      width: "120px",
-      height: "120px",
+      width: "144px",
+      height: "144px",
       transform: "rotate(45deg)",
       transition: "1s ease-in-out",
       "&:hover": {
@@ -77,7 +77,7 @@ export default function DemoColourGrid(props) {
       </Grid>
       <Box display="flex" mt={3}>
         <Typography align="center" variant="h5">
-          The ultimate loyalty rewards manager!
+          The ultimate customer loyalty program
         </Typography>
       </Box>
       <Grid>
