@@ -8,6 +8,8 @@ const checkLogin = require("../controllers/api/auth").checkLogin;
 router.post("/signup", authCtrl.create);
 router.post("/login", authCtrl.login);
 
+
+// client-side
 router.use(checkLogin);
 
 // Nodes
@@ -21,10 +23,13 @@ router.get("/campaigns/:id", nodeCtrl.getNode);
 router.get("/tokens/getData", nodeItemCtrl.getData);
 router.get("/tokens/:id/delete", nodeItemCtrl.deleteToken);
 router.get("/tokens/create/:nodeId", nodeItemCtrl.create);
-router.get("/tokens/redeem/:nodeId", nodeItemCtrl.redeemToken);
+router.post("/tokens/redeem", nodeItemCtrl.redeemToken);
 
 router.get("/test", function (req, res, next) {
   console.log(req.user);
+  const io = req.app.get("socketio");
+  console.log("OK");
+  io.emit("business-redeem");
   res.status(200).json(req.user);
 });
 module.exports = router;

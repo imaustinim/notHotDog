@@ -3,6 +3,9 @@ const Node = require("../../models/node");
 const NodeItem = require("../../models/nodeItem");
 const Contract = require("../../models/classes/contract");
 var ObjectID = require("mongodb").ObjectID;
+const io = require("socket.io-client");
+
+const socket = io("http://localhost:5000/");
 
 module.exports = {
   getData,
@@ -55,7 +58,6 @@ async function isNodeIdValid(nodeId) {
 async function create(req, res) {
   try {
     let node = await isNodeIdValid(req.params.nodeId);
-    console.log(node);
     if (node.constructor.name === "Error") throw node;
 
     // Edge Case [ No remaining node items ]
@@ -70,7 +72,10 @@ async function create(req, res) {
 
     // Create & Add Node Item to Node Model
     let activeDate, expireDate;
-    if (node.contract.staticDate) {
+    activeDate = node.activeDate;
+    expireDate = node.expireDate;
+
+    /*     if (node.contract.staticDate) {
       activeDate = node.activeDate;
       expireDate = node.expireDate;
     } else {
@@ -79,7 +84,7 @@ async function create(req, res) {
         new Date().getDate() + node.contract.duration
       );
       if (expireDate > node.expireDate) expireDate = node.expireDate;
-    }
+    } */
 
     const nodeItem = await NodeItem.create({
       _node: node,
@@ -95,71 +100,59 @@ async function create(req, res) {
     res.status(400).send(err.message);
   }
 }
-
 async function redeemToken(req, res) {
-  let node = Node.findById(req.params.nodeId);
-  let nodeItem = nodeItem.findById(req.body.tokenId);
-  const now = new Date();
-
-  // Check 1: Token exists and key is valid
   try {
-    // Check 2: Current date is between node dates
-    if (node.activeDate >= now && node.expireDate <= now) {
-    } else if (node.activeDate < now) {
-      throw {
-        checkFailed: 2,
-        message: "Campaign not yet started",
-        redeemed: false,
-      };
-    } else if (node.expireDate < now) {
-      throw {
-        checkFailed: 2,
-        message: "Campaing ended",
-        redeemed: false,
-      };
+    if (!ObjectID.isValid(req.body.nodeItem)) {
+      throw new Error("Node Item Id provided is not a valid format");
+    } else if (
+      new ObjectID(req.body.nodeItem).toString() !== req.body.nodeItem
+    ) {
+      throw new Error("Node Item Id provided is not a valid address");
     }
-    await node.findOne({ "nodeItems._id": nodeItem._id }).then((nodeItem) => {
-      // Check 3: Check if token is redeemed
-      if (nodeItem.redeemed) {
-        throw {
-          checkFailed: 3,
-          message: "Token already redeemed",
-          redeemed: false,
-        };
-      }
 
-      // Check 4: Check dynamic dates and current date is between nodes
-      if (!nodeItem.staticDate) {
-        if (nodeItem.activeDate < now) {
-          throw {
-            checkFailed: 4,
-            message: "Can't redeem token yet",
-            redeemed: false,
-          };
-        } else if (nodeItem.expireDate > now) {
-          throw {
-            checkFailed: 4,
-            message: "Token expired",
-            redeemed: false,
-          };
-        }
-      }
+    let thisItem = await NodeItem.findById(req.body.nodeItem).populate("_node");
+    let thisBusiness = req.user;
+    const now = new Date();
 
-      // Redeem token
-      const newPrice = nodeItem.contract.redeem(req.body.tokenValue);
-      throw {
-        message: "Token Redeemed",
-        contract: nodeItem.contract,
-        redeemed: true,
-      };
-    });
+    /* Check if nodeItem has been redeemed */
+
+    if (thisItem.redeemed) {
+      throw new Error("This has already been claimed");
+    }
+    /* Check if nodeitem is for this business: */
+    if (thisItem._node._business != thisBusiness._id) {
+      throw new Error("Invalid Business");
+    }
+    /* check if campaign is still active */
+    let activeDate = new Date(thisItem.activeDate);
+    let expireDate = new Date(thisItem.expireDate);
+    if (now < activeDate) {
+      throw new Error("Campaign is not yet active");
+    }
+    if (now > expireDate) {
+      throw new Error("Campaign has expired");
+    }
+
+    /* Are there uses left? */
+    let thisContract = thisItem.contract;
+
+    if (thisContract.numUses > 0) {
+      thisContract.numUses--;
+    }
+    if (thisContract.numUses === 0) {
+      thisContract.redeemed = true;
+      thisItem.redeemed = true;
+    }
+
+    thisItem.contract = { ...thisContract };
+    thisItem.markModified("contract");
+
+    await thisItem.save();
+    socket.emit("business-redeem", { id: thisItem._user, name: thisItem._node.name });
+
+    res.send(`Successfully Redeemed Coupon: ${thisItem._node.name}`);
   } catch (err) {
-    console.log("Error", err);
-    throw {
-      checkFailed: 1,
-      message: "Invalid Key",
-      redeemed: false,
-    };
+    res.status(400).send(err.message);
   }
 }
 
