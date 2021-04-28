@@ -29,20 +29,20 @@ export default function BusinessDashboard(props) {
       transform: "rotate(180deg)",
     },
   }));
-  
+
   const classes = useStyles();
   let [dataSet, setDataSet] = useState([]);
 
   useEffect(() => {
     try {
-      getCampaignData().then((data) => setDataSet(data))
+      getCampaignData().then((data) => setDataSet(data));
     } catch (err) {
       console.log(err);
     }
   }, []);
 
   return (
-    <Container maxWidth="sm" className={classes.root}>
+    <Container maxWidth='sm' className={classes.root}>
       {dataSet ? (
         <List className={classes.list}>
           {dataSet.map((item, idx) => (
@@ -50,8 +50,8 @@ export default function BusinessDashboard(props) {
               expanded={props.expanded}
               handleAccordian={props.handleAccordian}
               URL={props.URL + "tokens/create/"}
-              idx={idx}
-              key={idx}
+              idx={item._id}
+              key={item._id}
               data={item}
               setDataSet={setDataSet}
               setSnack={props.setSnack}
@@ -63,13 +63,13 @@ export default function BusinessDashboard(props) {
         <></>
       )}
       <CampaignForm
-        className="campaignform"
+        className='campaignform'
         setDataSet={setDataSet}
         setSnack={props.setSnack}
         user={props.user}
         {...props}
       />
-      <DemoColourGrid/>
+      <DemoColourGrid />
     </Container>
   );
 }

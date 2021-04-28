@@ -35,7 +35,6 @@ export async function handleSearchList(user) {
       let thisOption = createOption(each);
       return thisOption;
     });
-    console.log(options);
     return options;
   } catch (err) {
     console.log(err);

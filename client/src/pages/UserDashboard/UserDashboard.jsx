@@ -42,12 +42,13 @@ export default function UserDashboard(props) {
       severity: "success",
     });
   };
-  socket.on("client-redeem", (data) => {
-    console.log("CLIENT SIDE RECIEVED REDEEM HOOK", data.name);
-    handleEmit(data);
-  });
+
   useEffect(() => {
     try {
+      socket.on("client-redeem", (data) => {
+        console.log("CLIENT SIDE RECIEVED REDEEM HOOK", data.name);
+        handleEmit(data);
+      });
       getTokenData().then((res) => setDataSet(res));
     } catch (err) {
       console.log(err);
