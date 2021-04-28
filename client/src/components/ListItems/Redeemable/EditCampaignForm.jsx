@@ -104,7 +104,7 @@ export default function EditCampaignForm(props) {
       if (res.status !== 200) {
         throw res;
       } else {
-        props.handleEdit()
+        props.handleClose()
         try {
           let data = await getCampaignData()
           setCampaign()
