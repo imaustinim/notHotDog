@@ -7,40 +7,34 @@ import { getCampaignData } from "../../utils/businessUtils";
 import CampaignForm from "./CampaignForm";
 import Redeemable from "../../components/ListItems/Redeemable/Redeemable";
 
-const useStyles = makeStyles((theme) => ({
-  root: {
-    marginTop: theme.spacing(12),
-  },
-  form: {
-    width: "100%", // Fix IE 11 issue.
-    marginTop: theme.spacing(12),
-  },
-  submit: {
-    margin: theme.spacing(3, 0, 2),
-  },
-  expand: {
-    display: "inline-block",
-    verticalAlign: "middle",
-    transform: "rotate(0deg)",
-    marginLeft: "auto",
-    transition: theme.transitions.create("transform", {
-      duration: theme.transitions.duration.shortest,
-    }),
-  },
-  expandOpen: {
-    transform: "rotate(180deg)",
-  },
-}));
-
 export default function BusinessDashboard(props) {
+  const useStyles = makeStyles((theme) => ({
+    root: {
+      marginTop: theme.spacing(12),
+    },
+    submit: {
+      margin: theme.spacing(3, 0, 2),
+    },
+    expand: {
+      display: "inline-block",
+      verticalAlign: "middle",
+      transform: "rotate(0deg)",
+      marginLeft: "auto",
+      transition: theme.transitions.create("transform", {
+        duration: theme.transitions.duration.shortest,
+      }),
+    },
+    expandOpen: {
+      transform: "rotate(180deg)",
+    },
+  }));
+  
   const classes = useStyles();
   let [dataSet, setDataSet] = useState([]);
 
   useEffect(() => {
     try {
-      getCampaignData().then((data) => {
-        setDataSet(data);
-      });
+      getCampaignData().then((data) => setDataSet(data))
     } catch (err) {
       console.log(err);
     }
@@ -48,13 +42,6 @@ export default function BusinessDashboard(props) {
 
   return (
     <Container maxWidth="sm" className={classes.root}>
-      <CampaignForm
-        className={classes.form}
-        setDataSet={setDataSet}
-        setSnack={props.setSnack}
-        user={props.user}
-        {...props}
-      />
       {dataSet ? (
         <List className={classes.list}>
           {dataSet.map((item, idx) => (
@@ -74,6 +61,13 @@ export default function BusinessDashboard(props) {
       ) : (
         <></>
       )}
+      <CampaignForm
+        className="campaignform"
+        setDataSet={setDataSet}
+        setSnack={props.setSnack}
+        user={props.user}
+        {...props}
+      />
     </Container>
   );
 }

@@ -9,6 +9,29 @@ import Card from '@material-ui/core/Card';
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
 import Hidden from '@material-ui/core/Hidden';
+import Modal from '@material-ui/core/Modal';
+import Backdrop from '@material-ui/core/Backdrop';
+import Fade from '@material-ui/core/Fade';
+import Container from '@material-ui/core/Container';
+
+
+import Button from "@material-ui/core/Button";
+import DialogTitle from "@material-ui/core/DialogTitle";
+import Dialog from "@material-ui/core/Dialog";
+import ListItemIcon from "@material-ui/core/ListItemIcon";
+import IconButton from "@material-ui/core/IconButton";
+import DialogActions from "@material-ui/core/DialogActions";
+import DialogContent from "@material-ui/core/DialogContent";
+import DialogContentText from "@material-ui/core/DialogContentText";
+import useMediaQuery from "@material-ui/core/useMediaQuery";
+import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
+import Slide from "@material-ui/core/Slide";
+import DeleteIcon from "@material-ui/icons/Delete";
+import EditIcon from "@material-ui/icons/Edit";
+
+import EditCampaignForm from "./EditCampaignForm";
+import { deleteCampaign, getCampaignData } from "../../../utils/businessUtils";
+import { deleteToken, getTokenData } from "../../../utils/userUtils";
 
 import "./Redeemable.css"
 
@@ -21,18 +44,70 @@ import LoyaltyIcon from "@material-ui/icons/Loyalty";
 import CardGiftcardIcon from "@material-ui/icons/CardGiftcard";
 
 import { ParseData, ParseUserData } from "./RedeemableUtil";
+import QRCode from "qrcode.react";
+
 
 export default function Redeemable(props) {
-  const mytheme = useTheme();
+  const { data, onClose } = props;
+  const [edit, setEdit] = useState(false);
+  const [qrSize, setQrSize] = useState(256);
+  const [open, setOpen] = React.useState(false);
+
+  const handleOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+  // const handleEdit = () => {
+  //   setEdit(!edit);
+  // };
+
+  const handleDelete = async () => {
+    try {
+      let res;
+      if (props.user.businessName) {
+        res = await deleteCampaign(parsedData.id);
+        getCampaignData().then((data) => props.setDataSet(data));
+        props.setSnack({
+          open: true,
+          message: `Successfully deleted ${res.node.name}!`,
+          severity: "success",
+        });
+      } else {
+        res = await deleteToken(parsedData.id);
+        getTokenData().then((data) => props.setDataSet(data));
+        props.setSnack({
+          open: true,
+          message: `Successfully deleted ${res.token._node.name}!`,
+          severity: "success",
+        });
+      }
+      props.handleAccordian(props.idx)
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const theme = useTheme();
   let parsedData = props.user.businessName
-    ? ParseData(props.data, mytheme)
-    : ParseUserData(props.data, mytheme);
+    ? ParseData(props.data, theme)
+    : ParseUserData(props.data, theme);
   const useStyles = makeStyles((theme) => ({
+    modal: {
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+    },
+    paper: {
+      backgroundColor: theme.palette.background.paper,
+    },
     inline: {
       display: "inline",
     },
     listItem: {
-      backgroundColor: parsedData.background[mytheme.palette.type],
+      backgroundColor: parsedData.background[theme.palette.type],
     },
     accordian: {
       paddingBottom: theme.spacing(5),
@@ -40,17 +115,15 @@ export default function Redeemable(props) {
     },
     accordionSummary: {
       height: "64px",
-      // flexDirection: "row-reverse"
     },
     accordianDetails: {
       "&:hover": {
         cursor: "pointer",
       },
-      minHeight: "132px",
-      // maxHeight: "252px",
+      minHeight: "156px"
     },
     icon: {
-      color: parsedData.background[mytheme.palette.type]
+      color: parsedData.background[theme.palette.type]
     }
   }));
   const classes = useStyles();
@@ -64,7 +137,6 @@ export default function Redeemable(props) {
       return <EventSeatIcon className={classes.icon}/>
     }
   }
-
 
   return (
     <>
@@ -83,42 +155,129 @@ export default function Redeemable(props) {
         <Box my="auto">
           <Avatar alt="..." src={parsedData.avatar} /> 
         </Box>
-        <Box my="auto" ml={1}>
-          <Typography className={classes.heading}>{parsedData.businessName}</Typography>
+        <Box my="auto" ml={2}>
+          <Typography variant="h6" className={classes.heading}>{parsedData.businessName}</Typography>
         </Box>
         <Box my="auto" ml="auto">
-          <Typography className={classes.heading}>{parsedData.secondary}</Typography>
+          <Typography variant="subtitle1" className={classes.heading}>{parsedData.secondary}</Typography>
         </Box>
       </AccordionSummary>
       <AccordionDetails
         className={classes.accordianDetails}
         onClick={props.handleAccordian(props.idx)}
         >
+        <Box display="block">
+          <Box>
+            <Typography
+            variant="subtitle1"
+            className={classes.heading}>{parsedData.name}
+            </Typography>
+            <Typography
+            variant="body2"
+            className={classes.heading}>{parsedData.description}
+            </Typography>
+          </Box>
+          <Box display="flex" mt={3}>
+            <Box mt="auto" mr="auto" align="right">
+              <Typography
+              variant="body2"
+              className={classes.heading}>
+                <strong>Status:&nbsp;</strong>{(parsedData.redeemed) ? "Redeemed" : "Active"}</Typography>
+            </Box>
+            <Box mt="auto" ml="0" align="right">
+              <Typography
+              variant="body2"
+              className={classes.heading}>{parsedData.date}</Typography>
+            </Box>
+          </Box>
+        </Box>
       </AccordionDetails>
-        <Box>
-          
+      <Box mx={1}>
+        <hr color="lightgrey"/>
+      </Box>
+      <Box display="flex" justifyContent="flex-end" mr={.5}>
+      {props.user.businessName ? (
+        <Box display="flex">
+          <IconButton
+            onClick={handleOpen}
+            edge='start'
+            aria-label='edit'>
+            <EditIcon />
+          </IconButton>
         </Box>
-      <AccordionDetails
-        className={classes.accordianDetails}
-        onClick={props.handleAccordian(props.idx)}
+      ) : <></> }
+        <Box display="flex">
+          <IconButton
+            onClick={handleDelete}
+            edge='start'
+            aria-label='delete'>
+            <DeleteIcon />
+          </IconButton>
+        </Box> 
+      </Box>
+      <AccordionDetails className={classes.accordianDetails} >
+        <Box
+          mx="auto"
+          display="block"
+          justifyContent='center'
+          alignItems='center'
         >
-        <Box mr="auto" mt="auto">
-          <Typography
-          variant="subtitle1"
-          className={classes.heading}>{parsedData.name}
-          </Typography>
-          <Typography
-          variant="body2"
-          className={classes.heading}>{parsedData.name}
-          </Typography>
-        </Box>
-        <Box mt="auto" ml="0" align="right">
-          <Typography
-          variant="caption"
-          className={classes.heading}>{parsedData.date}</Typography>
+          <Box>
+          <QRCode
+            value={parsedData.id}
+            size={qrSize}
+            bgColor={theme.palette.primary.main}
+            fgColor={theme.palette.secondary.main}
+          />
+          </Box>
+          <Box mt={1}>
+            <Typography variant="subtitle1" align="center">
+              Id: {parsedData.id}
+            </Typography>
+          </Box>
         </Box>
       </AccordionDetails>
     </Accordion>
+    {props.edit ? (
+        <>
+          {/* <DialogContent>
+            <Box
+              display='flex'
+              flexDirection='column'
+              justifyContent='center'
+              alignItems='center'>
+              <EditCampaignForm
+                data={data}
+                setDataSet={props.setDataSet}
+                setSnack={props.setSnack}
+              />
+            </Box>
+          </DialogContent> */}
+        </>
+    ) : <></> }
+    <Modal
+      aria-labelledby="transition-modal-title"
+      aria-describedby="transition-modal-description"
+      open={open}
+      className={classes.modal}
+      onClose={handleClose}
+      closeAfterTransition
+      BackdropComponent={Backdrop}
+      BackdropProps={{timeout: 100}}
+    >
+      <Fade in={open}>
+        <Card>
+          <Container maxWidth="sm" className={classes.paper}>
+            <EditCampaignForm
+              handleClose={handleClose}
+              data={parsedData}
+              setDataSet={props.setDataSet}
+              setSnack={props.setSnack}
+            />
+          </Container>
+        </Card>
+      </Fade>
+    </Modal>
 
 
     {/* <Card

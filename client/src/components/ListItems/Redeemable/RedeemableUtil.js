@@ -3,7 +3,7 @@ import { setDate } from "date-fns/esm";
 export function ParseUserData(data, theme) {
   let startDate = new Date(data.activeDate);
   let endDate = new Date(data.expireDate);
-  console.log(data);
+  // console.log(data);
   let parsedData = {
     id: data._id,
     businessName: data._node._business.businessName,
@@ -12,6 +12,7 @@ export function ParseUserData(data, theme) {
     description: data._node.description,
     startDate: startDate,
     endDate: endDate,
+    redeemed: data.redeemed
   };
   parsedData = createMessage(data, theme, parsedData);
   console.log(data);
