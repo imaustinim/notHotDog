@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import clsx from "clsx"
 import Avatar from "@material-ui/core/Avatar";
 import { makeStyles, useTheme } from "@material-ui/core/styles";
 
@@ -35,7 +36,8 @@ import QRCode from "qrcode.react";
 
 export default function Redeemable(props) {
   const [qrSize, setQrSize] = useState(256);
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = useState(false);
+  const [active, setActive] = useState()
 
   const handleOpen = () => {
     setOpen(true);
@@ -81,10 +83,6 @@ export default function Redeemable(props) {
       alignItems: 'center',
       justifyContent: 'center',
     },
-    accordian: {
-      paddingBottom: theme.spacing(5),
-      marginBottom: theme.spacing(5),
-    },
     accordionSummary: {
       height: "64px",
     },
@@ -93,26 +91,20 @@ export default function Redeemable(props) {
       "&:hover": {
         cursor: "pointer",
         filter: "grayscale(0%)",
-        transition: ".5s ease-in-out"
       },
       paddingTop: "0px",
       minHeight: "146px",
-      transition: ".3s ease-in-out"
     },
     icon: {
-      color: "white",
-      filter: "brightness(98%)"
+      color: "#F8FFA8",
+      filter: "brightness(100%)"
     },
     active: {
+      filter: "grayscale(15%)",
     },
-    redeemed: {
-      filter: "grayscale(80%)",
-      transition: ".3s ease-in-out"
+    inactive: {
+      filter: "grayscale(100%)",
     },
-    expired: {
-      filter: "grayscale(80%)",
-      transition: ".3s ease-in-out"
-    }
   }));
   const classes = useStyles();
 
@@ -130,10 +122,10 @@ export default function Redeemable(props) {
     <>
       <Accordion
         style={{background: parsedData.background}}
-        className={classes.accordion}
-        className={parsedData.active ? classes.active : classes.null}
-        className={parsedData.redeemed ? classes.redeemed : classes.null}
-        className={parsedData.expired ? classes.expired : classes.null}
+        className={clsx({
+          [classes.active]: parsedData.active,
+          [classes.inactive]: !parsedData.active,
+        })}
         expanded={props.expanded === props.idx} 
         onChange={props.handleAccordian(props.idx)}
         >
@@ -146,7 +138,9 @@ export default function Redeemable(props) {
             <Avatar alt="..." src={parsedData.avatar} /> 
           </Box>
           <Box my="auto" ml={2}>
-            <Typography variant="h6" className={classes.heading}>{parsedData.businessName}</Typography>
+            <Typography variant="h6" className={classes.heading}>
+              {props.user.businessName ? parsedData.name : parsedData.businessName}
+            </Typography>
           </Box>
           <Box my="auto" ml="auto">
             <Typography variant="subtitle1" className={classes.heading}>{parsedData.secondary}</Typography>
@@ -160,7 +154,9 @@ export default function Redeemable(props) {
             <Box display="flex" flexDirection="column" >
               <Box display="flex">
                 <Box>
-                  <Typography variant="h6">{parsedData.name}</Typography>
+                  <Typography variant="h6">
+                    {props.user.businessName ? parsedData.businessName : parsedData.name}
+                  </Typography>
                 </Box>
                 <Box display="flex" ml="auto">
                   {props.user.businessName ? (
