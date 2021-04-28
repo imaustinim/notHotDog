@@ -1,12 +1,7 @@
 import React, { useState } from 'react';
 import Avatar from "@material-ui/core/Avatar";
-<<<<<<< HEAD
-import { makeStyles, useTheme, withStyles } from "@material-ui/core/styles";
-import RedeemModal from "../RedeemModal/RedeemModal";
-=======
 import { makeStyles, useTheme } from "@material-ui/core/styles";
 
->>>>>>> redeem
 import Card from '@material-ui/core/Card';
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
@@ -133,7 +128,6 @@ export default function Redeemable(props) {
 
   return (
     <>
-<<<<<<< HEAD
       <Accordion
         style={{background: parsedData.background}}
         className={classes.accordion}
@@ -142,32 +136,6 @@ export default function Redeemable(props) {
         className={parsedData.expired ? classes.expired : classes.null}
         expanded={props.expanded === props.idx} 
         onChange={props.handleAccordian(props.idx)}
-=======
-    <Accordion
-      square={false}
-      className={classes.accordion}
-      expanded={props.expanded === props.idx} 
-      onChange={props.handleAccordian(props.idx)}
-      >
-      <AccordionSummary 
-        className={classes.accordionSummary}
-        id={props.idx}
-        // IconButtonProps={{edge: 'start'}}
-        expandIcon={campaignIcon(props.data.contract.type)}>
-        <Box my="auto">
-          <Avatar alt="..." src={parsedData.avatar} /> 
-        </Box>
-        <Box my="auto" ml={2}>
-          <Typography variant="h6" className={classes.heading}>{parsedData.businessName}</Typography>
-        </Box>
-        <Box my="auto" ml="auto">
-          <Typography variant="subtitle1" className={classes.heading}>{parsedData.secondary}</Typography>
-        </Box>
-      </AccordionSummary>
-      <AccordionDetails
-        className={classes.accordianDetails}
-        onClick={props.handleAccordian(props.idx)}
->>>>>>> redeem
         >
         <AccordionSummary 
           className={classes.accordionSummary}
@@ -281,40 +249,10 @@ export default function Redeemable(props) {
                 setDataSet={props.setDataSet}
                 setSnack={props.setSnack}
               />
-<<<<<<< HEAD
             </Container>
           </Card>
         </Fade>
       </Modal>
-=======
-            </Box>
-          </DialogContent> */}
-        </>
-    ) : <></> }
-    <Modal
-      aria-labelledby="transition-modal-title"
-      aria-describedby="transition-modal-description"
-      open={open}
-      className={classes.modal}
-      onClose={handleClose}
-      closeAfterTransition
-      BackdropComponent={Backdrop}
-      BackdropProps={{timeout: 100}}
-    >
-      <Fade in={open}>
-        <Card>
-          <Container maxWidth="sm" className={classes.paper}>
-            <EditCampaignForm
-              handleClose={handleClose}
-              data={parsedData}
-              setDataSet={props.setDataSet}
-              setSnack={props.setSnack}
-            />
-          </Container>
-        </Card>
-      </Fade>
-    </Modal>
->>>>>>> redeem
     </>
   );
 }
