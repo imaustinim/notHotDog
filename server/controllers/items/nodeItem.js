@@ -5,8 +5,6 @@ const Contract = require("../../models/classes/contract");
 var ObjectID = require("mongodb").ObjectID;
 const io = require("socket.io-client");
 
-const socket = io("http://localhost:5000/");
-
 module.exports = {
   getData,
   create,
@@ -22,7 +20,6 @@ async function getData(req, res) {
         path: "_business",
       },
     });
-    console.log(tokens);
     res.status(200).send({
       tokens: tokens,
     });
@@ -39,7 +36,6 @@ async function isNodeIdValid(nodeId) {
       throw "nodeId provided is not a valid address";
     } else {
       let node = await Node.findById(nodeId);
-      console.log(node);
       let now = new Date();
       if (node.remainingQuantity === 0) {
         throw "Sorry, all of this token has been claimed!";
@@ -103,6 +99,7 @@ async function create(req, res) {
 }
 async function redeemToken(req, res) {
   try {
+    const socket = io("http://localhost:5000/");
     if (!ObjectID.isValid(req.body.nodeItem)) {
       throw new Error("Node Item Id provided is not a valid format");
     } else if (
@@ -149,7 +146,7 @@ async function redeemToken(req, res) {
     thisItem.markModified("contract");
 
     await thisItem.save();
-    socket.emit("business-redeem", {
+    await socket.emit("business-redeem", {
       id: thisItem._user,
       name: thisItem._node.name,
     });

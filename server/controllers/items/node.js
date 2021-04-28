@@ -51,7 +51,7 @@ async function editNode(req, res) {
 
 async function deleteNode(req, res) {
   const node = await Node.findOneAndDelete({ _id: req.params.id });
-  console.log(node);
+
   res.status(200).send({
     status: 200,
     message: "Successfully delete campaign",
