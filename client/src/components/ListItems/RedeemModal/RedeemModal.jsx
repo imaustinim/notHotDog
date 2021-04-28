@@ -27,8 +27,9 @@ import EditCampaignForm from "./EditCampaignForm";
 import { deleteCampaign, getCampaignData } from "../../../utils/businessUtils";
 import { deleteToken, getTokenData } from "../../../utils/userUtils";
 
-import QRCode from "qrcode.react";
+import { socket, pairNow } from "../../../utils/socketio";
 
+import QRCode from "qrcode.react";
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction='up' ref={ref} {...props} />;
 });
@@ -36,7 +37,6 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 function SimpleDialog(props) {
   const theme = useTheme();
   const { data, onClose, open } = props;
-  const URL = props.URL + data.id;
   const [qrSize, setQrSize] = useState(128);
   let xsMatch = useMediaQuery(theme.breakpoints.down("xs"));
   let smMatch = useMediaQuery(theme.breakpoints.up("sm"));
@@ -72,8 +72,20 @@ function SimpleDialog(props) {
       console.log(err);
     }
   };
-
+  const handleEmit = (emitData) => {
+    getTokenData().then((data) => props.setDataSet(data));
+    props.setSnack({
+      open: true,
+      message: `Successfully redeemed '${emitData.name}'`,
+      severity: "success",
+    });
+  };
   useEffect(() => {
+    socket.on("client-redeem", (data) => {
+      console.log("CLIENT SIDE RECIEVED REDEEM HOOK", data.name);
+      handleEmit(data);
+    });
+
     if (mdMatch) setQrSize(512);
     else if (smMatch) setQrSize(400);
     else if (xsMatch) setQrSize(200);
@@ -188,6 +200,7 @@ export default function RedeemModal(props) {
   const [open, setOpen] = React.useState(false);
 
   const handleClickOpen = () => {
+    pairNow();
     setOpen(true);
   };
 

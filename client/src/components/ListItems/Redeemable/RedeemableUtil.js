@@ -1,7 +1,6 @@
 export function ParseUserData(data, theme) {
   let startDate = new Date(data.activeDate);
   let endDate = new Date(data.expireDate);
-  console.log(data);
   let parsedData = {
     id: data._id,
     businessName: data._node._business.businessName,
@@ -12,7 +11,6 @@ export function ParseUserData(data, theme) {
     endDate: endDate,
   };
   parsedData = createMessage(data, theme, parsedData);
-  console.log(data);
   return parsedData;
 }
 
@@ -49,7 +47,7 @@ function createMessage(data, theme, parsedData) {
             2
           )} / $${parseFloat(data.contract.value).toFixed(2)}`}
           <br />
-          <strong>Expires:</strong>
+          Expires:
           {parsedData.endDate.toDateString()}
           <br />
         </>
@@ -59,11 +57,11 @@ function createMessage(data, theme, parsedData) {
       parsedData.background = theme.palette.ticket;
       parsedData.secondary = (
         <>
-          <strong>Start date:</strong>
+          Start date:
           {parsedData.startDate.toDateString()} @
           {parsedData.startDate.toLocaleTimeString("en-us")}
           <br />
-          <strong>End date:</strong>
+          End date:
           {parsedData.endDate.toDateString()} @
           {parsedData.endDate.toLocaleTimeString("en-us")}
           <br />
@@ -77,10 +75,10 @@ function createMessage(data, theme, parsedData) {
           <>
             {data.contract.value}% Off
             <br />
-            <strong>Activated:</strong>
+            Activated:
             {parsedData.startDate.toDateString()}
             <br />
-            <strong>Expires:</strong>
+            Expires:
             {parsedData.endDate.toDateString()}
             <br />
           </>
@@ -90,10 +88,10 @@ function createMessage(data, theme, parsedData) {
           <>
             ${parseFloat(data.contract.value).toFixed(2)} Off
             <br />
-            <strong>Activated:</strong>
+            Activated:
             {parsedData.startDate.toDateString()}
             <br />
-            <strong>Expires:</strong>
+            Expires:
             {parsedData.endDate.toDateString()}
             <br />
           </>
@@ -104,11 +102,11 @@ function createMessage(data, theme, parsedData) {
       parsedData.background = theme.palette.error;
       parsedData.secondary = (
         <>
-          <strong>Activated:</strong>
+          Activated:
           {parsedData.startDate.toDateString()} @ [
           {parsedData.startDate.toLocaleTimeString("en-us")}]
           <br />
-          <strong>Expires:</strong>
+          Expires:
           {parsedData.endDate.toDateString()} @ [
           {parsedData.endDate.toLocaleTimeString("en-us")}]
           <br />

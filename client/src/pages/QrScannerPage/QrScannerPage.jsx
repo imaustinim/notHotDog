@@ -45,15 +45,28 @@ export default function QrScanner(props) {
   let handleSubmit = async () => {
     try {
       if (result) {
-        let res = await QrScannerUtil.checkCode(result);
-        if (res.constructor && res.constructor.name === "Error") throw res;
-        let response = JSON.parse(res);
-        console.log(response);
-        props.setSnack({
-          open: true,
-          message: `Added new coupon "${response._node.name}"`,
-          severity: "success",
-        });
+        if (!props.user.businessName) {
+          /* If this is the user scanner, work as normal */
+          let res = await QrScannerUtil.checkCode(result);
+          if (res.constructor && res.constructor.name === "Error") throw res;
+          let response = JSON.parse(res);
+          props.setSnack({
+            open: true,
+            message: `Added new coupon "${response._node.name}"`,
+            severity: "success",
+          });
+        } else {
+          /* If this is a business scanner: */
+          let res = await QrScannerUtil.redeemCode(result);
+          console.log(res);
+          if (res.constructor && res.constructor.name === "Error") throw res;
+          let response = res;
+          props.setSnack({
+            open: true,
+            message: `Response: ${response}`,
+            severity: "success",
+          });
+        }
       }
     } catch (err) {
       props.setSnack({
