@@ -78,11 +78,7 @@ function createMessage(data, theme, parsedData) {
       let tEndDate = tEndDateArr[1] + " " + tEndDateArr[2] + ", " + tEndDateArr[3]
       parsedData.color = theme.palette.ticket;
       parsedData.background = `linear-gradient(${degree}deg, ${theme.palette.ticket.light} ${startPercent}%, ${theme.palette.ticket.dark} ${endPercent}%)`
-      parsedData.secondary = (
-        <>
-          
-        </>
-      );
+      parsedData.secondary = tStartDate;
       parsedData.date = (
         <>
           <strong>Time: </strong>{" "}

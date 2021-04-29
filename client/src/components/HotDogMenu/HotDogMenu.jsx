@@ -1,5 +1,5 @@
 import { useState, useRef } from "react";
-import clsx from "clsx"
+import clsx from "clsx";
 import {
   Grow,
   Paper,
@@ -17,12 +17,9 @@ import Divider from "@material-ui/core/Divider";
 
 import { Link as RouterLink } from "react-router-dom";
 import HotDogIcon from "../HotDogIcon/HotDogIcon";
-import AllInboxIcon from "@material-ui/icons/AllInbox";
+import DashboardIcon from "@material-ui/icons/Dashboard";
 import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 import InvertColorsIcon from "@material-ui/icons/InvertColors";
-import EventSeatIcon from "@material-ui/icons/EventSeat";
-import LoyaltyIcon from "@material-ui/icons/Loyalty";
-import CardGiftcardIcon from "@material-ui/icons/CardGiftcard";
 
 import { logout } from "../../utils/authUtils";
 export default function HotDogMenu(props) {
@@ -46,7 +43,7 @@ export default function HotDogMenu(props) {
     },
     icon: {
       transition: ".7s ease-in-out",
-    }
+    },
   }));
   const classes = useStyles();
 
@@ -81,26 +78,17 @@ export default function HotDogMenu(props) {
             <Paper>
               <ClickAwayListener onClickAway={handleClose}>
                 <MenuList autoFocusItem={open} id='menu-list-grow'>
+                  {/* //dashboard */}
                   <MenuItem
-                    onClick={(e) => {
-                      handleClose(e);
-                      props.toggleLightDark();
-                    }}>
+                    onClick={handleClose}
+                    to={`/`}
+                    component={RouterLink}>
                     <ListItemIcon>
-                      <InvertColorsIcon />
+                      <DashboardIcon />
                     </ListItemIcon>
-                    <ListItemText primary='Toggle Light/Dark Mode' />
+                    <ListItemText primary='Dashboard' />
                   </MenuItem>
-                  <MenuItem
-                    onClick={(e) => {
-                      handleClose(e);
-                      logout();
-                    }}>
-                    <ListItemIcon>
-                      <ExitToAppIcon />
-                    </ListItemIcon>
-                    <ListItemText primary='Logout' />
-                  </MenuItem>
+                  {/* //qr_code_scanner */}
                   <Divider />
                   <MenuItem
                     onClick={handleClose}
@@ -114,41 +102,27 @@ export default function HotDogMenu(props) {
                     <ListItemText primary='QR Scanner' />
                   </MenuItem>
                   <Divider />
+                  {/* //toggle */}
                   <MenuItem
-                    onClick={handleClose}
-                    to={`/`}
-                    component={RouterLink}>
+                    onClick={(e) => {
+                      handleClose(e);
+                      props.toggleLightDark();
+                    }}>
                     <ListItemIcon>
-                      <AllInboxIcon />
+                      <InvertColorsIcon />
                     </ListItemIcon>
-                    <ListItemText primary='Show All' />
+                    <ListItemText primary='Toggle Light/Dark Mode' />
                   </MenuItem>
+                  {/* //logout */}
                   <MenuItem
-                    onClick={handleClose}
-                    to={`/`}
-                    component={RouterLink}>
+                    onClick={(e) => {
+                      handleClose(e);
+                      logout();
+                    }}>
                     <ListItemIcon>
-                      <LoyaltyIcon />
+                      <ExitToAppIcon />
                     </ListItemIcon>
-                    <ListItemText primary='Coupons' />
-                  </MenuItem>
-                  <MenuItem
-                    onClick={handleClose}
-                    to={`/`}
-                    component={RouterLink}>
-                    <ListItemIcon>
-                      <CardGiftcardIcon />
-                    </ListItemIcon>
-                    <ListItemText primary='Giftcards' />
-                  </MenuItem>
-                  <MenuItem
-                    onClick={handleClose}
-                    to={`/`}
-                    component={RouterLink}>
-                    <ListItemIcon>
-                      <EventSeatIcon />
-                    </ListItemIcon>
-                    <ListItemText primary='Tickets' />
+                    <ListItemText primary='Logout' />
                   </MenuItem>
                 </MenuList>
               </ClickAwayListener>

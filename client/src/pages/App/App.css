@@ -20,8 +20,8 @@ a {
 }
 
 .MuiCardActionArea-root {
-  -webkit-filter: grayscale(0%) !important;
-  filter: grayscale(0%) !important;
+  /* -webkit-filter: grayscale(0%) !important; */
+  /* filter: grayscale(0%) !important; */
   transition: 0.2s ease-in-out;
 }
 
