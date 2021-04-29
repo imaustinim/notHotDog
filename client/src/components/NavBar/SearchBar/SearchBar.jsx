@@ -79,7 +79,6 @@ const useStyles = makeStyles((theme) => ({
   searchBar: {
     justifyContent: "center",
     display: "flex",
-    margin: "10px 0 0 14px",
     width: "auto",
   }
 }));
@@ -122,8 +121,9 @@ export default function SearchBar(props) {
   return (
     <div className={classes.search} {...getRootProps()} >
       <TextField
-        variant="standard" 
-        placeholder='Search…'
+        // size="small"
+        variant="filled" 
+        label="Search..."
         fullWidth={true}
         className={classes.searchBar}
         // classes={{
@@ -134,7 +134,7 @@ export default function SearchBar(props) {
         {...getInputProps()}
         InputProps={{
           endAdornment: (
-            <InputAdornment position="start" style={{ marginRight: "14px"}}>
+            <InputAdornment position="start" style={{marginBottom: "16px"}}>
               <SearchIcon />
             </InputAdornment>
           ),
