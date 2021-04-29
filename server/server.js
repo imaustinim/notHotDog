@@ -32,8 +32,8 @@ app.use(
 );
 
 // Build
-app.use(favicon(path.join(__dirname, "..", "client", "build", "hotdog.svg")));
-app.use(express.static(path.join(__dirname, "..", "client", "build")));
+app.use(favicon(path.join("client", "build", "hotdog.svg")));
+app.use(express.static(path.join("client", "build")));
 
 let server = app.listen(port, function () {
   console.log(`Express app running on port ${port}`);
