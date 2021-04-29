@@ -1,4 +1,4 @@
-export let checkCode = async (code) => {
+export let addCode = async (code) => {
   try {
     let jwt = localStorage.getItem("token");
     let url = `${window.location.protocol}//${window.location.hostname}:${window.location.port}/api/tokens/create/${code}`;
@@ -39,6 +39,30 @@ export let redeemCode = async (code) => {
     let res = await fetch(url, options);
     console.log(res);
     let response = await res.text();
+    if (!res.ok) {
+      throw response;
+    } else {
+      return response;
+    }
+  } catch (err) {
+    return new Error(err);
+  }
+};
+
+export let getOne = async (nodeItemId) => {
+  try {
+    let jwt = localStorage.getItem("token");
+    let url = `${window.location.protocol}//${window.location.hostname}:${window.location.port}/api/tokens/${nodeItemId}`;
+    let options = {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + jwt,
+      },
+    };
+
+    let res = await fetch(url, options);
+    let response = await res.json();
     if (!res.ok) {
       throw response;
     } else {

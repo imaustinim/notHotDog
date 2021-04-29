@@ -4,6 +4,7 @@ import {
   CardActions,
   CardContent,
   Container,
+  Grid,
   Icon,
   IconButton,
   LinearProgress,
@@ -38,6 +39,7 @@ export default function QrScanner(props) {
     console.log(err);
   };
   let handleFacingMode = () => {
+    setResult("");
     if (facingMode === "environment") setFacingMode("user");
     else setFacingMode("environment");
   };
@@ -47,7 +49,7 @@ export default function QrScanner(props) {
       if (result) {
         if (!props.user.businessName) {
           /* If this is the user scanner, work as normal */
-          let res = await QrScannerUtil.checkCode(result);
+          let res = await QrScannerUtil.addCode(result);
           if (res.constructor && res.constructor.name === "Error") throw res;
           let response = JSON.parse(res);
           props.setSnack({
@@ -75,6 +77,22 @@ export default function QrScanner(props) {
         severity: "error",
       });
     }
+    setResult("");
+  };
+
+  let timeOut;
+
+  let handleChange = async (e) => {
+    clearTimeout(timeOut);
+    await setResult(e.target.value);
+    timeOut = setTimeout(async function () {
+      try {
+        let thisNode = await QrScannerUtil.getOne(result);
+        console.log(thisNode);
+      } catch (err) {
+        console.log(err);
+      }
+    }, 1000);
   };
   return (
     <Container component={Box} pt={10} maxWidth='sm'>
@@ -92,32 +110,44 @@ export default function QrScanner(props) {
           <LinearProgress color='secondary' />
         </CardContent>
         <CardActions>
-          <IconButton onClick={handleFacingMode}>
-            <FlipCameraIosIcon />
-          </IconButton>
-          <Typography className={classes.flexGrow}>Scanning...</Typography>
-          {result ? (
-            <>
-              <IconButton onClick={handleSubmit}>
-                <Icon>check</Icon>
+          <Grid container>
+            <Grid item xs={12} component={Box} display='flex'>
+              <IconButton onClick={handleFacingMode}>
+                <FlipCameraIosIcon />
               </IconButton>
-              <IconButton
-                onClick={() => {
-                  setResult("");
-                }}>
-                <RedoIcon />
-              </IconButton>
-            </>
-          ) : (
-            <></>
-          )}
-          <TextField
-            id='outlined-basic'
-            placeholder='Result'
-            variant='outlined'
-            onChange={(e) => setResult(e.target.value)}
-            value={result}
-          />
+              <Typography className={classes.flexGrow}>Scanning...</Typography>
+              {result ? (
+                <>
+                  <IconButton onClick={handleSubmit}>
+                    <Icon>check</Icon>
+                  </IconButton>
+                  <IconButton
+                    onClick={() => {
+                      setResult("");
+                    }}>
+                    <RedoIcon />
+                  </IconButton>
+                </>
+              ) : (
+                <></>
+              )}
+              <TextField
+                id='outlined-basic'
+                placeholder='Result'
+                variant='outlined'
+                onChange={handleChange}
+                value={result}
+              />
+            </Grid>
+
+            {props.user && props.user.businessName ? (
+              <Grid item xs={12}>
+                Business
+              </Grid>
+            ) : (
+              <></>
+            )}
+          </Grid>
         </CardActions>
       </Card>
     </Container>
