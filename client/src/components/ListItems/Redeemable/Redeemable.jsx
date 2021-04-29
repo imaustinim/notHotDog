@@ -91,7 +91,7 @@ export default function Redeemable(props) {
       display: "block",
       "&:hover": {
         cursor: "pointer",
-        filter: "grayscale(0%)",
+        filter: "grayscale(100%)",
       },
       paddingTop: "0px",
       minHeight: "146px",
@@ -104,7 +104,7 @@ export default function Redeemable(props) {
       // filter: "grayscale(15%)",
     },
     inactive: {
-      filter: "grayscale(100%)",
+      // filter: "grayscale(100%)",
     },
   }));
   const classes = useStyles();

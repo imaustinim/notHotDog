@@ -28,19 +28,21 @@ export default function LoginButtons(props) {
 
   return (
     <>
-      <Button
-        ref={anchorRef}
-        edge='end'
-        aria-controls={open ? "menu-list-grow" : undefined}
-        aria-haspopup='true'
-        aria-label={"login" + props.type}
-        onClick={handleToggle}
-        color='inherit'
-        startIcon={props.icon}>
-        <Box display={{ xs: "none", sm: "inline" }}>
-          <Typography variant='body1'>{props.type}</Typography>
-        </Box>
-      </Button>
+      <Box>
+        <Button
+          ref={anchorRef}
+          edge='end'
+          aria-controls={open ? "menu-list-grow" : undefined}
+          aria-haspopup='true'
+          aria-label={"login" + props.type}
+          onClick={handleToggle}
+          color='inherit'
+          startIcon={props.icon}>
+          <Box display={{ xs: "none", sm: "inline" }}>
+            <Typography variant='body1'>{props.type}</Typography>
+          </Box>
+        </Button>
+      </Box>
       <Popper
         open={open}
         anchorEl={anchorRef.current}

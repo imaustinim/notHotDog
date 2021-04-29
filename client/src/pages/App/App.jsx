@@ -60,16 +60,16 @@ function App() {
   const theme = createMuiTheme({
     palette: {
       giftcard: {
-        light: "#EF476F",
-        dark: "#F47C98",
+        light: "#FBB1BD",
+        dark: "#FF7096",
       },
       ticket: {
-        light: "#EE6644",
-        dark: "#F1856A",
+        light: "#74C69D",
+        dark: "#A8DCC2",
       },
       coupon: {
-        light: "#0AC2FF",
-        dark: "#70DBFF",
+        light: "#85A9FF",
+        dark: "#ADC6FF",
       },
       type: darkMode ? "dark" : "light",
       secondary: {

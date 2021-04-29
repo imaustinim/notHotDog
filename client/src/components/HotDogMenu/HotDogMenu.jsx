@@ -41,7 +41,7 @@ export default function HotDogMenu(props) {
 
   const useStyles = makeStyles((theme) => ({
     hotdog: {
-      transform: "rotate(180deg)",
+      transform: "rotate(225deg)",
       transition: ".7s ease-in-out",
     },
     icon: {

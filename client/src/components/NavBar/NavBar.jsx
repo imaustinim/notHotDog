@@ -12,13 +12,21 @@ import SearchBar from "./SearchBar/SearchBar";
 import HotDogMenu from "../HotDogMenu/HotDogMenu";
 import HotDogIcon from "../HotDogIcon/HotDogIcon";
 
-/* 
-                
- */
 const useStyles = makeStyles((theme) => ({
   grow: {
     flexGrow: 1,
   },
+  not: {
+    fontSize: "10.3px",
+    fontWeight: 600,
+    position: "relative",
+    bottom: "12.3px",
+    marginLeft: "8px"
+  },
+  hotdog: {
+    fontSize: "24px",
+    fontWeight: 600,
+  }
 }));
 
 export default function NavBar(props) {
@@ -42,7 +50,12 @@ export default function NavBar(props) {
                   className={classes.grow}>
                   <Box display={{ xs: "none", sm: "block" }}>
                     <Link component={RouterLink} to='/' color='inherit'>
-                      !hotdog
+                      <Typography display="inline" className={classes.not}>
+                      not&nbsp;
+                      </Typography>
+                      <Typography display="inline" className={classes.hotdog}>
+                      Hot Dog
+                      </Typography>
                     </Link>
                   </Box>
                 </Typography>
@@ -67,14 +80,19 @@ export default function NavBar(props) {
                   component='h1'
                   className={classes.grow}>
                   <Link component={RouterLink} to='/' color='inherit'>
-                    !hotdog
+                    <Typography display="inline" className={classes.not}>
+                      not&nbsp;
+                      </Typography>
+                      <Typography display="inline" className={classes.hotdog}>
+                      Hot Dog
+                      </Typography>
                   </Link>
                 </Typography>
               </Box>
               <Box className={classes.grow}></Box>
 
-              <LoginButtons icon={<PersonOutlineIcon />} type='user' />
-              <LoginButtons icon={<BusinessIcon />} type='business' />
+              <LoginButtons icon={<PersonOutlineIcon />} type='user'/>
+              <LoginButtons icon={<BusinessIcon />} type='business'/>
             </>
           )}
 
