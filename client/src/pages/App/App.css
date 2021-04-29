@@ -17,7 +17,8 @@ a {
 
 .box-shadow,
 .MuiPaper-elevation1 {
-  box-shadow: 1px 1px 5px grey !important;
+  
+  box-shadow: 1px 1px 5px lightgrey !important;
 }
 
 .MuiCardActionArea-root {

@@ -7,7 +7,7 @@ import Grid from "@material-ui/core/Grid";
 
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import Typography from "@material-ui/core/Typography";
-import { makeStyles } from "@material-ui/core/styles";
+import { makeStyles, useTheme } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 
 import { useState } from "react";
@@ -36,6 +36,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function SignUp(props) {
+  const theme = useTheme();
   const classes = useStyles();
   const history = useHistory();
   const { type } = useParams();
@@ -106,6 +107,9 @@ export default function SignUp(props) {
           <Grid container spacing={2}>
             <Grid item xs={12} sm={6}>
               <TextField
+                InputLabelProps={{
+                  style: { color: theme.palette.text[theme.palette.type] },
+                }}
                 autoComplete='fname'
                 name='firstName'
                 variant='outlined'
@@ -122,6 +126,9 @@ export default function SignUp(props) {
             </Grid>
             <Grid item xs={12} sm={6}>
               <TextField
+                InputLabelProps={{
+                  style: { color: theme.palette.text[theme.palette.type] },
+                }}
                 variant='outlined'
                 required
                 fullWidth
@@ -138,6 +145,9 @@ export default function SignUp(props) {
             {type && type === "business" ? (
               <Grid item xs={12}>
                 <TextField
+                  InputLabelProps={{
+                    style: { color: theme.palette.text[theme.palette.type] },
+                  }}
                   variant='outlined'
                   required
                   fullWidth
@@ -156,6 +166,9 @@ export default function SignUp(props) {
 
             <Grid item xs={12}>
               <TextField
+                InputLabelProps={{
+                  style: { color: theme.palette.text[theme.palette.type] },
+                }}
                 variant='outlined'
                 required
                 fullWidth
@@ -172,6 +185,9 @@ export default function SignUp(props) {
             </Grid>
             <Grid item xs={12}>
               <TextField
+                InputLabelProps={{
+                  style: { color: theme.palette.text[theme.palette.type] },
+                }}
                 variant='outlined'
                 required
                 fullWidth

@@ -2,14 +2,13 @@ import React from "react";
 import clsx from "clsx";
 import Container from "@material-ui/core/Container";
 import List from "@material-ui/core/List";
-import { makeStyles } from "@material-ui/core/styles";
+import { makeStyles, useTheme } from "@material-ui/core/styles";
 import { useState, useEffect } from "react";
 import { getCampaignData } from "../../utils/businessUtils";
 import CampaignForm from "./CampaignForm";
 import Redeemable from "../../components/ListItems/Redeemable/Redeemable";
-import DemoColourGrid from "../../components/DemoColourGrid/DemoColourGrid";
 import LoadingPage from "../../components/LoadingPage/LoadingPage";
-import { Box, MenuItem, Select, FormControl } from "@material-ui/core";
+import { Box, MenuItem, Select } from "@material-ui/core";
 import EventSeatIcon from "@material-ui/icons/EventSeat";
 import LoyaltyIcon from "@material-ui/icons/Loyalty";
 import CardGiftcardIcon from "@material-ui/icons/CardGiftcard";
@@ -19,11 +18,9 @@ import { sortData } from "../UserDashboard/UserDashboardUtil";
 import ToggleButtonGroup from "@material-ui/lab/ToggleButtonGroup";
 import SearchBar from "../../components/NavBar/SearchBar/SearchBar";
 import Grid from "@material-ui/core/Grid";
-import Card from "@material-ui/core/Card";
-import { normalizeUnits } from "moment";
-
 
 export default function BusinessDashboard(props) {
+  const theme = useTheme();
   const useStyles = makeStyles((theme) => ({
     root: {
       marginTop: theme.spacing(10),
@@ -49,50 +46,71 @@ export default function BusinessDashboard(props) {
     sort: {
       flexGrow: 1,
       width: "144px",
+      boxShadow: "1px 1px 3px lightgrey",
       borderRadius: 0,
       borderTop: "1.5px solid grey",
-      // borderBottom: "1.5px solid grey",
       borderLeft: "1px solid grey",
       borderRight: "1px solid grey",
       margin: "-1.5px -1px 0 -1px",
       top: "px"
     },
     borderMid: {
+      boxShadow: "1px 1px 3px lightgrey",
       borderRadius: 0,
       borderTop: "1.5px solid grey",
-      borderBottom: "1.5px solid lightgrey",
+      borderBottom: "1.5px solid grey",
       borderRight: "1.5px solid grey",
       borderLeft: "1.5px solid grey",
       bottom: "1px",
       marginBottom: "-1px"
     },
     borderLeft: {
+      boxShadow: "1px 1px 3px lightgrey",
       borderRadius: 0,
       borderRadiusTopLeft: 4,
-      borderBottom: "1.5px solid lightgrey",
+      borderBottom: "1.5px solid grey",
       borderTop: "1.5px solid grey",
       borderRight: "1.5px solid grey",
       bottom: "1.5px",
       marginBottom: "-1px"
     },
     borderRight: {
+      boxShadow: "1px 1px 3px lightgrey",
       borderRadius: 0,
       borderBottomRightRadius: 4,
       // borderTop: "1.5px solid grey",
-      // borderBottom: "1.5px solid lightgrey",
+      borderBottom: "1.5px solid grey",
       borderLeft: "1.5px solid grey",
       bottom: "1px",
       marginBottom: "-1px"
     },
     utilityBar: {
+      boxShadow: "1px 1px 5px grey",
       border: "none",
       borderRadius: 4,
-      boxShadow: "1px 1px 5px grey"
+    },
+    list: {
+      boxShadow: "1px 1px 5px grey",
+      borderRadius: 4,
+      border: "none",
+      padding: 0,
+      marginTop: theme.spacing(2),
+      marginBottom: theme.spacing(2)
+    },
+    giftcardIcon: {
+      color: theme.palette.giftcard[theme.palette.type]
+    },
+    couponIcon: {
+      color: theme.palette.coupon[theme.palette.type]
+    },
+    ticketIcon: {
+      color: theme.palette.ticket[theme.palette.type]
     }
   }));
 
   const classes = useStyles();
   let [loading, setLoading] = useState(false);
+  const [toggle, setToggle] = useState("")
 
   useEffect(() => {
     try {
@@ -127,6 +145,11 @@ export default function BusinessDashboard(props) {
     setLoading(false);
   };
   const handleJustOne = async (e, val) => {
+    if (val === toggle) {
+      setToggle("")
+    } else {
+      setToggle(val)
+    }
     let newSort = { ...props.sort };
     newSort.justOne = val;
     await props.setSort(newSort);
@@ -153,16 +176,31 @@ export default function BusinessDashboard(props) {
                 exclusive
                 onChange={handleJustOne}>
                 <ToggleButton value='coupon' className={classes.borderLeft}>
-                  <LoyaltyIcon />
+                  <LoyaltyIcon
+                    className={clsx({
+                      [classes.couponIcon]: toggle==="coupon"
+                    })}
+                  />
                 </ToggleButton>
                 <ToggleButton value='ticket' className={classes.borderMid}>
-                  <EventSeatIcon/>
+                  <EventSeatIcon
+                    className={clsx({
+                      [classes.ticketIcon]: toggle==="ticket"
+                    })}
+                  />
                 </ToggleButton>
                 <ToggleButton value='gift card' className={classes.borderMid}>
-                  <CardGiftcardIcon/>
+                  <CardGiftcardIcon 
+                    className={clsx({
+                      [classes.giftcardIcon]: toggle === "gift card"
+                    })}
+                  />
                 </ToggleButton>
               </ToggleButtonGroup>
               <Select
+                InputLabelProps={{
+                  style: { color: theme.palette.text[theme.palette.type] },
+                }}
                 id='select-sort'
                 value={props.sort.sort}
                 variant='outlined'
@@ -192,6 +230,7 @@ export default function BusinessDashboard(props) {
           {props.dataSet ? (
             props.dataSet.map((item, idx) => (
               <Redeemable
+                darkMode={props.darkMode}
                 expanded={props.expanded}
                 handleAccordian={props.handleAccordian}
                 URL={props.URL + "tokens/create/"}
@@ -210,13 +249,13 @@ export default function BusinessDashboard(props) {
       </LoadingPage>
 
       <CampaignForm
+        darkMode={props.darkMode}
         className='campaignform'
         setDataSet={props.setDataSet}
         setSnack={props.setSnack}
         user={props.user}
         {...props}
       />
-      <DemoColourGrid />
     </Container>
   );
 }

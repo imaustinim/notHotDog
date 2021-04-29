@@ -98,12 +98,15 @@ export default function Redeemable(props) {
     },
     active: {
       "&:hover": {
-        filter: "grayscale(0%)",
+        filter: props.darkMode ? "brightness(100%)" : "brightness(110%)"
       },
-      filter: "grayscale(30%)",
+      filter: props.darkMode ? "brightness(80%)" : "",
     },
     inactive: {
-      // filter: "grayscale(100%)",
+      filter: props.darkMode ? "grayscale(100%) brightness(80%)" : "grayscale(100%)",
+      "&:hover": {
+        filter: props.darkMode ? "grayscale(80%)" : "grayscale(80%)"
+      },
     },
   }));
   const classes = useStyles();
@@ -121,7 +124,9 @@ export default function Redeemable(props) {
   return (
     <>
       <Accordion
-        style={{ background: parsedData.background }}
+        style={{
+          background: parsedData.background,
+        }}
         className={clsx({
           [classes.active]: parsedData.active,
           [classes.inactive]: !parsedData.active,
@@ -155,7 +160,7 @@ export default function Redeemable(props) {
           <Box display='flex' flexDirection='column'>
             <Box display='flex' flexDirection='column'>
               <Box display='flex'>
-                <Box>
+                <Box alignSelf="center">
                   <Typography variant='h6'>
                     {props.user.businessName
                       ? parsedData.businessName
@@ -192,18 +197,38 @@ export default function Redeemable(props) {
               </Box>
               <Box display='flex' mt='auto' mb={0} pt={1}>
                 <Box mt='auto' mr='auto' align='left'>
-                  <Typography variant='body2'>
-                    <strong>Status:&nbsp;</strong>
-                    {props.user.businessName
-                      ? parsedData.expired
-                        ? "Finished"
-                        : "Active"
-                      : parsedData.redeemed
-                      ? "Redeemed"
-                      : parsedData.expired
-                      ? "Expired"
-                      : "Active"}
-                  </Typography>
+                  {props.user.businessName ? (
+                    <>
+                    <Box mt='auto' mr='auto' align='left'>
+                      <Typography variant='body2'>
+                        <strong>Redeemed:&nbsp;</strong>
+                        {props.data.redeemedQuantity}
+                      </Typography>
+                    </Box>
+                    <Box mt='auto' mr='auto' align='left'>
+                      <Typography variant='body2'>
+                        <strong>Quantity:&nbsp;</strong>
+                        {props.data.remainingQuantity > -1 ? 
+                          props.data.remainingQuantity : "Unlimited"
+                        }
+                      </Typography>
+                    </Box>
+                    </>
+                  ) : (<></>)}
+                  <Box>
+                    <Typography variant='body2'>
+                      <strong>Status:&nbsp;</strong>
+                      {props.user.businessName
+                        ? parsedData.expired
+                          ? "Finished"
+                          : "Active"
+                        : parsedData.redeemed
+                        ? "Redeemed"
+                        : parsedData.expired
+                        ? "Expired"
+                        : "Active"}
+                    </Typography>
+                  </Box>
                 </Box>
                 <Box mt='auto' ml='auto' mr={0} align='right'>
                   <Typography variant='body2' className={classes.heading}>
@@ -256,6 +281,7 @@ export default function Redeemable(props) {
           <Card>
             <Container maxWidth='sm' className={classes.paper}>
               <EditCampaignForm
+                darkMode={props.darkMode}
                 handleClose={handleClose}
                 data={parsedData}
                 setDataSet={props.setDataSet}

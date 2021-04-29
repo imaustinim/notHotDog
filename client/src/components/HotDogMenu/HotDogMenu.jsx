@@ -27,6 +27,7 @@ export default function HotDogMenu(props) {
   const anchorRef = useRef(null);
   const handleToggle = () => {
     setOpen((prevOpen) => !prevOpen);
+    props.setHotdog(!props.hotdog)
   };
 
   const handleClose = (event) => {
@@ -57,7 +58,7 @@ export default function HotDogMenu(props) {
         aria-label={"login" + props.type}
         onClick={handleToggle}
         className={clsx(classes.icon, {
-          [classes.hotdog]: open,
+          [classes.hotdog]: props.hotdog,
         })}
         color='inherit'>
         <HotDogIcon />

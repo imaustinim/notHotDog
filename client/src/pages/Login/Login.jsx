@@ -7,12 +7,11 @@ import Link from "@material-ui/core/Link";
 import Grid from "@material-ui/core/Grid";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import Typography from "@material-ui/core/Typography";
-import { makeStyles } from "@material-ui/core/styles";
+import { makeStyles, useTheme } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import { useState } from "react";
 import { Link as RouterLink, useParams, useHistory } from "react-router-dom";
 import { attemptLogin } from "../../utils/authUtils";
-import HotDogIcon from "../../components/HotDogIcon/HotDogIcon";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -35,6 +34,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function SignIn(props) {
+  const theme = useTheme();
   const history = useHistory();
   let [email, setEmail] = useState("");
   let [password, setPassword] = useState("");
@@ -81,6 +81,9 @@ export default function SignIn(props) {
         </Typography>
         <form onSubmit={handleSubmit} className={classes.form} noValidate>
           <TextField
+            InputLabelProps={{
+              style: { color: theme.palette.text[theme.palette.type] },
+            }}
             variant='outlined'
             margin='normal'
             required
@@ -96,6 +99,9 @@ export default function SignIn(props) {
             autoFocus
           />
           <TextField
+            InputLabelProps={{
+              style: { color: theme.palette.text[theme.palette.type] },
+            }}
             variant='outlined'
             margin='normal'
             required

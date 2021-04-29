@@ -1,4 +1,4 @@
-import { Box, Grid, Input } from "@material-ui/core";
+import { Box, Grid } from "@material-ui/core";
 import SearchIcon from "@material-ui/icons/Search";
 import useAutocomplete from "@material-ui/lab/useAutocomplete";
 import { fade, makeStyles, useTheme } from "@material-ui/core/styles";
@@ -21,23 +21,10 @@ const useStyles = makeStyles((theme) => ({
     },
     maxWidth: "80ch",
     flexGrow: 1,
-    // marginRight: theme.spacing(),
     marginLeft: 0,
     [theme.breakpoints.up("sm")]: {
-      // marginLeft: theme.spacing(3),
       width: "auto",
     },
-  },
-  searchIcon: {
-    padding: theme.spacing(0, 2),
-    top: 0,
-    right: 0,
-    height: "100%",
-    position: "absolute",
-    pointerEvents: "none",
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
   },
   inputRoot: {
     color: "inherit",
@@ -45,13 +32,9 @@ const useStyles = makeStyles((theme) => ({
   },
   inputInput: {
     padding: theme.spacing(1, 1, 1, 0),
-    // vertical padding + font size from searchIcon
     paddingLeft: `calc(1em )`,
     transition: theme.transitions.create("width"),
     width: "100%",
-    // [theme.breakpoints.up("md")]: {
-    //   width: "20ch",
-    // },
   },
   listbox: {
     width: "100%",
@@ -79,12 +62,14 @@ const useStyles = makeStyles((theme) => ({
   searchBar: {
     justifyContent: "center",
     display: "flex",
-    margin: "10px 0 0 14px",
     width: "auto",
+    boxShadow: "1px 1px 5px lightgrey"
   }
 }));
 
 export default function SearchBar(props) {
+  const theme = useTheme();
+
   const classes = useStyles();
   let [searchList, setSearchList] = useState([]);
   const [search, setSearch] = useState("");
@@ -122,19 +107,18 @@ export default function SearchBar(props) {
   return (
     <div className={classes.search} {...getRootProps()} >
       <TextField
-        variant="standard" 
-        placeholder='Search…'
+        InputLabelProps={{
+          style: { color: theme.palette.text[theme.palette.type] },
+        }}
+        variant="filled" 
+        label="Search..."
         fullWidth={true}
         className={classes.searchBar}
-        // classes={{
-        //   root: classes.inputRoot,
-        //   // input: classes.inputInput,
-        // }}
         value={search}
         {...getInputProps()}
         InputProps={{
           endAdornment: (
-            <InputAdornment position="start" style={{ marginRight: "14px"}}>
+            <InputAdornment position="start" style={{marginBottom: "16px"}}>
               <SearchIcon />
             </InputAdornment>
           ),
