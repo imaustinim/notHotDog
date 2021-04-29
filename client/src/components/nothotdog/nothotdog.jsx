@@ -17,13 +17,13 @@ export default function NotHotDog(props) {
   }));
   const classes = useStyles();
   return (
-    <Box display="inline">
-      <Typography display="inline" variant="caption" align="center" className={classes.not}>
+    <>
+      <span display="inline" variant="caption" align="center" className={classes.not}>
         <strong>not</strong>&nbsp;
-      </Typography>
-      <Typography display="inline" className={classes.fontBody}>
-        <strong>Hot Dog</strong>
-      </Typography>
-    </Box>
+      </span>
+      <span display="inline" className={classes.fontBody}>
+       <strong>Hot Dog</strong>
+      </span>
+    </>
   );
 }
