@@ -32,7 +32,6 @@ import CardGiftcardIcon from "@material-ui/icons/CardGiftcard";
 
 import { ParseData, ParseUserData } from "./RedeemableUtil";
 import QRCode from "qrcode.react";
-import classNames from "classnames";
 
 export default function Redeemable(props) {
   const [open, setOpen] = useState(false);
@@ -112,7 +111,6 @@ export default function Redeemable(props) {
     },
   }));
   const classes = useStyles();
-  let cx = classNames.bind(classes)
 
   const campaignIcon = (type) => {
     if (type === "gift card") {
