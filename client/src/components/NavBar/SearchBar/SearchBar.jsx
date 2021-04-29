@@ -79,12 +79,14 @@ const useStyles = makeStyles((theme) => ({
   searchBar: {
     justifyContent: "center",
     display: "flex",
-    margin: "10px 0 0 14px",
     width: "auto",
+    boxShadow: "1px 1px 5px lightgrey"
   }
 }));
 
 export default function SearchBar(props) {
+  const theme = useTheme();
+
   const classes = useStyles();
   let [searchList, setSearchList] = useState([]);
   const [search, setSearch] = useState("");
@@ -122,8 +124,11 @@ export default function SearchBar(props) {
   return (
     <div className={classes.search} {...getRootProps()} >
       <TextField
-        variant="standard" 
-        placeholder='Search…'
+        InputLabelProps={{
+          style: { color: theme.palette.text[theme.palette.type] },
+        }}
+        variant="filled" 
+        label="Search..."
         fullWidth={true}
         className={classes.searchBar}
         // classes={{
@@ -134,7 +139,7 @@ export default function SearchBar(props) {
         {...getInputProps()}
         InputProps={{
           endAdornment: (
-            <InputAdornment position="start" style={{ marginRight: "14px"}}>
+            <InputAdornment position="start" style={{marginBottom: "16px"}}>
               <SearchIcon />
             </InputAdornment>
           ),

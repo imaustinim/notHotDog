@@ -11,7 +11,7 @@ import {
   TextField,
   Typography,
 } from "@material-ui/core";
-import { makeStyles } from "@material-ui/core/styles";
+import { makeStyles, useTheme } from "@material-ui/core/styles";
 import { useState } from "react";
 import QrReader from "react-qr-reader";
 import FlipCameraIosIcon from "@material-ui/icons/FlipCameraIos";
@@ -19,6 +19,7 @@ import RedoIcon from "@material-ui/icons/Redo";
 import * as QrScannerUtil from "./QrScannerUtil";
 
 export default function QrScanner(props) {
+  const theme = useTheme();
   const useStyles = makeStyles((theme) => ({
     scanning: { backgroundColor: theme.palette.info.light },
     success: { backgroundColor: theme.palette.success.light },

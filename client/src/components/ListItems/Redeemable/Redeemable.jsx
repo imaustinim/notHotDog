@@ -32,6 +32,7 @@ import CardGiftcardIcon from "@material-ui/icons/CardGiftcard";
 
 import { ParseData, ParseUserData } from "./RedeemableUtil";
 import QRCode from "qrcode.react";
+import classNames from "classnames";
 
 export default function Redeemable(props) {
   const [open, setOpen] = useState(false);
@@ -98,15 +99,20 @@ export default function Redeemable(props) {
     },
     active: {
       "&:hover": {
-        filter: "grayscale(0%)",
+        // filter: "grayscale(0%)",
+        filter: props.darkMode ? "brightness(100%)" : "brightness(110%)"
       },
-      filter: "grayscale(30%)",
+      filter: props.darkMode ? "brightness(80%)" : "",
     },
     inactive: {
-      // filter: "grayscale(100%)",
+      filter: props.darkMode ? "grayscale(100%) brightness(80%)" : "grayscale(100%)",
+      "&:hover": {
+        filter: props.darkMode ? "grayscale(80%)" : "grayscale(80%)"
+      },
     },
   }));
   const classes = useStyles();
+  let cx = classNames.bind(classes)
 
   const campaignIcon = (type) => {
     if (type === "gift card") {
@@ -121,7 +127,9 @@ export default function Redeemable(props) {
   return (
     <>
       <Accordion
-        style={{ background: parsedData.background }}
+        style={{
+          background: parsedData.background,
+        }}
         className={clsx({
           [classes.active]: parsedData.active,
           [classes.inactive]: !parsedData.active,
@@ -256,6 +264,7 @@ export default function Redeemable(props) {
           <Card>
             <Container maxWidth='sm' className={classes.paper}>
               <EditCampaignForm
+                darkMode={props.darkMode}
                 handleClose={handleClose}
                 data={parsedData}
                 setDataSet={props.setDataSet}

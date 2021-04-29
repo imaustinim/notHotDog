@@ -10,7 +10,7 @@ import InputLabel from '@material-ui/core/InputLabel';
 import FormControl from '@material-ui/core/FormControl';
 import MenuItem from '@material-ui/core/MenuItem';
 import Select from '@material-ui/core/Select';
-import { makeStyles } from "@material-ui/core/styles";
+import { makeStyles, useTheme } from "@material-ui/core/styles";
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import InputAdornment from '@material-ui/core/InputAdornment';
 
@@ -66,6 +66,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function CampaignForm(props) {
+  const theme = useTheme();
   const classes = useStyles();
   const history = useHistory();
 
@@ -176,6 +177,9 @@ export default function CampaignForm(props) {
                 <Grid container spacing={2}>
                   <Grid item xs={12} sm={6}>
                     <TextField
+                      InputLabelProps={{
+                        style: { color: theme.palette.text[theme.palette.type] },
+                      }}
                       variant='outlined'
                       required
                       fullWidth
@@ -191,7 +195,7 @@ export default function CampaignForm(props) {
                   </Grid>
                   <Grid item xs={12} sm={6}>
                     <FormControl fullWidth required variant="outlined" className={classes.formControl}>
-                      <InputLabel htmlFor="outlined-age-native-simple">Campaign Type</InputLabel>
+                      <InputLabel htmlFor="outlined-age-native-simple" color={ props.darkMode ? "primary" : "secondary" }>Campaign Type</InputLabel>
                       <Select
                         native
                         value={campaignType}
@@ -213,6 +217,9 @@ export default function CampaignForm(props) {
                   </Grid>
                   <Grid item xs={12} sm={12}>
                     <TextField
+                      InputLabelProps={{
+                        style: { color: theme.palette.text[theme.palette.type] },
+                      }}
                       variant='outlined'
                       fullWidth
                       multiline
@@ -230,6 +237,9 @@ export default function CampaignForm(props) {
                   </Grid>
                   <Grid item xs={12} sm={6}>
                     <TextField
+                      InputLabelProps={{
+                        style: { color: theme.palette.text[theme.palette.type] },
+                      }}
                       fullWidth
                       id="activeDate"
                       label="Start Date"
@@ -245,6 +255,9 @@ export default function CampaignForm(props) {
                   </Grid>
                   <Grid item xs={12} sm={6}>
                     <TextField
+                      InputLabelProps={{
+                        style: { color: theme.palette.text[theme.palette.type] },
+                      }}
                       fullWidth
                       id="expireDate"
                       label="End Date"
@@ -260,6 +273,9 @@ export default function CampaignForm(props) {
                   </Grid>
                   <Grid item xs={6} sm={6}>
                     <TextField
+                      InputLabelProps={{
+                        style: { color: theme.palette.text[theme.palette.type] },
+                      }}
                       variant='outlined'
                       required
                       fullWidth
@@ -278,6 +294,9 @@ export default function CampaignForm(props) {
                   {campaignType === "gift card" ? (
                     <Grid item xs={6} sm={6}>
                       <TextField
+                        InputLabelProps={{
+                          style: { color: theme.palette.text[theme.palette.type] },
+                        }}
                         variant='outlined'
                         required
                         fullWidth
@@ -299,6 +318,9 @@ export default function CampaignForm(props) {
                     <>
                     <Grid item xs={6} sm={6}>
                       <TextField
+                        InputLabelProps={{
+                          style: { color: theme.palette.text[theme.palette.type] },
+                        }}
                         variant='outlined'
                         required
                         fullWidth
@@ -316,6 +338,9 @@ export default function CampaignForm(props) {
                     </Grid>
                     <Grid item xs={6} sm={6}>
                       <TextField
+                        InputLabelProps={{
+                          style: { color: theme.palette.text[theme.palette.type] },
+                        }}
                         variant='outlined'
                         required
                         fullWidth
@@ -332,6 +357,9 @@ export default function CampaignForm(props) {
                     </Grid>
                     <Grid item xs={6} sm={6}>
                       <TextField
+                        InputLabelProps={{
+                          style: { color: theme.palette.text[theme.palette.type] },
+                        }}
                         fullWidth
                         id="unit"
                         select
@@ -369,6 +397,9 @@ export default function CampaignForm(props) {
                     <>
                     <Grid item xs={6} sm={6}>
                       <TextField
+                        InputLabelProps={{
+                          style: { color: theme.palette.text[theme.palette.type] },
+                        }}
                         variant='outlined'
                         required
                         fullWidth
@@ -386,6 +417,9 @@ export default function CampaignForm(props) {
                     </Grid>
                     <Grid item xs={6} sm={6}>
                       <TextField
+                        InputLabelProps={{
+                          style: { color: theme.palette.text[theme.palette.type] },
+                        }}
                         variant='outlined'
                         required
                         fullWidth
@@ -398,19 +432,6 @@ export default function CampaignForm(props) {
                         }}
                       />
                     </Grid>
-                    {/* <Grid item xs={6} sm={6}>
-                      <TextField
-                        required
-                        fullWidth
-                        id="numUses"
-                        label="Number of Uses"
-                        type="number"
-                        // InputLabelProps={{
-                        //   shrink: true,
-                        // }}
-                        variant="outlined"
-                      />
-                    </Grid> */}
                     </>
                   ) : (
                     <></>
