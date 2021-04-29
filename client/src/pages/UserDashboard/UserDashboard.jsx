@@ -188,7 +188,7 @@ export default function UserDashboard(props) {
 
   return (
     <Container maxWidth='sm' className={classes.root} >
-      {props.dataSet && props.dataSet.length > -1 ? (
+      {props.dataSet && props.dataSet.length > 0 ? (
       <>
       <Box mb={1} className={classes.utilityBar}>
         <Grid container>
@@ -253,48 +253,52 @@ export default function UserDashboard(props) {
           </Grid>
         </Grid>
       </Box>
-      <Box mt={2} className={classes.landingCard}>
-        <Card>
-          <CardContent>
-            <Box my={2}>
-              <Typography variant="h5" align="center" style={{fontWeight: "600"}}>
-                Welcome
-              </Typography>
-            </Box>
-            <Box className={classes.featureBody} align="center">
-              <NotHotDog/>&nbsp;
-              <Typography display="inline" className={classes.fontBody}>
-                allows you to store all your coupons, gift cards, and tokens without ever misplacing them!
-                Designed to save, this app takes care of the tedious and time consuming work of organizing your loyalty rewards.
-                Simply scan to add and display the QR Code when it's time to save.
-                <Box mb={1} mt={3}>
-                  Go paperless with <NotHotDog/>
-                </Box>
-                <Box mt={1} mb={3}>
-                  Go <NotHotDog/>
-                </Box>
-                Click on the button below to scan your first item.
-              </Typography>
-            </Box>
-          </CardContent>
-        </Card>
-      </Box>
-      <Box mt={2}>
-        <Button
-          type='submit'
-          fullWidth
-          variant='contained'
-          color='primary'
-        >
-          Scan Item
-        </Button>
-      </Box>
       </>
       ) : (
-      <Box>
-        <Card>
-        </Card>
-      </Box>
+      <>
+        <Box mt={2} className={classes.landingCard}>
+          <Card>
+            <CardContent>
+              <Box my={2}>
+                <Typography variant="h5" align="center" style={{fontWeight: "600"}}>
+                  Welcome
+                </Typography>
+              </Box>
+              <Box className={classes.featureBody} align="center">
+                <NotHotDog/>&nbsp;
+                <Typography display="inline" className={classes.fontBody}>
+                  allows you to store all your coupons, gift cards, and tokens without ever misplacing them!
+                  Designed to save, this app takes care of the tedious and time consuming work of organizing your loyalty rewards.
+                  Simply scan to add and display the QR Code when it's time to save.
+                </Typography>
+                <Box mb={1} mt={3}>
+                  <Typography display="inline" className={classes.fontBody}>
+                    Go paperless with <NotHotDog/>
+                  </Typography>
+                </Box>
+                <Box mt={1} mb={3}>
+                  <Typography display="inline" className={classes.fontBody}>
+                  Go <NotHotDog/>
+                  </Typography>
+                </Box>
+                <Typography display="inline" className={classes.fontBody}>
+                  Click on the button below to scan your first item.
+                </Typography>
+              </Box>
+            </CardContent>
+          </Card>
+        </Box>
+        <Box mt={2}>
+          <Button
+            type='submit'
+            fullWidth
+            variant='contained'
+            color='primary'
+          >
+            Scan Item
+          </Button>
+        </Box>
+      </>
       )}
       <LoadingPage show={loading} message={loading}>
         <List className={classes.list}>
