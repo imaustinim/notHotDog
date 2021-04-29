@@ -188,8 +188,6 @@ export default function UserDashboard(props) {
 
   return (
     <Container maxWidth='sm' className={classes.root} >
-      {props.dataSet && props.dataSet.length > 0 ? (
-      <>
       <Box mb={1} className={classes.utilityBar}>
         <Grid container>
           <Grid item xs={12}>
@@ -253,8 +251,7 @@ export default function UserDashboard(props) {
           </Grid>
         </Grid>
       </Box>
-      </>
-      ) : (
+      {!(props.dataSet && props.dataSet.length > 0 || props.sort.justOne) ? (
       <>
         <Box mt={2} className={classes.landingCard}>
           <Card>
@@ -299,6 +296,9 @@ export default function UserDashboard(props) {
           </Button>
         </Box>
       </>
+      ) : (
+        <>
+        </>
       )}
       <LoadingPage show={loading} message={loading}>
         <List className={classes.list}>
