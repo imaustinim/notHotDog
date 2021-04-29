@@ -4,7 +4,7 @@ import Container from "@material-ui/core/Container";
 import List from "@material-ui/core/List";
 import ToggleButton from "@material-ui/lab/ToggleButton";
 import ToggleButtonGroup from "@material-ui/lab/ToggleButtonGroup";
-import { makeStyles } from "@material-ui/core/styles";
+import { makeStyles, useTheme } from "@material-ui/core/styles";
 import { useState, useEffect } from "react";
 import { getTokenData } from "../../utils/userUtils";
 import Redeemable from "../../components/ListItems/Redeemable/Redeemable";
@@ -48,6 +48,7 @@ const useStyles = makeStyles((theme) => ({
   sort: {
     flexGrow: 1,
     width: "144px",
+    boxShadow: "1px 1px 3px lightgrey",
     borderRadius: 0,
     borderTop: "1.5px solid grey",
     // borderBottom: "1.5px solid grey",
@@ -57,6 +58,7 @@ const useStyles = makeStyles((theme) => ({
     top: "px"
   },
   borderMid: {
+    boxShadow: "1px 1px 3px lightgrey",
     borderRadius: 0,
     borderTop: "1.5px solid grey",
     borderBottom: "1.5px solid lightgrey",
@@ -66,6 +68,7 @@ const useStyles = makeStyles((theme) => ({
     marginBottom: "-1px"
   },
   borderLeft: {
+    boxShadow: "1px 1px 3px lightgrey",
     borderRadius: 0,
     borderRadiusTopLeft: 4,
     borderBottom: "1.5px solid lightgrey",
@@ -75,6 +78,7 @@ const useStyles = makeStyles((theme) => ({
     marginBottom: "-1px"
   },
   borderRight: {
+    boxShadow: "1px 1px 3px lightgrey",
     borderRadius: 0,
     borderBottomRightRadius: 4,
     // borderTop: "1.5px solid grey",
@@ -87,10 +91,28 @@ const useStyles = makeStyles((theme) => ({
     border: "none",
     borderRadius: 4,
     boxShadow: "1px 1px 5px grey"
+  },
+  list: {
+    borderRadius: 4,
+    boxShadow: "1px 1px 5px lightgrey",
+    border: "none",
+    padding: 0,
+    marginTop: theme.spacing(2),
+    marginBottom: theme.spacing(2)
+  },
+  giftcardIcon: {
+    color: theme.palette.giftcard[theme.palette.type]
+  },
+  couponIcon: {
+    color: theme.palette.coupon[theme.palette.type]
+  },
+  ticketIcon: {
+    color: theme.palette.ticket[theme.palette.type]
   }
 }));
 
 export default function UserDashboard(props) {
+  const theme = useTheme();
   const classes = useStyles();
   let [loading, setLoading] = useState(false);
   let updateDataSet = async () => {
@@ -100,6 +122,9 @@ export default function UserDashboard(props) {
     });
     setLoading(false);
   };
+
+  const [toggle, setToggle] = useState("")
+
 
   const handleEmit = (emitData) => {
     updateDataSet();
@@ -128,6 +153,11 @@ export default function UserDashboard(props) {
     setLoading(false);
   };
   const handleJustOne = async (e, val) => {
+    if (val === toggle) {
+      setToggle("")
+    } else {
+      setToggle(val)
+    }
     let newSort = { ...props.sort };
     newSort.justOne = val;
     await props.setSort(newSort);
@@ -166,16 +196,31 @@ export default function UserDashboard(props) {
                 exclusive
                 onChange={handleJustOne}>
                 <ToggleButton value='coupon' className={classes.borderLeft}>
-                  <LoyaltyIcon />
+                  <LoyaltyIcon
+                    className={clsx({
+                      [classes.couponIcon]: toggle==="coupon"
+                    })}
+                  />
                 </ToggleButton>
                 <ToggleButton value='ticket' className={classes.borderMid}>
-                  <EventSeatIcon/>
+                  <EventSeatIcon
+                    className={clsx({
+                      [classes.ticketIcon]: toggle==="ticket"
+                    })}
+                  />
                 </ToggleButton>
                 <ToggleButton value='gift card' className={classes.borderMid}>
-                  <CardGiftcardIcon/>
+                  <CardGiftcardIcon 
+                    className={clsx({
+                      [classes.giftcardIcon]: toggle === "gift card"
+                    })}
+                  />
                 </ToggleButton>
               </ToggleButtonGroup>
               <Select
+                InputLabelProps={{
+                  style: { color: theme.palette.text[theme.palette.type] },
+                }}
                 id='select-sort'
                 value={props.sort.sort}
                 variant='outlined'
@@ -200,23 +245,22 @@ export default function UserDashboard(props) {
         </Grid>
       </Box>
         <LoadingPage show={loading} message={loading}>
+          <List className={classes.list}>
           {props.dataSet ? (
             props.dataSet.map((item, idx) => (
               <Redeemable
-                expanded={props.expanded}
-                handleAccordian={props.handleAccordian}
-                URL={`${props.URL}/tokens/redeem/`}
-                idx={item._id}
-                key={item._id}
-                data={item}
-                setDataSet={props.setDataSet}
-                setSnack={props.setSnack}
-                user={props.user}
-              />
-            ))
-          ) : (
-            <></>
-          )}
+              darkMode={props.darkMode}
+              expanded={props.expanded}
+              handleAccordian={props.handleAccordian}
+              URL={`${props.URL}/tokens/redeem/`}
+              idx={item._id}
+              key={item._id}
+              data={item}
+              setDataSet={props.setDataSet}
+              setSnack={props.setSnack}
+              user={props.user}
+            />))) : (<></>)}
+          </List>
         </LoadingPage>
     </Container>
   );

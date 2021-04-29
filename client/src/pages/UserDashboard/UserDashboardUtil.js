@@ -1,6 +1,5 @@
 export function sortData(dataSet, sort) {
   let sortedData;
-  console.log(dataSet);
   switch (sort.justOne) {
     case null:
       sortedData = dataSet;

@@ -80,10 +80,13 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: "center",
     display: "flex",
     width: "auto",
+    boxShadow: "1px 1px 5px lightgrey"
   }
 }));
 
 export default function SearchBar(props) {
+  const theme = useTheme();
+
   const classes = useStyles();
   let [searchList, setSearchList] = useState([]);
   const [search, setSearch] = useState("");
@@ -121,7 +124,9 @@ export default function SearchBar(props) {
   return (
     <div className={classes.search} {...getRootProps()} >
       <TextField
-        // size="small"
+        InputLabelProps={{
+          style: { color: theme.palette.text[theme.palette.type] },
+        }}
         variant="filled" 
         label="Search..."
         fullWidth={true}

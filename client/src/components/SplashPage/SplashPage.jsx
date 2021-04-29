@@ -23,14 +23,14 @@ export default function DemoColourGrid(props) {
     icon: {
       width: "144px",
       height: "144px",
-      transform: "rotate(45deg)",
+      // transform: "rotate(45deg)",
       transition: "1s ease-in-out",
       "&:hover": {
         cursor: "pointer"
       }
     },
     hotdog: {
-      transform: "rotate(180deg)",
+      transform: "rotate(225deg)",
       transition: "1s ease-in-out",
     },
     hidden: {
