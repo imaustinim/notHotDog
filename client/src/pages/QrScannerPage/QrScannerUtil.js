@@ -1,3 +1,5 @@
+import { ParseUserData } from "../../components/ListItems/Redeemable/RedeemableUtil";
+
 export let addCode = async (code) => {
   try {
     let jwt = localStorage.getItem("token");
@@ -22,11 +24,12 @@ export let addCode = async (code) => {
   }
 };
 
-export let redeemCode = async (code) => {
+export let redeemCode = async (code, redeemValue = null) => {
   try {
     let jwt = localStorage.getItem("token");
     let url = `${window.location.protocol}//${window.location.hostname}:${window.location.port}/api/tokens/redeem/`;
     let body = { nodeItem: code };
+    if (redeemValue) body.redeemValue = redeemValue;
     let options = {
       method: "POST",
       cors: "cors",
@@ -49,8 +52,11 @@ export let redeemCode = async (code) => {
   }
 };
 
-export let getOne = async (nodeItemId) => {
+export let getOne = async (nodeItemId, theme) => {
   try {
+    if (nodeItemId.length !== 24)
+      throw new Error("Invalid Format for a Node Id");
+
     let jwt = localStorage.getItem("token");
     let url = `${window.location.protocol}//${window.location.hostname}:${window.location.port}/api/tokens/${nodeItemId}`;
     let options = {
@@ -62,13 +68,18 @@ export let getOne = async (nodeItemId) => {
     };
 
     let res = await fetch(url, options);
-    let response = await res.json();
+
+    let response = await res.text();
     if (!res.ok) {
       throw response;
     } else {
-      return response;
+      let parsed = JSON.parse(response);
+      let thisItem = ParseUserData(parsed, theme);
+      thisItem._nodeItem = parsed;
+      return thisItem;
     }
   } catch (err) {
+    console.log(err);
     return new Error(err);
   }
 };
