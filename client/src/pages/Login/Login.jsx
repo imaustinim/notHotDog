@@ -15,7 +15,7 @@ import { attemptLogin } from "../../utils/authUtils";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
-    marginTop: theme.spacing(12),
+    marginTop: theme.spacing(14),
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
@@ -77,7 +77,7 @@ export default function SignIn(props) {
         <Typography component='h1' variant='h5'>
           {`${
             type && type.length > 2 ? type[0].toUpperCase() + type.slice(1) : ""
-          } Sign in`}
+          } Sign In`}
         </Typography>
         <form onSubmit={handleSubmit} className={classes.form} noValidate>
           <TextField

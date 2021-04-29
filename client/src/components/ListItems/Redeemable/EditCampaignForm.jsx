@@ -69,7 +69,7 @@ export default function EditCampaignForm(props) {
     setCampaignType(data.type);
     setDescription(data.description);
     setActiveDate(moment(data.activeDate).format("YYYY-MM-DDTkk:mm"));
-    setExpireDate(moment(data.activeDate).format("YYYY-MM-DDTkk:mm"));
+    setExpireDate(moment(data.expireDate).format("YYYY-MM-DDTkk:mm"));
     setQuantity(data.remainingQuantity);
     setNumUses(data.contract.numUses);
     setValue(data.contract.value);
@@ -88,7 +88,8 @@ export default function EditCampaignForm(props) {
     } catch (err) {
       console.log(err);
     }
-  });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  },[]);
 
   const handleSubmit = async (e) => {
     try {
