@@ -70,7 +70,7 @@ export default function CampaignForm(props) {
   const classes = useStyles();
   const history = useHistory();
 
-  let [expanded, setExpanded] = useState(false);
+  let [expanded, setExpanded] = useState(props.length > 0 ? false : true);
   let [campaignName, setCampaignName] = useState("");
   let [campaignType, setCampaignType] = useState("");
   let [description, setDescription] = useState("");

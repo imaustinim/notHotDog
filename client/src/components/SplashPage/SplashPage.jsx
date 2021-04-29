@@ -6,6 +6,7 @@ import Container from "@material-ui/core/Container";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import HotDogIcon from "../HotDogIcon/HotDogIcon"
+import NotHotDog from "../nothotdog/nothotdog"
 
 export default function DemoColourGrid(props) {
   const [hotdog, setHotdog] = useState(true)
@@ -16,6 +17,8 @@ export default function DemoColourGrid(props) {
   const useStyles = makeStyles((theme) => ({
     paper: {
       marginTop: theme.spacing(8),
+      paddingLeft: theme.spacing(4),
+      paddingRight: theme.spacing(4),
       display: "flex",
       flexDirection: "column",
       alignItems: "center",
@@ -43,20 +46,11 @@ export default function DemoColourGrid(props) {
     transition: {
       transition: "1s ease-in-out",
     },
-    not: {
-      position: "relative", 
-      fontSize: "9px", 
-      bottom: "9px",
-    },
-    fontBody: {
-      fontSize: "18px",
-      fontWeight: 200
-    },
     aboutBody: {
       [theme.breakpoints.down("xs")]: {
         textAlign: "center"
       },
-      textAlign: "justify"
+      textAlign: "left"
     },
     featureBody: {
       [theme.breakpoints.down("xs")]: {
@@ -76,7 +70,7 @@ export default function DemoColourGrid(props) {
         })}
         />
       </Box>
-      <Box display="flex" className={classes.transition}>
+      <Box mt={2} display="flex" className={classes.transition}>
         <Typography 
           className={clsx(classes.transition,{
             [classes.hidden]: hotdog
@@ -103,7 +97,7 @@ export default function DemoColourGrid(props) {
               Your favourite customer loyalty app
         </Typography>
       </Box>
-      <Box mt={6} mb={6} width="98%">
+      <Box mt={6} mb={6} width="100%">
         <hr/>
       </Box>
       <Box>
@@ -117,19 +111,15 @@ export default function DemoColourGrid(props) {
           </Grid>
           <Grid item xs={12} sm={6}>
             <Box className={classes.aboutBody}>
-              <Typography display="inline" variant="caption" align="center" className={classes.not}>
-                <strong>not</strong>&nbsp;
-              </Typography>
+              <NotHotDog/>&nbsp;
               <Typography display="inline" className={classes.fontBody}>
-                <strong>Hot Dog</strong>&nbsp;
-              </Typography>
-              <Typography display="inline" align="justify" className={classes.fontBody}>
-                is a multiplatform loyalty cards platform where customers can store, track, and manage their loyalty cards. Businesses can create and manage marketing campaigns and loyalty programs.
+                is a free, and easy-to-use loyalty rewards manager. Users can manage all their cards, coupons, and tickets in one place. 
+                Small businesses can easily create and manage promotional campaigns and programs.
               </Typography>
             </Box>
           </Grid>
           <Grid item xs={12} sm={12}>
-            <Box display="flex" justifyContent="center" mt={8} mb={2}>
+            <Box display="flex" justifyContent="center" mt={6} mb={2}>
               <Typography variant="h4">
                 <strong>Features</strong>
               </Typography>
@@ -137,22 +127,25 @@ export default function DemoColourGrid(props) {
           </Grid>
           <Grid item xs={12} sm={12}>
             <Box className={classes.featureBody}>
-              <Typography display="inline" variant="caption" className={classes.not}>
-                <strong>not&nbsp;</strong>
-              </Typography>
+              <NotHotDog/>&nbsp;
               <Typography display="inline" className={classes.fontBody}>
-                <strong>Hot Dog&nbsp;</strong>
-              </Typography>
-              <Typography display="inline" className={classes.fontBody}>
-                allows you to keep track and manage various loyalty rewards cards such as coupons, gift cards, and tickets. Go paperless and never miss out on an opportunity to save!
+              allows you to store your favourite coupons, gift cards, and tokens without ever misplacing them!
+              Designed to save you time at home and in the checkout; our app lets you organize, collect and redeem benefits from local small businesses.
+              <Box>
+                Simply scan to add and display the QR Code when it's time to save.
+                Let our QR scanner simplify the process of adding and claiming your benefits
+              </Box>
+              
+              
+              
+              <Box mb={1} mt={3}>
+                Go paperless with <NotHotDog/>
+              </Box>
+              <Box mt={1} mb={3}>
+                Go <NotHotDog/>
+              </Box>
               </Typography>
             </Box>
-          </Grid>
-          <Grid item xs={6} sm={3}>
-          </Grid>
-          <Grid item xs={6} sm={3}>
-          </Grid>
-          <Grid item xs={6} sm={3}>
           </Grid>
         </Grid>
       </Box>

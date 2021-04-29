@@ -142,7 +142,7 @@ export default function Redeemable(props) {
             <Avatar alt='...' src={parsedData.avatar} />
           </Box>
           <Box my='auto' ml={2}>
-            <Typography variant='h6' className={classes.heading}>
+            <Typography variant='h6' className={classes.heading} >
               {props.user.businessName
                 ? parsedData.name
                 : parsedData.businessName}

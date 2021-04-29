@@ -159,6 +159,7 @@ export default function BusinessDashboard(props) {
   };
   return (
     <Container maxWidth='sm' className={classes.root} >
+      {props.dataSet && props.dataSet.length > 0 ? (
       <Box mb={1} className={classes.utilityBar}>
         <Grid container>
           <Grid item xs={12}>
@@ -225,6 +226,7 @@ export default function BusinessDashboard(props) {
           </Grid>
         </Grid>
       </Box>
+      ) : (<></>)}
       <LoadingPage show={loading}>
         <List className={classes.list}>
           {props.dataSet ? (
@@ -247,8 +249,8 @@ export default function BusinessDashboard(props) {
           )}
         </List>
       </LoadingPage>
-
       <CampaignForm
+        length={props.dataSet.length}
         darkMode={props.darkMode}
         className='campaignform'
         setDataSet={props.setDataSet}
