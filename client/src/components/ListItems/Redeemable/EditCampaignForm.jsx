@@ -88,7 +88,8 @@ export default function EditCampaignForm(props) {
     } catch (err) {
       console.log(err);
     }
-  });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  },[]);
 
   const handleSubmit = async (e) => {
     try {

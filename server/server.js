@@ -38,10 +38,14 @@ app.use(express.static(path.join(__dirname, "..", "client", "build")));
 let server = app.listen(port, function () {
   console.log(`Express app running on port ${port}`);
 });
+var host = server.address();
+
+
 
 const options = {
   cors: {
-    origin: "http://localhost:3000",
+    origin: process.env.URL,
+    // origin: "http://localhost:3000",
     methods: ["GET", "POST"],
   },
 };

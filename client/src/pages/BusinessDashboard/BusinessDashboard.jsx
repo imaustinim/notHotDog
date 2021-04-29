@@ -41,7 +41,7 @@ export default function BusinessDashboard(props) {
       transform: "rotate(180deg)",
     },
     ascending: {
-      transform: "scaleY(-1)"
+      transform: "scaleY(-1)",
     },
     sort: {
       flexGrow: 1,
@@ -52,7 +52,7 @@ export default function BusinessDashboard(props) {
       borderLeft: "1px solid grey",
       borderRight: "1px solid grey",
       margin: "-1.5px -1px 0 -1px",
-      top: "px"
+      top: "px",
     },
     borderMid: {
       boxShadow: "1px 1px 3px lightgrey",
@@ -62,7 +62,7 @@ export default function BusinessDashboard(props) {
       borderRight: "1.5px solid grey",
       borderLeft: "1.5px solid grey",
       bottom: "1px",
-      marginBottom: "-1px"
+      marginBottom: "-1px",
     },
     borderLeft: {
       boxShadow: "1px 1px 3px lightgrey",
@@ -72,7 +72,7 @@ export default function BusinessDashboard(props) {
       borderTop: "1.5px solid grey",
       borderRight: "1.5px solid grey",
       bottom: "1.5px",
-      marginBottom: "-1px"
+      marginBottom: "-1px",
     },
     borderRight: {
       boxShadow: "1px 1px 3px lightgrey",
@@ -82,7 +82,7 @@ export default function BusinessDashboard(props) {
       borderBottom: "1.5px solid grey",
       borderLeft: "1.5px solid grey",
       bottom: "1px",
-      marginBottom: "-1px"
+      marginBottom: "-1px",
     },
     utilityBar: {
       boxShadow: "1px 1px 5px grey",
@@ -95,22 +95,22 @@ export default function BusinessDashboard(props) {
       border: "none",
       padding: 0,
       marginTop: theme.spacing(2),
-      marginBottom: theme.spacing(2)
+      marginBottom: theme.spacing(2),
     },
     giftcardIcon: {
-      color: theme.palette.giftcard[theme.palette.type]
+      color: theme.palette.giftcard[theme.palette.type],
     },
     couponIcon: {
-      color: theme.palette.coupon[theme.palette.type]
+      color: theme.palette.coupon[theme.palette.type],
     },
     ticketIcon: {
-      color: theme.palette.ticket[theme.palette.type]
-    }
+      color: theme.palette.ticket[theme.palette.type],
+    },
   }));
 
   const classes = useStyles();
   let [loading, setLoading] = useState(false);
-  const [toggle, setToggle] = useState("")
+  const [toggle, setToggle] = useState("");
 
   useEffect(() => {
     try {
@@ -118,6 +118,7 @@ export default function BusinessDashboard(props) {
     } catch (err) {
       console.log(err);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   let updateDataSet = async () => {
@@ -146,9 +147,9 @@ export default function BusinessDashboard(props) {
   };
   const handleJustOne = async (e, val) => {
     if (val === toggle) {
-      setToggle("")
+      setToggle("");
     } else {
-      setToggle(val)
+      setToggle(val);
     }
     let newSort = { ...props.sort };
     newSort.justOne = val;
@@ -163,15 +164,16 @@ export default function BusinessDashboard(props) {
       <Box mb={1} className={classes.utilityBar}>
         <Grid container>
           <Grid item xs={12}>
-            <Box display='flex' justifyContent='center' >
-              <SearchBar
-              user={props.user}
-              setExpanded={props.setExpanded}
-              />
+            <Box display='flex' justifyContent='center'>
+              <SearchBar user={props.user} setExpanded={props.setExpanded} />
             </Box>
           </Grid>
           <Grid item xs={12}>
-            <Box display='flex' justifyContent='flex-end' align="left" style={{height: "48px"}}>
+            <Box
+              display='flex'
+              justifyContent='flex-end'
+              align='left'
+              style={{ height: "48px" }}>
               <ToggleButtonGroup
                 value={props.sort.justOne}
                 exclusive
@@ -179,35 +181,32 @@ export default function BusinessDashboard(props) {
                 <ToggleButton value='coupon' className={classes.borderLeft}>
                   <LoyaltyIcon
                     className={clsx({
-                      [classes.couponIcon]: toggle==="coupon"
+                      [classes.couponIcon]: toggle === "coupon",
                     })}
                   />
                 </ToggleButton>
                 <ToggleButton value='ticket' className={classes.borderMid}>
                   <EventSeatIcon
                     className={clsx({
-                      [classes.ticketIcon]: toggle==="ticket"
+                      [classes.ticketIcon]: toggle === "ticket",
                     })}
                   />
                 </ToggleButton>
                 <ToggleButton value='gift card' className={classes.borderMid}>
-                  <CardGiftcardIcon 
+                  <CardGiftcardIcon
                     className={clsx({
-                      [classes.giftcardIcon]: toggle === "gift card"
+                      [classes.giftcardIcon]: toggle === "gift card",
                     })}
                   />
                 </ToggleButton>
               </ToggleButtonGroup>
               <Select
-                InputLabelProps={{
-                  style: { color: theme.palette.text[theme.palette.type] },
-                }}
+                style={{ color: theme.palette.text[theme.palette.type] }}
                 id='select-sort'
                 value={props.sort.sort}
                 variant='outlined'
                 className={classes.sort}
-                onChange={handleSort}
-              >
+                onChange={handleSort}>
                 <MenuItem value={"expire"}>Expiry</MenuItem>
                 <MenuItem value={"create"}>Activation</MenuItem>
                 <MenuItem value={"businessName"}>Name</MenuItem>
@@ -216,10 +215,9 @@ export default function BusinessDashboard(props) {
                 selected={props.sort.asc}
                 value={props.sort.asc}
                 onChange={handleAsc}
-                className={clsx(classes.borderRight,{
+                className={clsx(classes.borderRight, {
                   [classes.ascending]: !props.sort.asc,
-                })}
-              >
+                })}>
                 <SortIcon />
               </ToggleButton>
             </Box>

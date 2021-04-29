@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import clsx from "clsx"
+import clsx from "clsx";
 import Box from "@material-ui/core/Box";
 import Grid from "@material-ui/core/Grid";
 import Container from "@material-ui/core/Container";
@@ -9,11 +9,14 @@ import HotDogIcon from "../HotDogIcon/HotDogIcon"
 import NotHotDog from "../nothotdog/nothotdog"
 
 export default function DemoColourGrid(props) {
-  const [hotdog, setHotdog] = useState(true)
+  const [hotdog, setHotdog] = useState(true);
 
   useEffect(() => {
-    setTimeout(() => setHotdog(!hotdog), 300)
-  }, [])
+    let timeOut = setTimeout(() => setHotdog(!hotdog), 300);
+    
+    return () => clearTimeout(timeOut);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
   const useStyles = makeStyles((theme) => ({
     paper: {
       marginTop: theme.spacing(8),
@@ -29,8 +32,8 @@ export default function DemoColourGrid(props) {
       // transform: "rotate(45deg)",
       transition: "1s ease-in-out",
       "&:hover": {
-        cursor: "pointer"
-      }
+        cursor: "pointer",
+      },
     },
     hotdog: {
       transform: "rotate(225deg)",
@@ -41,33 +44,33 @@ export default function DemoColourGrid(props) {
       opacity: 0,
     },
     shift: {
-      transform: "translateX(-14.5px)"
+      transform: "translateX(-14.5px)",
     },
     transition: {
       transition: "1s ease-in-out",
     },
     aboutBody: {
       [theme.breakpoints.down("xs")]: {
-        textAlign: "center"
+        textAlign: "center",
       },
       textAlign: "left"
     },
     featureBody: {
       [theme.breakpoints.down("xs")]: {
-        textAlign: "center"
+        textAlign: "center",
       },
-      textAlign: "center"
-    }
+      textAlign: "center",
+    },
   }));
   const classes = useStyles();
   return (
-    <Container maxWidth="md" className={classes.paper}>
+    <Container maxWidth='md' className={classes.paper}>
       <Box mb={2} mt={6}>
-        <HotDogIcon 
-        onClick={() => setHotdog(!hotdog)}
-        className={clsx(classes.icon, {
-          [classes.hotdog]: hotdog,
-        })}
+        <HotDogIcon
+          onClick={() => setHotdog(!hotdog)}
+          className={clsx(classes.icon, {
+            [classes.hotdog]: hotdog,
+          })}
         />
       </Box>
       <Box mt={2} display="flex" className={classes.transition}>
@@ -75,26 +78,23 @@ export default function DemoColourGrid(props) {
           className={clsx(classes.transition,{
             [classes.hidden]: hotdog
           })}
-          align="center"
-          variant="h6"
-          style={{position: "relative", bottom: "2px"}}
-        >
+          align='center'
+          variant='h6'
+          style={{ position: "relative", bottom: "2px" }}>
           <strong>not&nbsp;</strong>
         </Typography>
-        <Typography 
-          align="center"
-          variant="h3"
-          className={clsx(classes.transition,{
-            [classes.shift]: hotdog
+        <Typography
+          align='center'
+          variant='h3'
+          className={clsx(classes.transition, {
+            [classes.shift]: hotdog,
           })}>
-          <strong>
-            Hot Dog
-          </strong>
+          <strong>Hot Dog</strong>
         </Typography>
       </Box>
       <Box mt={3}>
-        <Typography align="center" variant="h5">
-              Your favourite customer loyalty app
+        <Typography align='center' variant='h5'>
+          Your favourite customer loyalty app
         </Typography>
       </Box>
       <Box mt={6} mb={6} width="100%">
@@ -103,8 +103,8 @@ export default function DemoColourGrid(props) {
       <Box>
         <Grid container spacing={1}>
           <Grid item xs={12} sm={6}>
-            <Box display="flex" justifyContent="center" mb={2}>
-              <Typography variant="h4">
+            <Box display='flex' justifyContent='center' mb={2}>
+              <Typography variant='h4'>
                 <strong>About</strong>
               </Typography>
             </Box>

@@ -24,7 +24,7 @@ router.get("/tokens/getData", nodeItemCtrl.getData);
 router.get("/tokens/:id/delete", nodeItemCtrl.deleteToken);
 router.get("/tokens/create/:nodeId", nodeItemCtrl.create);
 router.post("/tokens/redeem", nodeItemCtrl.redeemToken);
-router.get("/tokens/:nodeId", nodeItemCtrl.getOne);
+router.get("/tokens/:id", nodeItemCtrl.getOne);
 
 router.get("/test", function (req, res, next) {
   console.log(req.user);

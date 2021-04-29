@@ -31,12 +31,37 @@ async function getData(req, res) {
 
 async function getOne(req, res) {
   try {
-    const thisItem = await isNodeIdValid(req.params.nodeId)
-    
-    res.status(200).send({
-      tokens: tokens,
-    });
+    let id = req.params.id;
+    if (!ObjectID.isValid(id)) {
+      throw "node item Id provided is not a valid format";
+    } else if (new ObjectID(id).toString() !== id) {
+      throw "node item Id provided is not a valid address";
+    } else {
+      let nodeItem = await NodeItem.findById(id)
+        .populate("_node")
+        .populate({
+          path: "_node",
+          populate: {
+            path: "_business",
+          },
+        });
+      let now = new Date();
+      if (nodeItem === null)
+        throw "This node item doesnt appear to exist! Perhaps it is has already been claimed and deleted?";
+      if (nodeItem.redeemed) {
+        throw "node item has already been claimed";
+      }
+      if (
+        new Date(nodeItem.activeDate) > now ||
+        new Date(nodeItem.expireDate) < now
+      ) {
+        throw "nodeId provided is not within valid date range";
+      }
+
+      res.status(200).json(nodeItem);
+    }
   } catch (err) {
+    console.log(err);
     res.status(400).json(err);
   }
 }
@@ -48,12 +73,7 @@ async function isNodeIdValid(nodeId) {
     } else if (new ObjectID(nodeId).toString() !== nodeId) {
       throw "nodeId provided is not a valid address";
     } else {
-      let node = await Node.findById(nodeId).populate('_node').populate({
-        path: "_node",
-        populate: {
-          path: "_business",
-        },
-      });;
+      let node = await Node.findById(nodeId).populate("_business");
       let now = new Date();
       if (node.remainingQuantity === 0) {
         throw "Sorry, all of this token has been claimed!";
@@ -117,7 +137,7 @@ async function create(req, res) {
 }
 async function redeemToken(req, res) {
   try {
-    const socket = io("http://localhost:5000/");
+    const socket = io(process.env.URL);
     if (!ObjectID.isValid(req.body.nodeItem)) {
       throw new Error("Node Item Id provided is not a valid format");
     } else if (
@@ -151,15 +171,25 @@ async function redeemToken(req, res) {
 
     /* Are there uses left? */
     let thisContract = thisItem.contract;
-
-    if (thisContract.numUses > 0) {
-      thisContract.numUses--;
+    if (thisContract.type === "gift card") {
+      let redeemValue = parseFloat(req.body.redeemValue);
+      let remainingValue = parseFloat(thisContract.remainingValue);
+      if (redeemValue > remainingValue) throw new Error("Insufficient credit");
+      remainingValue -= redeemValue;
+      thisContract.remainingValue = `${remainingValue}`;
+      if (remainingValue === 0) {
+        thisContract.redeemed = true;
+        thisItem.redeemed = true;
+      }
+    } else {
+      if (thisContract.numUses > 0) {
+        thisContract.numUses--;
+      }
+      if (thisContract.numUses === 0) {
+        thisContract.redeemed = true;
+        thisItem.redeemed = true;
+      }
     }
-    if (thisContract.numUses === 0) {
-      thisContract.redeemed = true;
-      thisItem.redeemed = true;
-    }
-
     thisItem.contract = { ...thisContract };
     thisItem.markModified("contract");
 

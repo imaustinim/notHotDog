@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Route, Switch } from "react-router";
+import { Route, Switch, Redirect } from "react-router";
 import { useHistory } from "react-router-dom";
 
 /* Material */
@@ -9,7 +9,6 @@ import { ThemeProvider, createMuiTheme } from "@material-ui/core/styles";
 /* Custom Components */
 import NavBar from "../../components/NavBar/NavBar";
 import Footer from "../../components/Footer/Footer";
-import DemoColourGrid from "../../components/DemoColourGrid/DemoColourGrid";
 import SplashPage from "../../components/SplashPage/SplashPage";
 import SnackbarHandler from "../../components/SnackbarHandler/SnackbarHandler";
 
@@ -114,9 +113,9 @@ function App() {
         paper: darkMode ? "#303030" : "#FFFBEB",
       },
       text: {
-        light: "#354E6E", 
+        light: "#354E6E",
         dark: "#FFE066",
-      }
+      },
     },
     typography: {
       fontFamily: "'Libre Franklin', sans-serif",
@@ -205,13 +204,14 @@ function App() {
           />
           <Route
             path='/'
-            render={(props) => {
-              if (!user) {
-                return <SplashPage {...props} />;
-              } else {
-                history.push("/dashboard");
-              }
-            }}
+            // render={(props) => <SplashPage {...props} />}
+            render={(props) =>
+              !user ? (
+                <SplashPage {...props} />
+              ) : (
+                <Redirect to='/dashboard' {...props} />
+              )
+            }
           />
         </Switch>
         <SnackbarHandler

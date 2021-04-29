@@ -58,6 +58,7 @@ export default function NavBar(props) {
   const [hotdog, setHotdog] = useState(true)
   useEffect(() => {
     setTimeout(() => setHotdog(!hotdog), 300)
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   const classes = useStyles();
