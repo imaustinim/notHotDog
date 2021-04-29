@@ -7,7 +7,7 @@
         "p": "npm run post",
         "build": "npm run build --prefix client",
         "audit": "npm audit fix && npm --prefix client audit fix && npm --prefix server audit fix",
-        "heroku-postbuild": "npm run post",
+        "heroku-postbuild": "npm run post && npm run build",
         "start": "node client/src/index.js"
         
     },
