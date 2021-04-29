@@ -87,7 +87,7 @@ export default function EditCampaignForm(props) {
     } catch (err) {
       console.log(err);
     }
-  }, []);
+  });
 
   const handleSubmit = async (e) => {
     try {

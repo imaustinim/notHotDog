@@ -41,7 +41,10 @@ export default function NavBar(props) {
                   component='h1'
                   className={classes.grow}>
                   <Box display={{ xs: "none", sm: "block" }}>
-                    <Link component={RouterLink} to='/' color='inherit'>
+                    <Link
+                      component={RouterLink}
+                      to='/dashboard'
+                      color='inherit'>
                       !hotdog
                     </Link>
                   </Box>
@@ -51,10 +54,7 @@ export default function NavBar(props) {
                 display='flex'
                 className={classes.grow}
                 justifyContent='center'>
-                <SearchBar
-                  user={props.user}
-                  setExpanded={props.setExpanded}
-                />
+                <SearchBar user={props.user} setExpanded={props.setExpanded} />
               </Box>
             </>
           ) : (
@@ -77,8 +77,6 @@ export default function NavBar(props) {
               <LoginButtons icon={<BusinessIcon />} type='business' />
             </>
           )}
-
-          {/* <div className={classes.grow} /> */}
         </Toolbar>
       </AppBar>
     </HideOnScroll>

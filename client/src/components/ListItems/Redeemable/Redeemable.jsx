@@ -1,18 +1,16 @@
-
-import React, { useState } from 'react';
-import clsx from "clsx"
+import React, { useState } from "react";
+import clsx from "clsx";
 
 import Avatar from "@material-ui/core/Avatar";
 import { makeStyles, useTheme } from "@material-ui/core/styles";
 
-import Card from '@material-ui/core/Card';
-import Typography from '@material-ui/core/Typography';
-import Box from '@material-ui/core/Box';
-import Modal from '@material-ui/core/Modal';
-import Backdrop from '@material-ui/core/Backdrop';
-import Fade from '@material-ui/core/Fade';
-import Container from '@material-ui/core/Container';
-import MuiAccordian from "@material-ui/core/Accordion"
+import Card from "@material-ui/core/Card";
+import Typography from "@material-ui/core/Typography";
+import Box from "@material-ui/core/Box";
+import Modal from "@material-ui/core/Modal";
+import Backdrop from "@material-ui/core/Backdrop";
+import Fade from "@material-ui/core/Fade";
+import Container from "@material-ui/core/Container";
 
 import IconButton from "@material-ui/core/IconButton";
 import DeleteIcon from "@material-ui/icons/Delete";
@@ -36,10 +34,8 @@ import { ParseData, ParseUserData } from "./RedeemableUtil";
 import QRCode from "qrcode.react";
 
 export default function Redeemable(props) {
-  const [qrSize, setQrSize] = useState(256);
   const [open, setOpen] = useState(false);
-  const [active, setActive] = useState()
-
+  const qrSize = 256;
   const handleOpen = () => {
     setOpen(true);
   };
@@ -91,17 +87,19 @@ export default function Redeemable(props) {
       display: "block",
       "&:hover": {
         cursor: "pointer",
-        filter: "grayscale(0%)",
       },
       paddingTop: "0px",
       minHeight: "146px",
     },
     icon: {
       color: "#F8FFA8",
-      filter: "brightness(100%)"
+      filter: "brightness(100%)",
     },
     active: {
-      // filter: "grayscale(15%)",
+      "&:hover": {
+        filter: "grayscale(0%)",
+      },
+      filter: "grayscale(30%)",
     },
     inactive: {
       filter: "grayscale(100%)",
@@ -122,15 +120,14 @@ export default function Redeemable(props) {
   return (
     <>
       <Accordion
-        style={{background: parsedData.background}}
+        style={{ background: parsedData.background }}
         className={clsx({
           [classes.active]: parsedData.active,
           [classes.inactive]: !parsedData.active,
         })}
-        expanded={props.expanded === props.idx} 
-        onChange={props.handleAccordian(props.idx)}
-        >
-        <AccordionSummary 
+        expanded={props.expanded === props.idx}
+        onChange={props.handleAccordian(props.idx)}>
+        <AccordionSummary
           className={classes.accordionSummary}
           id={props.idx}
           IconButtonProps={{ edge: "end" }}
@@ -138,9 +135,11 @@ export default function Redeemable(props) {
           <Box my='auto'>
             <Avatar alt='...' src={parsedData.avatar} />
           </Box>
-          <Box my="auto" ml={2}>
-            <Typography variant="h6" className={classes.heading}>
-              {props.user.businessName ? parsedData.name : parsedData.businessName}
+          <Box my='auto' ml={2}>
+            <Typography variant='h6' className={classes.heading}>
+              {props.user.businessName
+                ? parsedData.name
+                : parsedData.businessName}
             </Typography>
           </Box>
           <Box my='auto' ml='auto'>
@@ -156,8 +155,10 @@ export default function Redeemable(props) {
             <Box display='flex' flexDirection='column'>
               <Box display='flex'>
                 <Box>
-                  <Typography variant="h6">
-                    {props.user.businessName ? parsedData.businessName : parsedData.name}
+                  <Typography variant='h6'>
+                    {props.user.businessName
+                      ? parsedData.businessName
+                      : parsedData.name}
                   </Typography>
                 </Box>
                 <Box display='flex' ml='auto'>

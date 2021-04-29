@@ -36,6 +36,13 @@ function App() {
     useMediaQuery("(prefers-color-scheme: dark)")
   );
 
+  let [dataSet, setDataSet] = useState([]);
+  let [sort, setSort] = useState({
+    asc: false,
+    sort: "expire",
+    justOne: null,
+  });
+
   let setOpen = () => {
     let thisSnack = { ...snack };
     thisSnack.open = false;
@@ -109,53 +116,53 @@ function App() {
       month: [
         {
           light: "#CCDBFD",
-          dark: "#ABC4FF"
+          dark: "#ABC4FF",
         },
         {
           light: "#A9D6E5",
-          dark: "#468FAF"
+          dark: "#468FAF",
         },
         {
           light: "#D69F7E",
-          dark: "#9D6B53"
+          dark: "#9D6B53",
         },
         {
           light: "#D0D1FF",
-          dark: "#E2AFFF"
+          dark: "#E2AFFF",
         },
         {
           light: "#FF85A1",
-          dark: "#FF477E"
+          dark: "#FF477E",
         },
         {
           light: "#FFEA00",
-          dark: "#FFD000"
+          dark: "#FFD000",
         },
         {
           light: "#FF9100",
-          dark: "#FF6000"
+          dark: "#FF6000",
         },
         {
           light: "#E95D70",
-          dark: "#E01E37"
+          dark: "#E01E37",
         },
         {
           light: "#CFE1B9",
-          dark: "#718355"
+          dark: "#718355",
         },
         {
           light: "#95D5B2",
-          dark: "#40916C"
+          dark: "#40916C",
         },
         {
           light: "#A9D6E5",
-          dark: "#2C7DA0"
+          dark: "#2C7DA0",
         },
         {
           light: "#E0AAFF",
-          dark: "#9D4EDD"
+          dark: "#9D4EDD",
         },
-      ]
+      ],
     },
     typography: {
       fontFamily: "'Libre Franklin', sans-serif",
@@ -178,6 +185,7 @@ function App() {
           user={user}
           handleAccordian={handleAccordian}
           setExpanded={setExpanded}
+          setSort={setSort}
         />
         <Switch>
           <Route
@@ -212,6 +220,10 @@ function App() {
                       URL={URL}
                       setSnack={setSnack}
                       user={user}
+                      setDataSet={setDataSet}
+                      dataSet={dataSet}
+                      setSort={setSort}
+                      sort={sort}
                       {...props}
                     />
                   );
@@ -223,6 +235,10 @@ function App() {
                       URL={URL}
                       setSnack={setSnack}
                       user={user}
+                      setDataSet={setDataSet}
+                      dataSet={dataSet}
+                      setSort={setSort}
+                      sort={sort}
                       {...props}
                     />
                   );
@@ -248,7 +264,7 @@ function App() {
           severity={snack.severity}
         />
       </main>
-      <Footer className="footer" />
+      <Footer className='footer' />
     </ThemeProvider>
   );
 }
