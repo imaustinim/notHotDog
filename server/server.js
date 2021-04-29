@@ -32,15 +32,13 @@ app.use(
 );
 
 // Build
-app.use(favicon(path.join(__dirname, "..", "client", "build", "favicon.ico")));
+app.use(favicon(path.join(__dirname, "..", "client", "build", "hotdog.svg")));
 app.use(express.static(path.join(__dirname, "..", "client", "build")));
 
 let server = app.listen(port, function () {
   console.log(`Express app running on port ${port}`);
 });
 var host = server.address();
-
-
 
 const options = {
   cors: {
