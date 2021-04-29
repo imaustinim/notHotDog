@@ -248,7 +248,7 @@ export default function BusinessDashboard(props) {
         </List>
       </LoadingPage>
       <CampaignForm
-        length={props.dataSet.length}
+        isEmpty={props.dataSet.length <= 0}
         darkMode={props.darkMode}
         className='campaignform'
         setDataSet={props.setDataSet}
