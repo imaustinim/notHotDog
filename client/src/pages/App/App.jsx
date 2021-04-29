@@ -216,6 +216,7 @@ function App() {
                   return (
                     <BusinessDashboard
                       handleAccordian={handleAccordian}
+                      setExpanded={setExpanded}
                       expanded={expanded}
                       URL={URL}
                       setSnack={setSnack}
@@ -231,6 +232,7 @@ function App() {
                   return (
                     <UserDashboard
                       handleAccordian={handleAccordian}
+                      setExpanded={setExpanded}
                       expanded={expanded}
                       URL={URL}
                       setSnack={setSnack}

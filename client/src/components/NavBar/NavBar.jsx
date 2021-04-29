@@ -48,7 +48,7 @@ export default function NavBar(props) {
                   variant='h5'
                   component='h1'
                   className={classes.grow}>
-                  <Box display={{ xs: "none", sm: "block" }}>
+                  <Box display={{ xs: "block", sm: "block" }}>
                     <Link component={RouterLink} to='/dashboard' color='inherit'>
                       <Typography display="inline" className={classes.not}>
                       not&nbsp;
@@ -60,12 +60,6 @@ export default function NavBar(props) {
                   </Box>
                 </Typography>
               </Box>
-              <Box
-                display='flex'
-                className={classes.grow}
-                justifyContent='center'>
-                <SearchBar user={props.user} setExpanded={props.setExpanded} />
-              </Box>
             </>
           ) : (
             <>
@@ -76,6 +70,7 @@ export default function NavBar(props) {
                   variant='h5'
                   component='h1'
                   className={classes.grow}>
+                  <Box display={{ xs: "block", sm: "block" }}>
                   <Link component={RouterLink} to='/' color='inherit'>
                     <Typography display="inline" className={classes.not}>
                       not&nbsp;
@@ -84,6 +79,7 @@ export default function NavBar(props) {
                       Hot Dog
                       </Typography>
                   </Link>
+                  </Box>
                 </Typography>
               </Box>
               <Box className={classes.grow}></Box>

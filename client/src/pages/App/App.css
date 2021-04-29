@@ -15,6 +15,7 @@ a {
   min-height: 80vh;
 }
 
+.box-shadow,
 .MuiPaper-elevation1 {
   box-shadow: 1px 1px 5px grey !important;
 }
@@ -27,6 +28,10 @@ a {
 
 .MuiAccordion-root {
   transition: 0.2s ease-in-out;
+}
+
+.MuiCard-root {
+  overflow: visible !important;
 }
 
 html {

@@ -61,8 +61,7 @@ function createOption(data) {
       let tStartDateArr = startDate.toDateString().split(" ");
       let tStartDate =
         tStartDateArr[1] + " " + tStartDateArr[2] + ", " + tStartDateArr[3];
-
-      thisOption.value = `${tStartDate} - 
+      thisOption.value = `${tStartDate}  
           ${startDate.toLocaleTimeString("en-us").split(":00")[0]}
           ${startDate.toLocaleTimeString("en-us").split(":00")[1]}`;
       break;
