@@ -7,6 +7,7 @@ const io = require("socket.io-client");
 
 module.exports = {
   getData,
+  getOne,
   create,
   redeemToken,
   deleteToken,
@@ -28,6 +29,18 @@ async function getData(req, res) {
   }
 }
 
+async function getOne(req, res) {
+  try {
+    const thisItem = await isNodeIdValid(req.params.nodeId)
+    
+    res.status(200).send({
+      tokens: tokens,
+    });
+  } catch (err) {
+    res.status(400).json(err);
+  }
+}
+
 async function isNodeIdValid(nodeId) {
   try {
     if (!ObjectID.isValid(nodeId)) {
@@ -35,7 +48,12 @@ async function isNodeIdValid(nodeId) {
     } else if (new ObjectID(nodeId).toString() !== nodeId) {
       throw "nodeId provided is not a valid address";
     } else {
-      let node = await Node.findById(nodeId);
+      let node = await Node.findById(nodeId).populate('_node').populate({
+        path: "_node",
+        populate: {
+          path: "_business",
+        },
+      });;
       let now = new Date();
       if (node.remainingQuantity === 0) {
         throw "Sorry, all of this token has been claimed!";
