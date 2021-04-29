@@ -32,6 +32,7 @@ import CardGiftcardIcon from "@material-ui/icons/CardGiftcard";
 
 import { ParseData, ParseUserData } from "./RedeemableUtil";
 import QRCode from "qrcode.react";
+import { Grid } from "@material-ui/core";
 
 export default function Redeemable(props) {
   const [open, setOpen] = useState(false);
@@ -81,7 +82,7 @@ export default function Redeemable(props) {
       justifyContent: "center",
     },
     accordionSummary: {
-      height: "64px",
+      height: "5em",
     },
     accordianDetails: {
       display: "block",
@@ -96,16 +97,26 @@ export default function Redeemable(props) {
       color: "#F8FFA8",
       filter: "brightness(100%)",
     },
+    heading: {
+      height: "5em",
+    },
+    secondary: {
+      textAlign: "right",
+      height: "5em",
+    },
+
     active: {
       "&:hover": {
-        filter: props.darkMode ? "brightness(100%)" : "brightness(110%)"
+        filter: props.darkMode ? "brightness(100%)" : "brightness(110%)",
       },
       filter: props.darkMode ? "brightness(80%)" : "",
     },
     inactive: {
-      filter: props.darkMode ? "grayscale(100%) brightness(80%)" : "grayscale(100%)",
+      filter: props.darkMode
+        ? "grayscale(100%) brightness(80%)"
+        : "grayscale(100%)",
       "&:hover": {
-        filter: props.darkMode ? "grayscale(80%)" : "grayscale(80%)"
+        filter: props.darkMode ? "grayscale(80%)" : "grayscale(80%)",
       },
     },
   }));
@@ -141,17 +152,15 @@ export default function Redeemable(props) {
           <Box my='auto'>
             <Avatar alt='...' src={parsedData.avatar} />
           </Box>
-          <Box my='auto' ml={2}>
-            <Typography variant='h6' className={classes.heading}>
+          <Box my='auto' ml={2} className={classes.heading}>
+            <Typography variant='h6' >
               {props.user.businessName
                 ? parsedData.name
                 : parsedData.businessName}
             </Typography>
           </Box>
-          <Box my='auto' ml='auto'>
-            <Typography variant='subtitle1' className={classes.heading}>
-              {parsedData.secondary}
-            </Typography>
+          <Box my='auto' className={classes.secondary}>
+            <Typography variant='subtitle1'>{parsedData.secondary}</Typography>
           </Box>
         </AccordionSummary>
         <AccordionDetails
@@ -160,7 +169,7 @@ export default function Redeemable(props) {
           <Box display='flex' flexDirection='column'>
             <Box display='flex' flexDirection='column'>
               <Box display='flex'>
-                <Box alignSelf="center">
+                <Box alignSelf='center'>
                   <Typography variant='h6'>
                     {props.user.businessName
                       ? parsedData.businessName
@@ -199,22 +208,24 @@ export default function Redeemable(props) {
                 <Box mt='auto' mr='auto' align='left'>
                   {props.user.businessName ? (
                     <>
-                    <Box mt='auto' mr='auto' align='left'>
-                      <Typography variant='body2'>
-                        <strong>Redeemed:&nbsp;</strong>
-                        {props.data.redeemedQuantity}
-                      </Typography>
-                    </Box>
-                    <Box mt='auto' mr='auto' align='left'>
-                      <Typography variant='body2'>
-                        <strong>Quantity:&nbsp;</strong>
-                        {props.data.remainingQuantity > -1 ? 
-                          props.data.remainingQuantity : "Unlimited"
-                        }
-                      </Typography>
-                    </Box>
+                      <Box mt='auto' mr='auto' align='left'>
+                        <Typography variant='body2'>
+                          <strong>Redeemed:&nbsp;</strong>
+                          {props.data.redeemedQuantity}
+                        </Typography>
+                      </Box>
+                      <Box mt='auto' mr='auto' align='left'>
+                        <Typography variant='body2'>
+                          <strong>Quantity:&nbsp;</strong>
+                          {props.data.remainingQuantity > -1
+                            ? props.data.remainingQuantity
+                            : "Unlimited"}
+                        </Typography>
+                      </Box>
                     </>
-                  ) : (<></>)}
+                  ) : (
+                    <></>
+                  )}
                   <Box>
                     <Typography variant='body2'>
                       <strong>Status:&nbsp;</strong>
