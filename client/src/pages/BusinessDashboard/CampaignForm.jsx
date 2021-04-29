@@ -18,7 +18,7 @@ import clsx from 'clsx';
 import React from "react";
 import { CreateCampaign, getCampaignData } from "../../utils/businessUtils";
 import { useState } from "react";
-import { useParams, useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 
 const symbols = [
   {
@@ -239,14 +239,12 @@ export default function CampaignForm(props) {
                     <TextField
                       InputLabelProps={{
                         style: { color: theme.palette.text[theme.palette.type] },
+                        shrink: true,
                       }}
                       fullWidth
                       id="activeDate"
                       label="Start Date"
                       type="datetime-local"
-                      InputLabelProps={{
-                        shrink: true,
-                      }}
                       value={activeDate}
                       onChange={(e) => {
                         setActiveDate(e.target.value)}
@@ -257,14 +255,12 @@ export default function CampaignForm(props) {
                     <TextField
                       InputLabelProps={{
                         style: { color: theme.palette.text[theme.palette.type] },
+                        shrink: true,
                       }}
                       fullWidth
                       id="expireDate"
                       label="End Date"
                       type="datetime-local"
-                      InputLabelProps={{
-                        shrink: true,
-                      }}
                       value={expireDate}
                       onChange={(e) => {
                         setExpireDate(e.target.value)}

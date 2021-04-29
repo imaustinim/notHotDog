@@ -18,6 +18,7 @@ export function ParseUserData(data, theme) {
 }
 
 export function ParseData(data, theme) {
+  console.log(data)
   let startDate = new Date(data.activeDate);
   let endDate = new Date(data.expireDate);
   let parsedData = {
@@ -40,7 +41,6 @@ function createMessage(data, theme, parsedData) {
   parsedData.primary = (
     <>
       {parsedData.name} - {parsedData.businessName}
-      {/* - {data.contract.type.toUpperCase()} */}
     </>
   );
 
@@ -62,7 +62,6 @@ function createMessage(data, theme, parsedData) {
       parsedData.secondary = (
         <>
           {`$${parseFloat(data.contract.remainingValue).toFixed(2)}`}
-          {/* // / $${parseFloat(data.contract.value).toFixed(2)}`} */}
         </>
       );
       parsedData.date = (
@@ -73,9 +72,7 @@ function createMessage(data, theme, parsedData) {
       break;
     case "ticket":
       let tStartDateArr = parsedData.startDate.toDateString().split(" ")
-      let tEndDateArr = parsedData.endDate.toDateString().split(" ")
       let tStartDate = tStartDateArr[1] + " " + tStartDateArr[2] + ", " + tStartDateArr[3]
-      let tEndDate = tEndDateArr[1] + " " + tEndDateArr[2] + ", " + tEndDateArr[3]
       parsedData.color = theme.palette.ticket;
       parsedData.background = `linear-gradient(${degree}deg, ${theme.palette.ticket.light} ${startPercent}%, ${theme.palette.ticket.dark} ${endPercent}%)`
       parsedData.secondary = tStartDate;
@@ -86,11 +83,6 @@ function createMessage(data, theme, parsedData) {
           {parsedData.startDate.toLocaleTimeString("en-us").split(":00")[1]}
           <br />
           <strong>Date: </strong> {tStartDate}
-          {/* <strong>End date: </strong>{" "}
-          {tEndDate} @ {" "}
-          {parsedData.endDate.toLocaleTimeString("en-us").split(":00")[0]}
-          {parsedData.endDate.toLocaleTimeString("en-us").split(":00")[1]}
-          <br /> */}
         </>
       );
       break;
@@ -144,5 +136,6 @@ function createMessage(data, theme, parsedData) {
       );
       break;
   }
+  console.log(parsedData)
   return parsedData;
 }

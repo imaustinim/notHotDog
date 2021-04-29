@@ -12,7 +12,6 @@ import Container from "@material-ui/core/Container";
 import { useState } from "react";
 import { Link as RouterLink, useParams, useHistory } from "react-router-dom";
 import { attemptLogin } from "../../utils/authUtils";
-import HotDogIcon from "../../components/HotDogIcon/HotDogIcon";
 
 const useStyles = makeStyles((theme) => ({
   paper: {

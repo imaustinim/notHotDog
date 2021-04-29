@@ -223,15 +223,13 @@ export default function EditCampaignForm(props) {
               <Grid item xs={6} sm={6}>
                 <TextField
                   InputLabelProps={{
+                    shrink: true,
                     style: { color: theme.palette.text[theme.palette.type] },
                   }}
                   fullWidth
                   id='activeDate'
                   label='Start Date'
                   type='datetime-local'
-                  InputLabelProps={{
-                    shrink: true,
-                  }}
                   value={activeDate}
                   onChange={(e) => {
                     setActiveDate(e.target.value);
@@ -241,15 +239,13 @@ export default function EditCampaignForm(props) {
               <Grid item xs={6} sm={6}>
                 <TextField
                   InputLabelProps={{
+                    shrink: true,
                     style: { color: theme.palette.text[theme.palette.type] },
                   }}
                   fullWidth
                   id='expireDate'
                   label='End Date'
                   type='datetime-local'
-                  InputLabelProps={{
-                    shrink: true,
-                  }}
                   value={expireDate}
                   onChange={(e) => {
                     setExpireDate(e.target.value);

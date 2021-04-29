@@ -1,4 +1,4 @@
-import { Box, Fade, Typography } from "@material-ui/core";
+import { Box, Fade } from "@material-ui/core";
 import CircularProgress from "@material-ui/core/CircularProgress";
 
 /* translucent overlay for while page loads */
