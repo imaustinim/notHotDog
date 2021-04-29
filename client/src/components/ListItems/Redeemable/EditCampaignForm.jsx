@@ -62,33 +62,37 @@ export default function EditCampaignForm(props) {
   let [symbol, setSymbol] = useState("$");
   let [access, setAccess] = useState("");
   let [numUses, setNumUses] = useState("");
-
+  let [data, setData] = useState();
   const setCampaign = async () => {
-    let data = await getCampaign(props.data.id);
-    setCampaignName(data.name);
-    setCampaignType(data.type);
-    setDescription(data.description);
-    setActiveDate(moment(data.activeDate).format("YYYY-MM-DDTkk:mm"));
-    setExpireDate(moment(data.activeDate).format("YYYY-MM-DDTkk:mm"));
-    setQuantity(data.remainingQuantity);
-    setNumUses(data.contract.numUses);
-    setValue(data.contract.value);
-    setUnit(data.contract.unit);
-    if (data.contract.unit === "dollar") {
+    let tempData = await getCampaign(props.data.id);
+    await setData(data);
+    setCampaignName(tempData.name);
+    setCampaignType(tempData.type);
+    setDescription(tempData.description);
+    setActiveDate(moment(tempData.activeDate).format("YYYY-MM-DDTkk:mm"));
+    setExpireDate(moment(tempData.expireDate).format("YYYY-MM-DDTkk:mm"));
+    setQuantity(tempData.remainingQuantity);
+    setNumUses(tempData.contract.numUses);
+    setValue(tempData.contract.value);
+    setUnit(tempData.contract.unit);
+    if (tempData.contract.unit === "dollar") {
       setSymbol("$");
     } else {
       setSymbol("%");
     }
-    setAccess(data.contract.access);
+    setAccess(tempData.contract.access);
   };
 
   useEffect(() => {
     try {
-      setCampaign();
+      if (!data) {
+        setCampaign();
+      }
     } catch (err) {
       console.log(err);
     }
-  });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const handleSubmit = async (e) => {
     try {
@@ -178,7 +182,9 @@ export default function EditCampaignForm(props) {
                   required
                   variant='outlined'
                   className={classes.formControl}>
-                  <InputLabel htmlFor='outlined-age-native-simple' color={ props.darkMode ? "primary" : "secondary" }>
+                  <InputLabel
+                    htmlFor='outlined-age-native-simple'
+                    color={props.darkMode ? "primary" : "secondary"}>
                     Campaign Type
                   </InputLabel>
                   <Select
@@ -298,7 +304,9 @@ export default function EditCampaignForm(props) {
                   <Grid item xs={12} sm={6}>
                     <TextField
                       InputLabelProps={{
-                        style: { color: theme.palette.text[theme.palette.type] },
+                        style: {
+                          color: theme.palette.text[theme.palette.type],
+                        },
                       }}
                       variant='outlined'
                       required
@@ -318,7 +326,9 @@ export default function EditCampaignForm(props) {
                   <Grid item xs={6} sm={6}>
                     <TextField
                       InputLabelProps={{
-                        style: { color: theme.palette.text[theme.palette.type] },
+                        style: {
+                          color: theme.palette.text[theme.palette.type],
+                        },
                       }}
                       variant='outlined'
                       required
@@ -343,7 +353,9 @@ export default function EditCampaignForm(props) {
                   <Grid item xs={6} sm={6}>
                     <TextField
                       InputLabelProps={{
-                        style: { color: theme.palette.text[theme.palette.type] },
+                        style: {
+                          color: theme.palette.text[theme.palette.type],
+                        },
                       }}
                       fullWidth
                       id='unit'
@@ -388,7 +400,9 @@ export default function EditCampaignForm(props) {
                   <Grid item xs={12} sm={6}>
                     <TextField
                       InputLabelProps={{
-                        style: { color: theme.palette.text[theme.palette.type] },
+                        style: {
+                          color: theme.palette.text[theme.palette.type],
+                        },
                       }}
                       variant='outlined'
                       required
@@ -408,7 +422,9 @@ export default function EditCampaignForm(props) {
                   <Grid item xs={6} sm={6}>
                     <TextField
                       InputLabelProps={{
-                        style: { color: theme.palette.text[theme.palette.type] },
+                        style: {
+                          color: theme.palette.text[theme.palette.type],
+                        },
                       }}
                       variant='outlined'
                       required
