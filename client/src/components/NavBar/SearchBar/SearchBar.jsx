@@ -1,4 +1,4 @@
-import { Box, Grid, Input } from "@material-ui/core";
+import { Box, Grid } from "@material-ui/core";
 import SearchIcon from "@material-ui/icons/Search";
 import useAutocomplete from "@material-ui/lab/useAutocomplete";
 import { fade, makeStyles, useTheme } from "@material-ui/core/styles";
@@ -21,23 +21,10 @@ const useStyles = makeStyles((theme) => ({
     },
     maxWidth: "80ch",
     flexGrow: 1,
-    // marginRight: theme.spacing(),
     marginLeft: 0,
     [theme.breakpoints.up("sm")]: {
-      // marginLeft: theme.spacing(3),
       width: "auto",
     },
-  },
-  searchIcon: {
-    padding: theme.spacing(0, 2),
-    top: 0,
-    right: 0,
-    height: "100%",
-    position: "absolute",
-    pointerEvents: "none",
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
   },
   inputRoot: {
     color: "inherit",
@@ -45,13 +32,9 @@ const useStyles = makeStyles((theme) => ({
   },
   inputInput: {
     padding: theme.spacing(1, 1, 1, 0),
-    // vertical padding + font size from searchIcon
     paddingLeft: `calc(1em )`,
     transition: theme.transitions.create("width"),
     width: "100%",
-    // [theme.breakpoints.up("md")]: {
-    //   width: "20ch",
-    // },
   },
   listbox: {
     width: "100%",
@@ -131,10 +114,6 @@ export default function SearchBar(props) {
         label="Search..."
         fullWidth={true}
         className={classes.searchBar}
-        // classes={{
-        //   root: classes.inputRoot,
-        //   // input: classes.inputInput,
-        // }}
         value={search}
         {...getInputProps()}
         InputProps={{

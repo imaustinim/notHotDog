@@ -7,9 +7,8 @@ import { useState, useEffect } from "react";
 import { getCampaignData } from "../../utils/businessUtils";
 import CampaignForm from "./CampaignForm";
 import Redeemable from "../../components/ListItems/Redeemable/Redeemable";
-import DemoColourGrid from "../../components/DemoColourGrid/DemoColourGrid";
 import LoadingPage from "../../components/LoadingPage/LoadingPage";
-import { Box, MenuItem, Select, FormControl } from "@material-ui/core";
+import { Box, MenuItem, Select } from "@material-ui/core";
 import EventSeatIcon from "@material-ui/icons/EventSeat";
 import LoyaltyIcon from "@material-ui/icons/Loyalty";
 import CardGiftcardIcon from "@material-ui/icons/CardGiftcard";
@@ -19,9 +18,6 @@ import { sortData } from "../UserDashboard/UserDashboardUtil";
 import ToggleButtonGroup from "@material-ui/lab/ToggleButtonGroup";
 import SearchBar from "../../components/NavBar/SearchBar/SearchBar";
 import Grid from "@material-ui/core/Grid";
-import Card from "@material-ui/core/Card";
-import { normalizeUnits } from "moment";
-
 
 export default function BusinessDashboard(props) {
   const theme = useTheme();

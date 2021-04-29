@@ -51,6 +51,18 @@ export default function DemoColourGrid(props) {
     fontBody: {
       fontSize: "18px",
       fontWeight: 200
+    },
+    aboutBody: {
+      [theme.breakpoints.down("xs")]: {
+        textAlign: "center"
+      },
+      textAlign: "justify"
+    },
+    featureBody: {
+      [theme.breakpoints.down("xs")]: {
+        textAlign: "center"
+      },
+      textAlign: "center"
     }
   }));
   const classes = useStyles();
@@ -58,8 +70,6 @@ export default function DemoColourGrid(props) {
     <Container maxWidth="md" className={classes.paper}>
       <Box mb={2} mt={6}>
         <HotDogIcon 
-        className={classes.icon}
-        className={hotdog ? classes.hotdog : classes.nothotdog}
         onClick={() => setHotdog(!hotdog)}
         className={clsx(classes.icon, {
           [classes.hotdog]: hotdog,
@@ -76,7 +86,6 @@ export default function DemoColourGrid(props) {
           style={{position: "relative", bottom: "2px"}}
         >
           <strong>not&nbsp;</strong>
-          {/* not&nbsp; */}
         </Typography>
         <Typography 
           align="center"
@@ -107,7 +116,7 @@ export default function DemoColourGrid(props) {
             </Box>
           </Grid>
           <Grid item xs={12} sm={6}>
-            <Box textAlign="center">
+            <Box className={classes.aboutBody}>
               <Typography display="inline" variant="caption" align="center" className={classes.not}>
                 <strong>not</strong>&nbsp;
               </Typography>
@@ -127,7 +136,7 @@ export default function DemoColourGrid(props) {
             </Box>
           </Grid>
           <Grid item xs={12} sm={12}>
-            <Box textAlign="center">
+            <Box className={classes.featureBody}>
               <Typography display="inline" variant="caption" className={classes.not}>
                 <strong>not&nbsp;</strong>
               </Typography>

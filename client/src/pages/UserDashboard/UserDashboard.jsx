@@ -8,11 +8,10 @@ import { makeStyles, useTheme } from "@material-ui/core/styles";
 import { useState, useEffect } from "react";
 import { getTokenData } from "../../utils/userUtils";
 import Redeemable from "../../components/ListItems/Redeemable/Redeemable";
-// import { CreateCampaign } from "../../utils/userUtils";
 import { socket } from "../../utils/socketio";
 import LoadingPage from "../../components/LoadingPage/LoadingPage";
 import { sortData } from "./UserDashboardUtil";
-import { Box, FormControl, MenuItem, Select } from "@material-ui/core";
+import { Box, MenuItem, Select } from "@material-ui/core";
 
 import EventSeatIcon from "@material-ui/icons/EventSeat";
 import LoyaltyIcon from "@material-ui/icons/Loyalty";

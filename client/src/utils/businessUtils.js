@@ -82,7 +82,6 @@ export async function getCampaignData() {
       headers: { "Content-Type": "application/json", 'Authorization': 'Bearer ' + jwt },
     })
     let token = await fetchResponse.json();
-    console.log(token)
     if (!fetchResponse.ok) throw token;
     return token.nodes;
   } catch (err) {
