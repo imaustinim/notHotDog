@@ -137,7 +137,7 @@ async function create(req, res) {
 }
 async function redeemToken(req, res) {
   try {
-    const socket = io("http://localhost:5000/");
+    const socket = io(process.env.URL);
     if (!ObjectID.isValid(req.body.nodeItem)) {
       throw new Error("Node Item Id provided is not a valid format");
     } else if (

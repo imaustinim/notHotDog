@@ -32,7 +32,6 @@ import CardGiftcardIcon from "@material-ui/icons/CardGiftcard";
 
 import { ParseData, ParseUserData } from "./RedeemableUtil";
 import QRCode from "qrcode.react";
-import { Grid } from "@material-ui/core";
 
 export default function Redeemable(props) {
   const [open, setOpen] = useState(false);
@@ -99,6 +98,8 @@ export default function Redeemable(props) {
     },
     heading: {
       height: "5em",
+      display: "flex",
+      flexGrow: 1,
     },
     secondary: {
       textAlign: "right",
@@ -153,14 +154,16 @@ export default function Redeemable(props) {
             <Avatar alt='...' src={parsedData.avatar} />
           </Box>
           <Box my='auto' ml={2} className={classes.heading}>
-            <Typography variant='h6' >
+            <Typography variant='h6' style={{ alignSelf: "center" }}>
               {props.user.businessName
                 ? parsedData.name
                 : parsedData.businessName}
             </Typography>
           </Box>
-          <Box my='auto' className={classes.secondary}>
-            <Typography variant='subtitle1'>{parsedData.secondary}</Typography>
+          <Box my='auto' display='flex' className={classes.secondary}>
+            <Typography variant='subtitle1' style={{ alignSelf: "center" }}>
+              {parsedData.secondary}
+            </Typography>
           </Box>
         </AccordionSummary>
         <AccordionDetails

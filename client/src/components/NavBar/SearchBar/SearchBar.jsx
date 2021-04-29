@@ -4,9 +4,9 @@ import useAutocomplete from "@material-ui/lab/useAutocomplete";
 import { fade, makeStyles, useTheme } from "@material-ui/core/styles";
 import { useEffect, useState } from "react";
 import * as SearchBarUtil from "./SearchBarUtil";
-import TextField from '@material-ui/core/TextField';
-import Card from '@material-ui/core/Card';
-import InputAdornment from '@material-ui/core/InputAdornment';
+import TextField from "@material-ui/core/TextField";
+import Card from "@material-ui/core/Card";
+import InputAdornment from "@material-ui/core/InputAdornment";
 
 const useStyles = makeStyles((theme) => ({
   grow: {
@@ -63,8 +63,8 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: "center",
     display: "flex",
     width: "auto",
-    boxShadow: "1px 1px 5px lightgrey"
-  }
+    boxShadow: "1px 1px 5px lightgrey",
+  },
 }));
 
 export default function SearchBar(props) {
@@ -72,10 +72,8 @@ export default function SearchBar(props) {
 
   const classes = useStyles();
   let [searchList, setSearchList] = useState([]);
-  const [search, setSearch] = useState("");
   const {
     getRootProps,
-    getInputLabelProps,
     getInputProps,
     getListboxProps,
     getOptionProps,
@@ -103,22 +101,22 @@ export default function SearchBar(props) {
   };
   useEffect(() => {
     updateSearchList();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   return (
-    <div className={classes.search} {...getRootProps()} >
+    <div className={classes.search} {...getRootProps()}>
       <TextField
         InputLabelProps={{
           style: { color: theme.palette.text[theme.palette.type] },
         }}
-        variant="filled" 
-        label="Search..."
+        variant='filled'
+        label='Search...'
         fullWidth={true}
         className={classes.searchBar}
-        value={search}
         {...getInputProps()}
         InputProps={{
           endAdornment: (
-            <InputAdornment position="start" style={{marginBottom: "16px"}}>
+            <InputAdornment position='start' style={{ marginBottom: "16px" }}>
               <SearchIcon />
             </InputAdornment>
           ),
@@ -126,28 +124,28 @@ export default function SearchBar(props) {
       />
       {groupedOptions.length > 0 ? (
         <Card>
-        <ul className={classes.listbox} {...getListboxProps()}>
-          {groupedOptions.map((option, index) => (
-            <li
-              {...getOptionProps({
-                option,
-                index,
-              })}>
-              <Grid container>
-                <Grid item component={Box} pr={1}>
-                  {option.value}
-                </Grid>
-                <Grid item className={classes.grow}>
-                  {option.title}
-                </Grid>
+          <ul className={classes.listbox} {...getListboxProps()}>
+            {groupedOptions.map((option, index) => (
+              <li
+                {...getOptionProps({
+                  option,
+                  index,
+                })}>
+                <Grid container>
+                  <Grid item component={Box} pr={1}>
+                    {option.value}
+                  </Grid>
+                  <Grid item className={classes.grow}>
+                    {option.title}
+                  </Grid>
 
-                <Grid item style={{ textAlign: "center" }}>
-                  {option.icon}
+                  <Grid item style={{ textAlign: "center" }}>
+                    {option.icon}
+                  </Grid>
                 </Grid>
-              </Grid>
-            </li>
-          ))}
-        </ul>
+              </li>
+            ))}
+          </ul>
         </Card>
       ) : null}
     </div>

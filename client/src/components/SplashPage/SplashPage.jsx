@@ -1,18 +1,21 @@
 import { useState, useEffect } from "react";
-import clsx from "clsx"
+import clsx from "clsx";
 import Box from "@material-ui/core/Box";
 import Grid from "@material-ui/core/Grid";
 import Container from "@material-ui/core/Container";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
-import HotDogIcon from "../HotDogIcon/HotDogIcon"
+import HotDogIcon from "../HotDogIcon/HotDogIcon";
 
 export default function DemoColourGrid(props) {
-  const [hotdog, setHotdog] = useState(true)
+  const [hotdog, setHotdog] = useState(true);
 
   useEffect(() => {
-    setTimeout(() => setHotdog(!hotdog), 300)
-  }, [])
+    let timeOut = setTimeout(() => setHotdog(!hotdog), 300);
+    
+    return () => clearTimeout(timeOut);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
   const useStyles = makeStyles((theme) => ({
     paper: {
       marginTop: theme.spacing(8),
@@ -26,8 +29,8 @@ export default function DemoColourGrid(props) {
       // transform: "rotate(45deg)",
       transition: "1s ease-in-out",
       "&:hover": {
-        cursor: "pointer"
-      }
+        cursor: "pointer",
+      },
     },
     hotdog: {
       transform: "rotate(225deg)",
@@ -38,122 +41,130 @@ export default function DemoColourGrid(props) {
       opacity: 0,
     },
     shift: {
-      transform: "translateX(-14.5px)"
+      transform: "translateX(-14.5px)",
     },
     transition: {
       transition: "1s ease-in-out",
     },
     not: {
-      position: "relative", 
-      fontSize: "9px", 
+      position: "relative",
+      fontSize: "9px",
       bottom: "9px",
     },
     fontBody: {
       fontSize: "18px",
-      fontWeight: 200
+      fontWeight: 200,
     },
     aboutBody: {
       [theme.breakpoints.down("xs")]: {
-        textAlign: "center"
+        textAlign: "center",
       },
-      textAlign: "justify"
+      textAlign: "justify",
     },
     featureBody: {
       [theme.breakpoints.down("xs")]: {
-        textAlign: "center"
+        textAlign: "center",
       },
-      textAlign: "center"
-    }
+      textAlign: "center",
+    },
   }));
   const classes = useStyles();
   return (
-    <Container maxWidth="md" className={classes.paper}>
+    <Container maxWidth='md' className={classes.paper}>
       <Box mb={2} mt={6}>
-        <HotDogIcon 
-        onClick={() => setHotdog(!hotdog)}
-        className={clsx(classes.icon, {
-          [classes.hotdog]: hotdog,
-        })}
+        <HotDogIcon
+          onClick={() => setHotdog(!hotdog)}
+          className={clsx(classes.icon, {
+            [classes.hotdog]: hotdog,
+          })}
         />
       </Box>
-      <Box display="flex" className={classes.transition}>
-        <Typography 
-          className={clsx(classes.transition,{
-            [classes.hidden]: hotdog
+      <Box display='flex' className={classes.transition}>
+        <Typography
+          className={clsx(classes.transition, {
+            [classes.hidden]: hotdog,
           })}
-          align="center"
-          variant="h6"
-          style={{position: "relative", bottom: "2px"}}
-        >
+          align='center'
+          variant='h6'
+          style={{ position: "relative", bottom: "2px" }}>
           <strong>not&nbsp;</strong>
         </Typography>
-        <Typography 
-          align="center"
-          variant="h3"
-          className={clsx(classes.transition,{
-            [classes.shift]: hotdog
+        <Typography
+          align='center'
+          variant='h3'
+          className={clsx(classes.transition, {
+            [classes.shift]: hotdog,
           })}>
-          <strong>
-            Hot Dog
-          </strong>
+          <strong>Hot Dog</strong>
         </Typography>
       </Box>
       <Box mt={3}>
-        <Typography align="center" variant="h5">
-              Your favourite customer loyalty app
+        <Typography align='center' variant='h5'>
+          Your favourite customer loyalty app
         </Typography>
       </Box>
-      <Box mt={6} mb={6} width="98%">
-        <hr/>
+      <Box mt={6} mb={6} width='98%'>
+        <hr />
       </Box>
       <Box>
         <Grid container spacing={1}>
           <Grid item xs={12} sm={6}>
-            <Box display="flex" justifyContent="center" mb={2}>
-              <Typography variant="h4">
+            <Box display='flex' justifyContent='center' mb={2}>
+              <Typography variant='h4'>
                 <strong>About</strong>
               </Typography>
             </Box>
           </Grid>
           <Grid item xs={12} sm={6}>
             <Box className={classes.aboutBody}>
-              <Typography display="inline" variant="caption" align="center" className={classes.not}>
+              <Typography
+                display='inline'
+                variant='caption'
+                align='center'
+                className={classes.not}>
                 <strong>not</strong>&nbsp;
               </Typography>
-              <Typography display="inline" className={classes.fontBody}>
+              <Typography display='inline' className={classes.fontBody}>
                 <strong>Hot Dog</strong>&nbsp;
               </Typography>
-              <Typography display="inline" align="justify" className={classes.fontBody}>
-                is a multiplatform loyalty cards platform where customers can store, track, and manage their loyalty cards. Businesses can create and manage marketing campaigns and loyalty programs.
+              <Typography
+                display='inline'
+                align='justify'
+                className={classes.fontBody}>
+                is a multiplatform loyalty cards platform where customers can
+                store, track, and manage their loyalty cards. Businesses can
+                create and manage marketing campaigns and loyalty programs.
               </Typography>
             </Box>
           </Grid>
           <Grid item xs={12} sm={12}>
-            <Box display="flex" justifyContent="center" mt={8} mb={2}>
-              <Typography variant="h4">
+            <Box display='flex' justifyContent='center' mt={8} mb={2}>
+              <Typography variant='h4'>
                 <strong>Features</strong>
               </Typography>
             </Box>
           </Grid>
           <Grid item xs={12} sm={12}>
             <Box className={classes.featureBody}>
-              <Typography display="inline" variant="caption" className={classes.not}>
+              <Typography
+                display='inline'
+                variant='caption'
+                className={classes.not}>
                 <strong>not&nbsp;</strong>
               </Typography>
-              <Typography display="inline" className={classes.fontBody}>
+              <Typography display='inline' className={classes.fontBody}>
                 <strong>Hot Dog&nbsp;</strong>
               </Typography>
-              <Typography display="inline" className={classes.fontBody}>
-                allows you to keep track and manage various loyalty rewards cards such as coupons, gift cards, and tickets. Go paperless and never miss out on an opportunity to save!
+              <Typography display='inline' className={classes.fontBody}>
+                allows you to keep track and manage various loyalty rewards
+                cards such as coupons, gift cards, and tickets. Go paperless and
+                never miss out on an opportunity to save!
               </Typography>
             </Box>
           </Grid>
-          <Grid item xs={6} sm={3}>
-          </Grid>
-          <Grid item xs={6} sm={3}>
-          </Grid>
-          <Grid item xs={6} sm={3}>
-          </Grid>
+          <Grid item xs={6} sm={3}></Grid>
+          <Grid item xs={6} sm={3}></Grid>
+          <Grid item xs={6} sm={3}></Grid>
         </Grid>
       </Box>
     </Container>

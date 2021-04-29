@@ -1,8 +1,7 @@
 const io = require("socket.io-client");
-console.log(process.env)
-const socket = io("http://localhost:5000/", {
+let url = `${window.location.protocol}//${window.location.hostname}:${window.location.port}/`;
+const socket = io(url, {
   withCredentials: true,
-  transports: ["websocket"],
 });
 
 // client-side

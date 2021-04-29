@@ -11,7 +11,6 @@ import {
   InputAdornment,
   LinearProgress,
   TextField,
-  Typography,
 } from "@material-ui/core";
 import { makeStyles, useTheme } from "@material-ui/core/styles";
 import { useState } from "react";
@@ -64,7 +63,6 @@ export default function QrScanner(props) {
         } else {
           /* If this is a business scanner: */
           let res = await QrScannerUtil.redeemCode(result, redeemValue);
-          console.log(res);
           if (res.constructor && res.constructor.name === "Error") throw res;
           let response = res;
           props.setSnack({
@@ -95,7 +93,7 @@ export default function QrScanner(props) {
       try {
         let res = await QrScannerUtil.getOne(e.target.value, theme);
         if (res.constructor && res.constructor.name === "Error") throw res;
-        console.log(res);
+        
         setParsedResult(res);
       } catch (err) {
         console.log(err);
@@ -129,7 +127,7 @@ export default function QrScanner(props) {
               <IconButton onClick={handleFacingMode}>
                 <FlipCameraIosIcon />
               </IconButton>
-              <Typography className={classes.flexGrow}>Scanning...</Typography>
+
               {props.user && !props.user.businessName && result ? (
                 <Button onClick={handleSubmit} startIcon={<Icon>check</Icon>}>
                   Add To Wallet

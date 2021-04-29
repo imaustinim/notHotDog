@@ -40,7 +40,7 @@ export let redeemCode = async (code, redeemValue = null) => {
       body: JSON.stringify(body),
     };
     let res = await fetch(url, options);
-    console.log(res);
+    
     let response = await res.text();
     if (!res.ok) {
       throw response;
