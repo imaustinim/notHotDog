@@ -65,7 +65,7 @@ function createMessage(data, theme, parsedData) {
       );
       parsedData.date = (
         <>
-          <strong>Expires:</strong> {gcEndDate}
+          <strong>Expires:</strong>{" "}{gcEndDate}
         </>
       );
       break;

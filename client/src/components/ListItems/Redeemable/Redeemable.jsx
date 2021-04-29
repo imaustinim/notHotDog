@@ -86,18 +86,23 @@ export default function Redeemable(props) {
     accordianDetails: {
       display: "block",
       "&:hover": {
-        cursor: "pointer",
+        // cursor: "pointer",
         filter: "grayscale(100%)",
       },
       paddingTop: "0px",
       minHeight: "146px",
+    },
+    detailHover: {
+      "&:hover": {
+        cursor: "pointer",
+      },
     },
     icon: {
       color: "#F8FFA8",
       filter: "brightness(100%)",
     },
     heading: {
-      height: "5em",
+      // height: "5em",
       display: "flex",
       flexGrow: 1,
     },
@@ -153,7 +158,7 @@ export default function Redeemable(props) {
           <Box my='auto'>
             <Avatar alt='...' src={parsedData.avatar} />
           </Box>
-          <Box my='auto' ml={2} className={classes.heading}>
+          <Box my='auto' ml={1} className={classes.heading}>
             <Typography variant='h6' style={{ alignSelf: "center" }}>
               {props.user.businessName
                 ? parsedData.name
@@ -168,9 +173,9 @@ export default function Redeemable(props) {
         </AccordionSummary>
         <AccordionDetails
           className={classes.accordianDetails}
-          onClick={props.handleAccordian(props.idx)}>
+          >
           <Box display='flex' flexDirection='column'>
-            <Box display='flex' flexDirection='column'>
+            <Box display='flex' flexDirection='column' className={classes.detailHover} onClick={props.handleAccordian(props.idx)}>
               <Box display='flex'>
                 <Box alignSelf='center'>
                   <Typography variant='h6'>
@@ -202,13 +207,13 @@ export default function Redeemable(props) {
                   </Box>
                 </Box>
               </Box>
-              <Box minHeight='50px'>
+              <Box minHeight='50px' mt={.5}>
                 <Typography variant='body2'>
                   {parsedData.description}
                 </Typography>
               </Box>
               <Box display='flex' mt='auto' mb={0} pt={1}>
-                <Box mt='auto' mr='auto' align='left'>
+                <Box mt='auto' mb="0" mr='auto' align='left'>
                   {props.user.businessName ? (
                     <>
                       <Box mt='auto' mr='auto' align='left'>
@@ -244,8 +249,8 @@ export default function Redeemable(props) {
                     </Typography>
                   </Box>
                 </Box>
-                <Box mt='auto' ml='auto' mr={0} align='right'>
-                  <Typography variant='body2' className={classes.heading}>
+                <Box mt='auto' display="flex" mb="0" ml='auto' mr={0} align='right'>
+                  <Typography variant='body2'>
                     {parsedData.date}
                   </Typography>
                 </Box>

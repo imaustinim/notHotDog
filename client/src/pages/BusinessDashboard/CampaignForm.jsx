@@ -15,7 +15,7 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import InputAdornment from '@material-ui/core/InputAdornment';
 
 import clsx from 'clsx';
-import React from "react";
+import React, { useEffect } from "react";
 import { CreateCampaign, getCampaignData } from "../../utils/businessUtils";
 import { useState } from "react";
 import { useHistory } from "react-router-dom";
@@ -82,7 +82,7 @@ export default function CampaignForm(props) {
   let [symbol, setSymbol] = useState("$");
   let [access, setAccess] = useState("");
   let [numUses, setNumUses] = useState("");
-  
+
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };

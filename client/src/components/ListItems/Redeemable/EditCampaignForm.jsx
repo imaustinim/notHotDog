@@ -65,7 +65,7 @@ export default function EditCampaignForm(props) {
   let [data, setData] = useState();
   const setCampaign = async () => {
     let tempData = await getCampaign(props.data.id);
-    await setData(data);
+    await setData(tempData);
     setCampaignName(tempData.name);
     setCampaignType(tempData.type);
     setDescription(tempData.description);
