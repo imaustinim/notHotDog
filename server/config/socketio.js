@@ -8,7 +8,7 @@ io.on("connection", (socket) => {
       let decoded = jwt.verify(data.token, process.env.JWT_SECRET);
       userList[decoded.user._id] = data.id;
     } catch (err) {
-      console.log(`Error: ${socket.id} token error`, decoded);
+      console.log(`Error: ${socket.id} token error`, data);
     }
   });
   socket.on("business-redeem", function (data) {
