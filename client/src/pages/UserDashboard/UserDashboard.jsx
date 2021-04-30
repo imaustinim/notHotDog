@@ -128,11 +128,10 @@ export default function UserDashboard(props) {
   let [newUser, setNewUser] = useState(false);
   let updateDataSet = async () => {
     setLoading(true);
-    await getTokenData().then((res) => {
-      props.setDataSet(sortData(res, props.sort)).then((res) => {
-        if (res && res.length === 0) setNewUser(true);
-        else setNewUser(false);
-      });
+    await getTokenData().then(async (res) => {
+      await props.setDataSet(sortData(res, props.sort));
+      if (res && res.length === 0) setNewUser(true);
+      else setNewUser(false);
     });
     setLoading(false);
   };
@@ -192,78 +191,70 @@ export default function UserDashboard(props) {
 
   return (
     <Container maxWidth='sm' className={classes.root}>
-      {props.dataSet && props.dataSet.length > 0 ? (
-        <>
-          <Box mb={1} className={classes.utilityBar}>
-            <Grid container>
-              <Grid item xs={12}>
-                <Box display='flex' justifyContent='center'>
-                  <SearchBar
-                    user={props.user}
-                    setExpanded={props.setExpanded}
+      <Box mb={1} className={classes.utilityBar}>
+        <Grid container>
+          <Grid item xs={12}>
+            <Box display='flex' justifyContent='center'>
+              <SearchBar user={props.user} setExpanded={props.setExpanded} />
+            </Box>
+          </Grid>
+          <Grid item xs={12}>
+            <Box
+              display='flex'
+              justifyContent='flex-end'
+              align='left'
+              style={{ height: "48px" }}>
+              <ToggleButtonGroup
+                value={props.sort.justOne}
+                exclusive
+                onChange={handleJustOne}>
+                <ToggleButton value='coupon' className={classes.borderLeft}>
+                  <LoyaltyIcon
+                    className={clsx({
+                      [classes.couponIcon]: toggle === "coupon",
+                    })}
                   />
-                </Box>
-              </Grid>
-              <Grid item xs={12}>
-                <Box
-                  display='flex'
-                  justifyContent='flex-end'
-                  align='left'
-                  style={{ height: "48px" }}>
-                  <ToggleButtonGroup
-                    value={props.sort.justOne}
-                    exclusive
-                    onChange={handleJustOne}>
-                    <ToggleButton value='coupon' className={classes.borderLeft}>
-                      <LoyaltyIcon
-                        className={clsx({
-                          [classes.couponIcon]: toggle === "coupon",
-                        })}
-                      />
-                    </ToggleButton>
-                    <ToggleButton value='ticket' className={classes.borderMid}>
-                      <EventSeatIcon
-                        className={clsx({
-                          [classes.ticketIcon]: toggle === "ticket",
-                        })}
-                      />
-                    </ToggleButton>
-                    <ToggleButton
-                      value='gift card'
-                      className={classes.borderMid}>
-                      <CardGiftcardIcon
-                        className={clsx({
-                          [classes.giftcardIcon]: toggle === "gift card",
-                        })}
-                      />
-                    </ToggleButton>
-                  </ToggleButtonGroup>
-                  <Select
-                    style={{ color: theme.palette.text[theme.palette.type] }}
-                    id='select-sort'
-                    value={props.sort.sort}
-                    variant='outlined'
-                    className={classes.sort}
-                    onChange={handleSort}>
-                    <MenuItem value={"expire"}>Expiry</MenuItem>
-                    <MenuItem value={"create"}>Activation</MenuItem>
-                    <MenuItem value={"businessName"}>Name</MenuItem>
-                  </Select>
-                  <ToggleButton
-                    selected={props.sort.asc}
-                    value={props.sort.asc}
-                    onChange={handleAsc}
-                    className={clsx(classes.borderRight, {
-                      [classes.ascending]: !props.sort.asc,
-                    })}>
-                    <SortIcon />
-                  </ToggleButton>
-                </Box>
-              </Grid>
-            </Grid>
-          </Box>
-        </>
-      ) : (
+                </ToggleButton>
+                <ToggleButton value='ticket' className={classes.borderMid}>
+                  <EventSeatIcon
+                    className={clsx({
+                      [classes.ticketIcon]: toggle === "ticket",
+                    })}
+                  />
+                </ToggleButton>
+                <ToggleButton value='gift card' className={classes.borderMid}>
+                  <CardGiftcardIcon
+                    className={clsx({
+                      [classes.giftcardIcon]: toggle === "gift card",
+                    })}
+                  />
+                </ToggleButton>
+              </ToggleButtonGroup>
+              <Select
+                style={{ color: theme.palette.text[theme.palette.type] }}
+                id='select-sort'
+                value={props.sort.sort}
+                variant='outlined'
+                className={classes.sort}
+                onChange={handleSort}>
+                <MenuItem value={"expire"}>Expiry</MenuItem>
+                <MenuItem value={"create"}>Activation</MenuItem>
+                <MenuItem value={"businessName"}>Name</MenuItem>
+              </Select>
+              <ToggleButton
+                selected={props.sort.asc}
+                value={props.sort.asc}
+                onChange={handleAsc}
+                className={clsx(classes.borderRight, {
+                  [classes.ascending]: !props.sort.asc,
+                })}>
+                <SortIcon />
+              </ToggleButton>
+            </Box>
+          </Grid>
+        </Grid>
+      </Box>
+      {newUser ? (
         <>
           <Box mt={2} className={classes.landingCard}>
             <Card>
@@ -291,9 +282,28 @@ export default function UserDashboard(props) {
                       Go paperless with <NotHotDog />
                     </Typography>
                   </Box>
-                  <Box mt={1} mb={3}>
+                  <Box className={classes.featureBody} align='center'>
+                    <NotHotDog />
+                    &nbsp;
                     <Typography display='inline' className={classes.fontBody}>
-                      Go <NotHotDog />
+                      allows you to store all your coupons, gift cards, and
+                      tokens without ever misplacing them! Designed to save,
+                      this app takes care of the tedious and time consuming work
+                      of organizing your loyalty rewards. Simply scan to add and
+                      display the QR Code when it's time to save.
+                    </Typography>
+                    <Box mb={1} mt={3}>
+                      <Typography display='inline' className={classes.fontBody}>
+                        Go paperless with <NotHotDog />
+                      </Typography>
+                    </Box>
+                    <Box mt={1} mb={3}>
+                      <Typography display='inline' className={classes.fontBody}>
+                        Go <NotHotDog />
+                      </Typography>
+                    </Box>
+                    <Typography display='inline' className={classes.fontBody}>
+                      Click on the button below to scan your first item.
                     </Typography>
                   </Box>
                   <Typography display='inline' className={classes.fontBody}>
@@ -309,6 +319,8 @@ export default function UserDashboard(props) {
             </Button>
           </Box>
         </>
+      ) : (
+        <></>
       )}
       <LoadingPage show={loading} message={loading}>
         <List className={classes.list}>
