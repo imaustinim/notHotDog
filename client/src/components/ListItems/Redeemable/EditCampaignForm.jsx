@@ -64,6 +64,7 @@ export default function EditCampaignForm(props) {
   let [numUses, setNumUses] = useState("");
   let [data, setData] = useState();
   const setCampaign = async () => {
+    if (data) return;
     let tempData = await getCampaign(props.data.id);
     await setData(tempData);
     setCampaignName(tempData.name);
@@ -85,9 +86,7 @@ export default function EditCampaignForm(props) {
 
   useEffect(() => {
     try {
-      if (!data) {
-        setCampaign();
-      }
+      setCampaign();
     } catch (err) {
       console.log(err);
     }
@@ -101,6 +100,7 @@ export default function EditCampaignForm(props) {
         campaignName: campaignName,
         campaignType: campaignType,
         description: description,
+        quantity: parseInt(quantity),
         activeDate: activeDate,
         expireDate: expireDate,
         value: value,

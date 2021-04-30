@@ -32,21 +32,37 @@ async function createNode(req, res) {
 }
 
 async function editNode(req, res) {
-  let node = await Node.findById(req.params.id);
-  node.name = req.body.campaignName;
-  node.description = req.body.description;
-  // campaign.initialQuantity = req.body.initialQuantity,
-  // campaign.remainingQuantity = req.body.remainingQuantity,
-  node.activeDate = req.body.activeDate;
-  node.expireDate = req.body.expireDate;
-  node.contract = createContract(req.body);
-  node.save();
+  try {
+    let node = await Node.findById(req.params.id);
 
-  res.status(200).send({
-    status: 200,
-    message: "Successfully edited campaign",
-    campaign: node,
-  });
+    if (
+      node.remainingQuantity == -1 ||
+      req.body.quantity > node.remainingQuantity
+    ) {
+      node.remainingQuantity = req.body.quantity;
+    } else {
+      if (req.body.quantity < node.remainingQuantity)
+        throw new Error(
+          "Cannot reduce quantity below that which has already been issued"
+        );
+    }
+    node.name = req.body.campaignName;
+    node.description = req.body.description;
+
+    node.initialQuantity = req.body.quantity;
+    node.activeDate = req.body.activeDate;
+    node.expireDate = req.body.expireDate;
+    node.contract = createContract(req.body);
+    node.markModified("contract");
+    node.save();
+    res.status(200).send({
+      status: 200,
+      message: "Successfully edited campaign",
+      campaign: node,
+    });
+  } catch (err) {
+    console.log(err);
+  }
 }
 
 async function deleteNode(req, res) {
