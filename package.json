@@ -9,7 +9,6 @@
         "audit": "npm audit fix && npm --prefix client audit fix && npm --prefix server audit fix",
         "heroku-postbuild": "npm run post && npm run build",
         "start": "node client/src/index.js"
-        
     },
     "dependencies": {
         "concurrently": "^6.0.2",

@@ -55,7 +55,7 @@ io.attach(server, options);
 const apiRouter = require("./routes/api.routes");
 app.use("/api", apiRouter);
 
-app.get("/", function (req, res) {
+app.get("/*", function (req, res) {
   res.sendFile(path.join(__dirname, "..", "client", "build", "index.html"));
 });
 
