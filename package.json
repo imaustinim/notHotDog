@@ -1,15 +1,22 @@
 {
-    "scripts": {
-        "client": "npm start --prefix client",
-        "server": "NODE_ENV=development cd server/ && nodemon server.js",
-        "dev": "concurrently --raw \"npm run server\" \"npm run client\"",
-        "post": "npm install concurrently --save && npm --prefix client install && npm --prefix server install",
-        "p": "npm run post",
-        "build": "npm run build --prefix client",
-        "audit": "npm audit fix && npm --prefix client audit fix && npm --prefix server audit fix"
-    },
-    "dependencies": {
-        "concurrently": "^6.0.2",
-        "prefix": "^1.0.0"
-    }
+  "scripts": {
+    "client": "npm start --prefix client",
+    "server": "NODE_ENV=development cd server/ && nodemon server.js",
+    "dev": "concurrently --raw \"npm run server\" \"npm run client\"",
+    "post": "npm install concurrently --save && npm --prefix client install && npm --prefix server install",
+    "p": "npm run post",
+    "build": "npm run build --prefix client",
+    "audit": "npm audit fix && npm --prefix client audit fix && npm --prefix server audit fix",
+    "heroku-postbuild": "npm run post && npm run build",
+    "start": "node client/src/index.js"
+  },
+  "dependencies": {
+    "concurrently": "^6.0.2",
+    "prefix": "^1.0.0"
+  },
+  "cacheDirectories": [
+    "node_modules",
+    "server/node_modules",
+    "client/node_modules"
+  ]
 }
