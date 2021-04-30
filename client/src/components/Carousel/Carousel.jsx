@@ -41,15 +41,15 @@ export default function Carousel() {
   const tileData=[
     {
       src: "https://i.imgur.com/AbUvubM.png",
-      title: "User Welcome Page",
+      title: "Welcome Page",
     },
     {
       src: "https://i.imgur.com/ti1sgMm.png",
-      title: "Scan Coupon"
+      title: "Add Coupon"
     },
     {
       src: "https://i.imgur.com/wy4tcTe.png",
-      title: "Redeem Coupons"
+      title: "Redeem Coupon"
     },
     {
       src: "https://i.imgur.com/sGWUiHz.png",
