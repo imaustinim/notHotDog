@@ -62,7 +62,6 @@ export default function EditCampaignForm(props) {
   const theme = useTheme();
   const classes = useStyles();
 
-  let [onClose, setOnClose] = useState(false)
   let [campaignName, setCampaignName] = useState("");
   let [campaignType, setCampaignType] = useState("");
   let [description, setDescription] = useState("");
