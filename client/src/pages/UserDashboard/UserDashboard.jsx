@@ -21,9 +21,9 @@ import SearchBar from "../../components/NavBar/SearchBar/SearchBar";
 import Grid from "@material-ui/core/Grid";
 import Button from "@material-ui/core/Button";
 import Card from "@material-ui/core/Card";
-import CardContent from '@material-ui/core/CardContent';
-import Typography from '@material-ui/core/Typography';
-import NotHotDog from "../../components/nothotdog/nothotdog"
+import CardContent from "@material-ui/core/CardContent";
+import Typography from "@material-ui/core/Typography";
+import NotHotDog from "../../components/nothotdog/nothotdog";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -110,14 +110,14 @@ const useStyles = makeStyles((theme) => ({
     color: theme.palette.coupon[theme.palette.type],
   },
   ticketIcon: {
-    color: theme.palette.ticket[theme.palette.type]
+    color: theme.palette.ticket[theme.palette.type],
   },
   landingCard: {
-    boxShadow: "1px 1px 5px lightgrey"
+    boxShadow: "1px 1px 5px lightgrey",
   },
   fontBody: {
     fontSize: "18px",
-    fontWeight: 200
+    fontWeight: 200,
   },
 }));
 
@@ -125,10 +125,14 @@ export default function UserDashboard(props) {
   const theme = useTheme();
   const classes = useStyles();
   let [loading, setLoading] = useState(false);
+  let [newUser, setNewUser] = useState(false);
   let updateDataSet = async () => {
     setLoading(true);
     await getTokenData().then((res) => {
-      props.setDataSet(sortData(res, props.sort));
+      props.setDataSet(sortData(res, props.sort)).then((res) => {
+        if (res && res.length === 0) setNewUser(true);
+        else setNewUser(false);
+      });
     });
     setLoading(false);
   };
@@ -187,135 +191,145 @@ export default function UserDashboard(props) {
   }, []);
 
   return (
-    <Container maxWidth='sm' className={classes.root} >
+    <Container maxWidth='sm' className={classes.root}>
       {props.dataSet && props.dataSet.length > 0 ? (
-      <>
-      <Box mb={1} className={classes.utilityBar}>
-        <Grid container>
-          <Grid item xs={12}>
-            <Box display='flex' justifyContent='center'>
-              <SearchBar user={props.user} setExpanded={props.setExpanded} />
-            </Box>
-          </Grid>
-          <Grid item xs={12}>
-            <Box
-              display='flex'
-              justifyContent='flex-end'
-              align='left'
-              style={{ height: "48px" }}>
-              <ToggleButtonGroup
-                value={props.sort.justOne}
-                exclusive
-                onChange={handleJustOne}>
-                <ToggleButton value='coupon' className={classes.borderLeft}>
-                  <LoyaltyIcon
-                    className={clsx({
-                      [classes.couponIcon]: toggle === "coupon",
-                    })}
+        <>
+          <Box mb={1} className={classes.utilityBar}>
+            <Grid container>
+              <Grid item xs={12}>
+                <Box display='flex' justifyContent='center'>
+                  <SearchBar
+                    user={props.user}
+                    setExpanded={props.setExpanded}
                   />
-                </ToggleButton>
-                <ToggleButton value='ticket' className={classes.borderMid}>
-                  <EventSeatIcon
-                    className={clsx({
-                      [classes.ticketIcon]: toggle === "ticket",
-                    })}
-                  />
-                </ToggleButton>
-                <ToggleButton value='gift card' className={classes.borderMid}>
-                  <CardGiftcardIcon
-                    className={clsx({
-                      [classes.giftcardIcon]: toggle === "gift card",
-                    })}
-                  />
-                </ToggleButton>
-              </ToggleButtonGroup>
-              <Select
-                style={{ color: theme.palette.text[theme.palette.type] }}
-                id='select-sort'
-                value={props.sort.sort}
-                variant='outlined'
-                className={classes.sort}
-                onChange={handleSort}>
-                <MenuItem value={"expire"}>Expiry</MenuItem>
-                <MenuItem value={"create"}>Activation</MenuItem>
-                <MenuItem value={"businessName"}>Name</MenuItem>
-              </Select>
-              <ToggleButton
-                selected={props.sort.asc}
-                value={props.sort.asc}
-                onChange={handleAsc}
-                className={clsx(classes.borderRight, {
-                  [classes.ascending]: !props.sort.asc,
-                })}>
-                <SortIcon />
-              </ToggleButton>
-            </Box>
-          </Grid>
-        </Grid>
-      </Box>
-      </>
+                </Box>
+              </Grid>
+              <Grid item xs={12}>
+                <Box
+                  display='flex'
+                  justifyContent='flex-end'
+                  align='left'
+                  style={{ height: "48px" }}>
+                  <ToggleButtonGroup
+                    value={props.sort.justOne}
+                    exclusive
+                    onChange={handleJustOne}>
+                    <ToggleButton value='coupon' className={classes.borderLeft}>
+                      <LoyaltyIcon
+                        className={clsx({
+                          [classes.couponIcon]: toggle === "coupon",
+                        })}
+                      />
+                    </ToggleButton>
+                    <ToggleButton value='ticket' className={classes.borderMid}>
+                      <EventSeatIcon
+                        className={clsx({
+                          [classes.ticketIcon]: toggle === "ticket",
+                        })}
+                      />
+                    </ToggleButton>
+                    <ToggleButton
+                      value='gift card'
+                      className={classes.borderMid}>
+                      <CardGiftcardIcon
+                        className={clsx({
+                          [classes.giftcardIcon]: toggle === "gift card",
+                        })}
+                      />
+                    </ToggleButton>
+                  </ToggleButtonGroup>
+                  <Select
+                    style={{ color: theme.palette.text[theme.palette.type] }}
+                    id='select-sort'
+                    value={props.sort.sort}
+                    variant='outlined'
+                    className={classes.sort}
+                    onChange={handleSort}>
+                    <MenuItem value={"expire"}>Expiry</MenuItem>
+                    <MenuItem value={"create"}>Activation</MenuItem>
+                    <MenuItem value={"businessName"}>Name</MenuItem>
+                  </Select>
+                  <ToggleButton
+                    selected={props.sort.asc}
+                    value={props.sort.asc}
+                    onChange={handleAsc}
+                    className={clsx(classes.borderRight, {
+                      [classes.ascending]: !props.sort.asc,
+                    })}>
+                    <SortIcon />
+                  </ToggleButton>
+                </Box>
+              </Grid>
+            </Grid>
+          </Box>
+        </>
       ) : (
-      <>
-        <Box mt={2} className={classes.landingCard}>
-          <Card>
-            <CardContent>
-              <Box my={2}>
-                <Typography variant="h5" align="center" style={{fontWeight: "600"}}>
-                  Welcome
-                </Typography>
-              </Box>
-              <Box className={classes.featureBody} align="center">
-                <NotHotDog/>&nbsp;
-                <Typography display="inline" className={classes.fontBody}>
-                  allows you to store all your coupons, gift cards, and tokens without ever misplacing them!
-                  Designed to save, this app takes care of the tedious and time consuming work of organizing your loyalty rewards.
-                  Simply scan to add and display the QR Code when it's time to save.
-                </Typography>
-                <Box mb={1} mt={3}>
-                  <Typography display="inline" className={classes.fontBody}>
-                    Go paperless with <NotHotDog/>
+        <>
+          <Box mt={2} className={classes.landingCard}>
+            <Card>
+              <CardContent>
+                <Box my={2}>
+                  <Typography
+                    variant='h5'
+                    align='center'
+                    style={{ fontWeight: "600" }}>
+                    Welcome
                   </Typography>
                 </Box>
-                <Box mt={1} mb={3}>
-                  <Typography display="inline" className={classes.fontBody}>
-                  Go <NotHotDog/>
+                <Box className={classes.featureBody} align='center'>
+                  <NotHotDog />
+                  &nbsp;
+                  <Typography display='inline' className={classes.fontBody}>
+                    allows you to store all your coupons, gift cards, and tokens
+                    without ever misplacing them! Designed to save, this app
+                    takes care of the tedious and time consuming work of
+                    organizing your loyalty rewards. Simply scan to add and
+                    display the QR Code when it's time to save.
+                  </Typography>
+                  <Box mb={1} mt={3}>
+                    <Typography display='inline' className={classes.fontBody}>
+                      Go paperless with <NotHotDog />
+                    </Typography>
+                  </Box>
+                  <Box mt={1} mb={3}>
+                    <Typography display='inline' className={classes.fontBody}>
+                      Go <NotHotDog />
+                    </Typography>
+                  </Box>
+                  <Typography display='inline' className={classes.fontBody}>
+                    Click on the button below to scan your first item.
                   </Typography>
                 </Box>
-                <Typography display="inline" className={classes.fontBody}>
-                  Click on the button below to scan your first item.
-                </Typography>
-              </Box>
-            </CardContent>
-          </Card>
-        </Box>
-        <Box mt={2}>
-          <Button
-            type='submit'
-            fullWidth
-            variant='contained'
-            color='primary'
-          >
-            Scan Item
-          </Button>
-        </Box>
-      </>
+              </CardContent>
+            </Card>
+          </Box>
+          <Box mt={2}>
+            <Button type='submit' fullWidth variant='contained' color='primary'>
+              Scan Item
+            </Button>
+          </Box>
+        </>
       )}
       <LoadingPage show={loading} message={loading}>
         <List className={classes.list}>
-        {props.dataSet ? (
-          props.dataSet.map((item, idx) => (
-            <Redeemable
-            darkMode={props.darkMode}
-            expanded={props.expanded}
-            handleAccordian={props.handleAccordian}
-            URL={`${props.URL}/tokens/redeem/`}
-            idx={item._id}
-            key={item._id}
-            data={item}
-            setDataSet={props.setDataSet}
-            setSnack={props.setSnack}
-            user={props.user}
-          />))) :  (<></>)}
+          {props.dataSet ? (
+            props.dataSet.map((item, idx) => (
+              <Redeemable
+                darkMode={props.darkMode}
+                expanded={props.expanded}
+                handleAccordian={props.handleAccordian}
+                URL={`${props.URL}/tokens/redeem/`}
+                idx={item._id}
+                key={item._id}
+                data={item}
+                setDataSet={props.setDataSet}
+                setSnack={props.setSnack}
+                user={props.user}
+              />
+            ))
+          ) : (
+            <></>
+          )}
         </List>
       </LoadingPage>
     </Container>
