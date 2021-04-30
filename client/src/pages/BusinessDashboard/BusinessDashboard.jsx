@@ -160,7 +160,7 @@ export default function BusinessDashboard(props) {
   };
   return (
     <Container maxWidth='sm' className={classes.root} >
-      {props.dataSet && props.dataSet.length > 0 ? (
+      {props.dataSet ? (
       <Box mb={1} className={classes.utilityBar}>
         <Grid container>
           <Grid item xs={12}>

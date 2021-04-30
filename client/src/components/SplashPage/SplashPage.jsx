@@ -7,6 +7,7 @@ import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import HotDogIcon from "../HotDogIcon/HotDogIcon"
 import NotHotDog from "../nothotdog/nothotdog"
+import Slide from '@material-ui/core/Slide';
 
 export default function DemoColourGrid(props) {
   const [hotdog, setHotdog] = useState(true);
@@ -22,7 +23,7 @@ export default function DemoColourGrid(props) {
       marginTop: theme.spacing(8),
       paddingLeft: theme.spacing(4),
       paddingRight: theme.spacing(4),
-      display: "flex",
+      display: "flex",  
       flexDirection: "column",
       alignItems: "center",
     },
@@ -61,6 +62,19 @@ export default function DemoColourGrid(props) {
       },
       textAlign: "center",
     },
+    fontBody: {
+      fontSize: "18px",
+      fontWeight: 200,
+    },
+    fontSubtitle: {
+      fontSize: "24px",
+      fontWeight: 200,
+    },
+    notSubtitle: {
+      position: "relative", 
+      fontSize: "10.3px", 
+      bottom: "12px",
+    }
   }));
   const classes = useStyles();
   return (
@@ -119,6 +133,30 @@ export default function DemoColourGrid(props) {
             </Box>
           </Grid>
           <Grid item xs={12} sm={12}>
+            <Box mt={4} className={classes.featureBody}>
+              <Typography display="inline" className={classes.fontSubtitle}>
+                Go paperless with&nbsp;
+              </Typography>
+              <span display="inline" variant="caption" align="center" className={classes.notSubtitle}>
+                <strong>not</strong>&nbsp;
+              </span>
+              <span display="inline" className={classes.fontSubtitle}>
+                <strong>Hot Dog</strong>
+              </span>
+            <Box mt={2} className={classes.featureBody}>
+            </Box>
+              <Typography display="inline" className={classes.fontSubtitle}>
+                Go&nbsp;
+              </Typography>
+              <span display="inline" variant="caption" align="center" className={classes.notSubtitle}>
+                <strong>not</strong>&nbsp;
+              </span>
+              <span display="inline" className={classes.fontSubtitle}>
+                <strong>Hot Dog</strong>
+              </span>
+            </Box>
+          </Grid>
+          <Grid item xs={12} sm={12}>
             <Box display="flex" justifyContent="center" mt={6} mb={2}>
               <Typography variant="h4">
                 <strong>Features</strong>
@@ -131,20 +169,15 @@ export default function DemoColourGrid(props) {
               <Typography display="inline" className={classes.fontBody}>
               allows you to store your favourite coupons, gift cards, and tokens without ever misplacing them!
               Designed to save you time at home and in the checkout; our app lets you organize, collect and redeem benefits from local small businesses.
-              <Box>
-                Simply scan to add and display the QR Code when it's time to save.
-                Let our QR scanner simplify the process of adding and claiming your benefits
-              </Box>
-              
-              
-              
-              <Box mb={1} mt={3}>
-                Go paperless with <NotHotDog/>
-              </Box>
-              <Box mt={1} mb={3}>
-                Go <NotHotDog/>
-              </Box>
               </Typography>
+              <br/>
+              <br/>
+              <br/>
+              <Box>
+              <Typography display="inline" className={classes.fontBody}>
+                Let our QR scanner simplify the process of adding and claiming your benefits
+              </Typography>
+              </Box>
             </Box>
           </Grid>
         </Grid>

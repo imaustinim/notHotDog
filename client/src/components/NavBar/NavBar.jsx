@@ -116,24 +116,36 @@ export default function NavBar(props) {
               <Box alignSelf="center">
                 <HotDogIcon color={theme.palette.primary.contrastTest} />
               </Box>
-
-              {/* <Box pl={1}>
+              <Box className={classes.logo}>
                 <Typography
                   variant='h5'
                   component='h1'
-                  className={classes.grow}>
-                  <Box display={{ xs: "block", sm: "block" }}>
-                  <Link component={RouterLink} to='/' color='inherit'>
-                    <Typography display="inline" className={classes.not}>
+                  style={{transition: "1s ease-in-out"}}
+                >
+                  <Box display={{ xs: "block", sm: "block" }}
+                  style={{transition: "1s ease-in-out"}}
+                  >
+                    <Link component={RouterLink} to='/' color='inherit'>
+                      <Typography
+                        display="inline"
+                        className={clsx(classes.not,{
+                          [classes.hidden]: hotdog
+                        })}
+                      >
                       not&nbsp;
                       </Typography>
-                      <Typography display="inline" className={classes.hotdog}>
+                      <Typography
+                        display="inline"
+                        className={clsx(classes.hotdogtext,{
+                          [classes.shift]: hotdog
+                        })}
+                      >
                       Hot Dog
                       </Typography>
-                  </Link>
+                    </Link>
                   </Box>
                 </Typography>
-              </Box> */}
+              </Box>
               <Box className={classes.grow}></Box>
 
               <LoginButtons icon={<PersonOutlineIcon />} type='user'/>

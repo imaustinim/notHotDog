@@ -24,6 +24,7 @@ import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 import Typography from "@material-ui/core/Typography";
 import NotHotDog from "../../components/nothotdog/nothotdog";
+import { Link as RouterLink } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -269,20 +270,6 @@ export default function UserDashboard(props) {
                   </Typography>
                 </Box>
                 <Box className={classes.featureBody} align='center'>
-                  <NotHotDog />
-                  &nbsp;
-                  <Typography display='inline' className={classes.fontBody}>
-                    allows you to store all your coupons, gift cards, and tokens
-                    without ever misplacing them! Designed to save, this app
-                    takes care of the tedious and time consuming work of
-                    organizing your loyalty rewards. Simply scan to add and
-                    display the QR Code when it's time to save.
-                  </Typography>
-                  <Box mb={1} mt={3}>
-                    <Typography display='inline' className={classes.fontBody}>
-                      Go paperless with <NotHotDog />
-                    </Typography>
-                  </Box>
                   <Box className={classes.featureBody} align='center'>
                     <NotHotDog />
                     &nbsp;
@@ -307,15 +294,19 @@ export default function UserDashboard(props) {
                       Click on the button below to scan your first item.
                     </Typography>
                   </Box>
-                  <Typography display='inline' className={classes.fontBody}>
-                    Click on the button below to scan your first item.
-                  </Typography>
                 </Box>
               </CardContent>
             </Card>
           </Box>
           <Box mt={2}>
-            <Button type='submit' fullWidth variant='contained' color='primary'>
+            <Button 
+              type='button'
+              fullWidth
+              variant='contained'
+              color='primary'
+              component={RouterLink}
+              to={"/user/scan"}
+            >
               Scan Item
             </Button>
           </Box>

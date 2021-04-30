@@ -284,6 +284,7 @@ export default function CampaignForm(props) {
                       value={quantity}
                       onChange={(e) => {
                         setQuantity(e.target.value);
+                        console.log(quantity)
                       }}
                     />
                   </Grid>
