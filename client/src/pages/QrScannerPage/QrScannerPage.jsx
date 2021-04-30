@@ -37,6 +37,7 @@ export default function QrScanner(props) {
   let handleScan = async (data) => {
     if (data) {
       setResult(data);
+      if (data === "" || !props.user.businessName) return;
       fetchResult(data);
     }
   };
@@ -104,8 +105,9 @@ export default function QrScanner(props) {
 
   let handleChange = async (e, amount = null) => {
     clearTimeout(timeOut);
-    await setResult(e.target.value);
+    setResult(e.target.value);
     if (e.target.value === "" || !props.user.businessName) return;
+
     timeOut = setTimeout(() => {
       fetchResult(e.target.value);
     }, 500);
