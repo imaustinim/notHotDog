@@ -44,6 +44,7 @@ A platform for businesses to create coupons, giftcards, and event tickets and di
 ## Try it out in dark mode!
 
 [![](https://i.imgur.com/XYVT10tm.png)](https://i.imgur.com/XYVT10t.png)
+[!][](https://i.imgur.com/tu98WLx.png)
 
 ## (Here is a FREE! $100 gift card for you to test out!)
 
