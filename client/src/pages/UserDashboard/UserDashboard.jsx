@@ -176,6 +176,7 @@ export default function UserDashboard(props) {
   };
   useEffect(() => {
     try {
+      
       updateDataSet();
       socket.on("client-redeem", (data) => {
         handleEmit(data);
