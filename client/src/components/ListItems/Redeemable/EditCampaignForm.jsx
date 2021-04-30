@@ -9,8 +9,9 @@ import MenuItem from "@material-ui/core/MenuItem";
 import Select from "@material-ui/core/Select";
 import { makeStyles, useTheme } from "@material-ui/core/styles";
 import InputAdornment from "@material-ui/core/InputAdornment";
+import CloseIcon from "@material-ui/icons/Close";
 
-import moment from "moment";
+import moment, { relativeTimeThreshold } from "moment";
 import React from "react";
 import {
   EditCampaign,
@@ -18,6 +19,7 @@ import {
   getCampaign,
 } from "../../../utils/businessUtils";
 import { useState, useEffect } from "react";
+import { Box, IconButton } from "@material-ui/core";
 
 const symbols = [
   {
@@ -44,6 +46,15 @@ const useStyles = makeStyles((theme) => ({
   },
   submit: {
     margin: theme.spacing(3, 0, 2),
+  },
+  closeButton: {
+    position: "relative",
+  },
+  title: {
+    display: "flex",
+    flexGrow: 1,
+    justifyContent: "center",
+    paddingLeft: "48px",
   },
 }));
 
@@ -152,9 +163,23 @@ export default function EditCampaignForm(props) {
         <Grid item xs={12} sm={12}>
           {/* <Card className={classes.card}> */}
           <CardContent>
-            <Typography component='h1' variant='h5' align='center'>
-              Edit Campaign
-            </Typography>
+            <Box display='flex'>
+              <Box className={classes.title}>
+                <Typography
+                  component='h1'
+                  variant='h5'
+                  style={{ alignSelf: "center" }}
+                  align='center'>
+                  Edit Campaign
+                </Typography>
+              </Box>
+              <IconButton
+                aria-label='close'
+                className={classes.closeButton}
+                onClick={props.handleClose}>
+                <CloseIcon />
+              </IconButton>
+            </Box>
           </CardContent>
           <CardContent className={classes.cardcontent}>
             <Grid container spacing={2}>
