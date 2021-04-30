@@ -30,7 +30,7 @@ const useStyles = makeStyles((theme) => ({
     padding: "0",
     margin: "0",
     width: "auto",
-    height: "80vw",
+    height: "480px",
     maxWidth: "100%",
   }
 }));
@@ -66,14 +66,14 @@ export default function Carousel() {
             </strong>
           </Typography>
         </Box >
-        <Box mt={4}>
+        <Box mt={4} >
         <GridList className={classes.gridList} cols={1} cellHeight="auto">
           {tileData.map((tile) => (
             <GridListTile key={tile.src}>
               <Box align="center" m={0} p={0}>
                 <img src={tile.src} alt={tile.title} className={classes.img}/>
               </Box>
-              <Box mt={2} mx={0} p={0}>
+              <Box mt={2} mx={0} p={0} pb={4}>
                 <Typography variant="h6" align="center">
                   {tile.title}
                 </Typography>
