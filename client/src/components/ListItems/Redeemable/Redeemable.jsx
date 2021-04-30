@@ -311,6 +311,7 @@ export default function Redeemable(props) {
                 handleClose={handleClose}
                 data={parsedData}
                 setDataSet={props.setDataSet}
+                updateDataSet={props.updateDataSet}
                 setSnack={props.setSnack}
               />
             </Container>

@@ -115,9 +115,7 @@ export default function EditCampaignForm(props) {
       } else {
         props.handleClose();
         try {
-          let data = await getCampaignData();
           setCampaign();
-          props.setDataSet(data);
           props.setSnack({
             open: true,
             message: `Successfully edited ${res.campaign.name}!`,
@@ -144,6 +142,8 @@ export default function EditCampaignForm(props) {
       }
       props.setSnack(newErrorSnack);
     }
+
+    props.updateDataSet();
   };
 
   return (

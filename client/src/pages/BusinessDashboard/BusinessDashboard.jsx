@@ -253,6 +253,7 @@ export default function BusinessDashboard(props) {
         darkMode={props.darkMode}
         className='campaignform'
         setDataSet={props.setDataSet}
+        updateDataSet={updateDataSet}
         setSnack={props.setSnack}
         user={props.user}
         {...props}

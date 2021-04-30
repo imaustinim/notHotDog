@@ -1,25 +1,63 @@
 # !HOTDOG
 
+[![](https://i.imgur.com/5Cf0L78m.png)](https://hotnotdog.herokuapp.com)
+
 A platform for people to claim and redeem coupons, giftcards, and event tickets from businesses.
 A platform for businesses to create coupons, giftcards, and event tickets and distribute them to individuals.
 
-# Screenshots:
-
-todo..
-
 # Technologies Used:
 
-MongoDB
-Express
-React
-Node.js
+### Fundamental Stack:
 
-Material UI
+- MongoDB
+- Express
+- React
+- Node.js
+
+### Front end Libraries
+
+- Material UI
+- Moment
+- React QR Code Scanner (qrcode.react)
+
+### Back end Libraries
+
+- Socket.io
+- Bcrypt
+- JSON Web Token
 
 # Getting Started (Deployed):
 
-[TODO: link to deployed app](#)
+# [Click Here To Open Live Demo](https://hotnotdog.herokuapp.com)
+
+## Register an account and log in as either a business or a user:
+
+[![](https://i.imgur.com/RlkXDqFm.png)](https://i.imgur.com/RlkXDqF.png)
+[![](https://i.imgur.com/tTnOPuim.png)](https://i.imgur.com/tTnOPui.png)
+
+## User: Sign in to add coupons to your account
+
+[![](https://i.imgur.com/sxcerCkm.png)](https://i.imgur.com/sxcerCk.png)
+[![](https://i.imgur.com/ti1sgMmm.png)](https://i.imgur.com/ti1sgMm.png)
+[![](https://i.imgur.com/B8qRKhHm.png)](https://i.imgur.com/B8qRKhH.png)
+
+## Try it out in dark mode!
+
+[![](https://i.imgur.com/XYVT10tm.png)](https://i.imgur.com/XYVT10t.png)
+
+## (Here is a FREE! $100 gift card for you to test out!)
+
+[![](https://i.imgur.com/1Dq2tjA.png)](https://i.imgur.com/1Dq2tjA.png)
+\*\* accepted at no stores anywhere
+
+## Business owners: Redeem coupons using our QR code scanner
+
+[![](https://i.imgur.com/ihku0OOl.png)](https://i.imgur.com/ihku0OO.png)
+
+## Planning Materials
+
 ["Trello" Board](https://github.com/imaustinim/notHotDog/projects/1)
+
 [Wireframe (figma)](https://www.figma.com/file/G3XCH8mvmsLCGu5j3E73Xe/Untitled?node-id=0%3A1)
 
 # Next Steps:

@@ -37,7 +37,8 @@ async function editNode(req, res) {
 
     if (
       node.remainingQuantity == -1 ||
-      req.body.quantity > node.remainingQuantity
+      req.body.quantity > node.remainingQuantity ||
+      req.body.quantity == -1
     ) {
       node.remainingQuantity = req.body.quantity;
     } else {
