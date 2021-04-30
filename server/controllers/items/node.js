@@ -1,6 +1,7 @@
 const path = require("path");
 const Business = require("../../models/business");
 const Node = require("../../models/node");
+const NodeItem = require("../../models/nodeItem");
 const Contract = require("../../models/classes/contract");
 const { createContract } = require("../../models/classes/contract");
 
@@ -68,6 +69,7 @@ async function editNode(req, res) {
 
 async function deleteNode(req, res) {
   const node = await Node.findOneAndDelete({ _id: req.params.id });
+  await NodeItem.deleteMany({ _node: req.params.id })
 
   res.status(200).send({
     status: 200,

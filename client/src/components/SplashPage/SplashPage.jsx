@@ -180,12 +180,10 @@ export default function DemoColourGrid(props) {
               </Box>
             </Box>
           </Grid>
-          <Grid item xs={12} sm={12}>
-            <Box display="flex" justifyContent="center" mt={6} mb={2}>
-              <Carousel/>
-            </Box>
-          </Grid>
         </Grid>
+      </Box>
+      <Box justifyContent="center" mt={6} mb={2}>
+        <Carousel/>
       </Box>
     </Container>
   );

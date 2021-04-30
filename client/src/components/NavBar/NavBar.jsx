@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import clsx from "clsx"
-import { Typography, AppBar, Toolbar, Link, Box } from "@material-ui/core";
+import { Typography, AppBar, Toolbar, Link, Box, Container } from "@material-ui/core";
 import { makeStyles, useTheme } from "@material-ui/core/styles";
 import BusinessIcon from "@material-ui/icons/Business";
 import PersonOutlineIcon from "@material-ui/icons/PersonOutline";
@@ -66,7 +66,7 @@ export default function NavBar(props) {
 
   return (
     <HideOnScroll {...props}>
-      <AppBar position='fixed' my="auto">
+      <AppBar position='fixed' style={{width: "100%"}} my="auto">
         <Toolbar >
           <Box m="auto" px={1} display="flex" flexGrow={1}>
           {props.user ? (
@@ -147,9 +147,8 @@ export default function NavBar(props) {
                 </Typography>
               </Box>
               <Box className={classes.grow}></Box>
-
-              <LoginButtons icon={<PersonOutlineIcon />} type='user'/>
-              <LoginButtons icon={<BusinessIcon />} type='business'/>
+                <LoginButtons icon={<PersonOutlineIcon />} type='user'/>
+                <LoginButtons icon={<BusinessIcon />} type='business'/>
             </>
           )}
           </Box>
