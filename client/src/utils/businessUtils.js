@@ -1,12 +1,15 @@
-
 export async function CreateCampaign(formData) {
   try {
     let url = "/api/campaigns/create";
-    let jwt = localStorage.getItem('token')
+    let jwt = localStorage.getItem("token");
+
     if (!jwt) throw new Error();
     const fetchResponse = await fetch(url, {
       method: "POST",
-      headers: { "Content-Type": "application/json", 'Authorization': 'Bearer ' + jwt },
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + jwt,
+      },
       body: JSON.stringify(formData),
     });
     let token = await fetchResponse.json();
@@ -18,17 +21,19 @@ export async function CreateCampaign(formData) {
   }
 }
 
-
 export async function EditCampaign(formData, id) {
   try {
     let url = `/api/campaigns/${id}/edit`;
-    let jwt = localStorage.getItem('token')
+    let jwt = localStorage.getItem("token");
     if (!jwt) throw new Error();
     const fetchResponse = await fetch(url, {
       method: "POST",
-      headers: { "Content-Type": "application/json", 'Authorization': 'Bearer ' + jwt },
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + jwt,
+      },
       body: JSON.stringify(formData),
-    })
+    });
     let token = await fetchResponse.json();
     if (!fetchResponse.ok) throw token;
     return token;
@@ -40,12 +45,15 @@ export async function EditCampaign(formData, id) {
 export async function deleteCampaign(id) {
   try {
     let url = `/api/campaigns/${id}/delete`;
-    let jwt = localStorage.getItem('token')
+    let jwt = localStorage.getItem("token");
     if (!jwt) throw new Error();
     const fetchResponse = await fetch(url, {
       method: "GET",
-      headers: { "Content-Type": "application/json", 'Authorization': 'Bearer ' + jwt },
-    })
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + jwt,
+      },
+    });
 
     let token = await fetchResponse.json();
     if (!fetchResponse.ok) throw token;
@@ -58,12 +66,15 @@ export async function deleteCampaign(id) {
 export async function getCampaign(id) {
   try {
     let url = `/api/campaigns/${id}`;
-    let jwt = localStorage.getItem('token')
+    let jwt = localStorage.getItem("token");
     if (!jwt) throw new Error();
     const fetchResponse = await fetch(url, {
       method: "GET",
-      headers: { "Content-Type": "application/json", 'Authorization': 'Bearer ' + jwt },
-    })
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + jwt,
+      },
+    });
     let token = await fetchResponse.json();
     if (!fetchResponse.ok) throw token;
     return token.node;
@@ -75,12 +86,15 @@ export async function getCampaign(id) {
 export async function getCampaignData() {
   try {
     let url = `/api/campaigns/getNodes`;
-    let jwt = localStorage.getItem('token')
+    let jwt = localStorage.getItem("token");
     if (!jwt) throw new Error();
     const fetchResponse = await fetch(url, {
       method: "GET",
-      headers: { "Content-Type": "application/json", 'Authorization': 'Bearer ' + jwt },
-    })
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + jwt,
+      },
+    });
     let token = await fetchResponse.json();
     if (!fetchResponse.ok) throw token;
     return token.nodes;

@@ -1,20 +1,20 @@
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
 import Grid from "@material-ui/core/Grid";
-import Card from '@material-ui/core/Card';
-import CardContent from '@material-ui/core/CardContent';
-import CardActionArea from '@material-ui/core/CardActionArea';
-import Collapse from '@material-ui/core/Collapse';
+import Card from "@material-ui/core/Card";
+import CardContent from "@material-ui/core/CardContent";
+import CardActionArea from "@material-ui/core/CardActionArea";
+import Collapse from "@material-ui/core/Collapse";
 import Typography from "@material-ui/core/Typography";
-import InputLabel from '@material-ui/core/InputLabel';
-import FormControl from '@material-ui/core/FormControl';
-import MenuItem from '@material-ui/core/MenuItem';
-import Select from '@material-ui/core/Select';
+import InputLabel from "@material-ui/core/InputLabel";
+import FormControl from "@material-ui/core/FormControl";
+import MenuItem from "@material-ui/core/MenuItem";
+import Select from "@material-ui/core/Select";
 import { makeStyles, useTheme } from "@material-ui/core/styles";
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import InputAdornment from '@material-ui/core/InputAdornment';
+import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
+import InputAdornment from "@material-ui/core/InputAdornment";
 
-import clsx from 'clsx';
+import clsx from "clsx";
 import React, { useEffect } from "react";
 import { CreateCampaign, getCampaignData } from "../../utils/businessUtils";
 import { useState } from "react";
@@ -22,12 +22,12 @@ import { useHistory } from "react-router-dom";
 
 const symbols = [
   {
-    value: 'dollar',
-    label: '$',
+    value: "dollar",
+    label: "$",
   },
   {
-    value: 'percent',
-    label: '%',
+    value: "percent",
+    label: "%",
   },
 ];
 
@@ -41,11 +41,11 @@ const useStyles = makeStyles((theme) => ({
   form: {
     width: "100%", // Fix IE 11 issue.
     marginTop: theme.spacing(1),
-    marginBottom: theme.spacing(1)
+    marginBottom: theme.spacing(1),
   },
   cardcontent: {
     "&:last-child": {
-      paddingBottom: theme.spacing(1)
+      paddingBottom: theme.spacing(1),
     },
   },
   submit: {
@@ -54,14 +54,14 @@ const useStyles = makeStyles((theme) => ({
   expand: {
     display: "inline-block",
     verticalAlign: "middle",
-    transform: 'rotate(0deg)',
-    marginLeft: 'auto',
-    transition: theme.transitions.create('transform', {
+    transform: "rotate(0deg)",
+    marginLeft: "auto",
+    transition: theme.transitions.create("transform", {
       duration: theme.transitions.duration.shortest,
     }),
   },
   expandOpen: {
-    transform: 'rotate(180deg)',
+    transform: "rotate(180deg)",
   },
 }));
 
@@ -94,13 +94,14 @@ export default function CampaignForm(props) {
         campaignName: campaignName,
         campaignType: campaignType,
         description: description,
+        quantity: quantity,
         activeDate: activeDate,
         expireDate: expireDate,
         value: value,
         unit: unit,
-        access: access
+        access: access,
       };
-      
+
       let res = await CreateCampaign(formData);
       if (res.status !== 200) {
         throw res;
@@ -112,21 +113,21 @@ export default function CampaignForm(props) {
           severity: "success",
         });
         setExpanded(!expanded);
-        setCampaignName("")
-        setCampaignType("")
-        setDescription("")
-        setActiveDate("")
-        setExpireDate("")
-        setQuantity("")
-        setValue("")
-        setUnit("")
-        setAccess("")
-        setNumUses("")
+        setCampaignName("");
+        setCampaignType("");
+        setDescription("");
+        setActiveDate("");
+        setExpireDate("");
+        setQuantity("");
+        setValue("");
+        setUnit("");
+        setAccess("");
+        setNumUses("");
         try {
-          let data = await getCampaignData()
-          props.setDataSet(data)
+          let data = await getCampaignData();
+          props.setDataSet(data);
         } catch (err) {
-          console.log(err)
+          console.log(err);
         }
       }
     } catch (err) {
@@ -156,15 +157,13 @@ export default function CampaignForm(props) {
             <CardActionArea
               onClick={handleExpandClick}
               aria-expanded={expanded}
-              aria-label="show more"
-            >
+              aria-label='show more'>
               <CardContent>
-                <Typography component='h1' variant='h5' align="center"
-                >
+                <Typography component='h1' variant='h5' align='center'>
                   Create New Campaign&nbsp;
                   <ExpandMoreIcon
-                    color="inherit"
-                    fontSize="large"
+                    color='inherit'
+                    fontSize='large'
                     className={clsx(classes.expand, {
                       [classes.expandOpen]: expanded,
                     })}
@@ -172,13 +171,15 @@ export default function CampaignForm(props) {
                 </Typography>
               </CardContent>
             </CardActionArea>
-            <Collapse in={expanded} timeout="auto" unmountOnExit>
+            <Collapse in={expanded} timeout='auto' unmountOnExit>
               <CardContent className={classes.cardcontent}>
                 <Grid container spacing={2}>
                   <Grid item xs={12} sm={6}>
                     <TextField
                       InputLabelProps={{
-                        style: { color: theme.palette.text[theme.palette.type] },
+                        style: {
+                          color: theme.palette.text[theme.palette.type],
+                        },
                       }}
                       variant='outlined'
                       required
@@ -194,31 +195,40 @@ export default function CampaignForm(props) {
                     />
                   </Grid>
                   <Grid item xs={12} sm={6}>
-                    <FormControl fullWidth required variant="outlined" className={classes.formControl}>
-                      <InputLabel htmlFor="outlined-age-native-simple" color={ props.darkMode ? "primary" : "secondary" }>Campaign Type</InputLabel>
+                    <FormControl
+                      fullWidth
+                      required
+                      variant='outlined'
+                      className={classes.formControl}>
+                      <InputLabel
+                        htmlFor='outlined-age-native-simple'
+                        color={props.darkMode ? "primary" : "secondary"}>
+                        Campaign Type
+                      </InputLabel>
                       <Select
                         native
                         value={campaignType}
                         onChange={(e) => {
-                          setCampaignType(e.target.value)
+                          setCampaignType(e.target.value);
                         }}
-                        label="Campaign Type"
+                        label='Campaign Type'
                         inputProps={{
-                          name: 'age',
-                          id: 'outlined-age-native-simple',
-                        }}
-                      >
-                        <option aria-label="None" value="" />
-                        <option value="gift card">Gift Card</option>
-                        <option value="coupon">Coupon</option>
-                        <option value="ticket">Ticket</option>
+                          name: "age",
+                          id: "outlined-age-native-simple",
+                        }}>
+                        <option aria-label='None' value='' />
+                        <option value='gift card'>Gift Card</option>
+                        <option value='coupon'>Coupon</option>
+                        <option value='ticket'>Ticket</option>
                       </Select>
                     </FormControl>
                   </Grid>
                   <Grid item xs={12} sm={12}>
                     <TextField
                       InputLabelProps={{
-                        style: { color: theme.palette.text[theme.palette.type] },
+                        style: {
+                          color: theme.palette.text[theme.palette.type],
+                        },
                       }}
                       variant='outlined'
                       fullWidth
@@ -238,39 +248,47 @@ export default function CampaignForm(props) {
                   <Grid item xs={12} sm={6}>
                     <TextField
                       InputLabelProps={{
-                        style: { color: theme.palette.text[theme.palette.type] },
+                        style: {
+                          color: theme.palette.text[theme.palette.type],
+                        },
                         shrink: true,
                       }}
                       fullWidth
-                      id="activeDate"
-                      label="Start Date"
-                      type="datetime-local"
+                      id='activeDate'
+                      name='activeDate'
+                      label='Start Date'
+                      type='datetime-local'
                       value={activeDate}
                       onChange={(e) => {
-                        setActiveDate(e.target.value)}
-                      }
+                        setActiveDate(e.target.value);
+                      }}
                     />
                   </Grid>
                   <Grid item xs={12} sm={6}>
                     <TextField
                       InputLabelProps={{
-                        style: { color: theme.palette.text[theme.palette.type] },
+                        style: {
+                          color: theme.palette.text[theme.palette.type],
+                        },
                         shrink: true,
                       }}
                       fullWidth
-                      id="expireDate"
-                      label="End Date"
-                      type="datetime-local"
+                      id='expireDate'
+                      name='expireDate'
+                      label='End Date'
+                      type='datetime-local'
                       value={expireDate}
                       onChange={(e) => {
-                        setExpireDate(e.target.value)}
-                      }
+                        setExpireDate(e.target.value);
+                      }}
                     />
                   </Grid>
                   <Grid item xs={6} sm={6}>
                     <TextField
                       InputLabelProps={{
-                        style: { color: theme.palette.text[theme.palette.type] },
+                        style: {
+                          color: theme.palette.text[theme.palette.type],
+                        },
                       }}
                       variant='outlined'
                       required
@@ -278,8 +296,8 @@ export default function CampaignForm(props) {
                       id='quantity'
                       label='Quantity'
                       name='quantity'
-                      type="number"
-                      helperText="Use -1 for unlimited"
+                      type='number'
+                      helperText='Use -1 for unlimited'
                       InputProps={{ inputProps: { min: -1 } }}
                       value={quantity}
                       onChange={(e) => {
@@ -291,20 +309,28 @@ export default function CampaignForm(props) {
                     <Grid item xs={6} sm={6}>
                       <TextField
                         InputLabelProps={{
-                          style: { color: theme.palette.text[theme.palette.type] },
+                          style: {
+                            color: theme.palette.text[theme.palette.type],
+                          },
                         }}
                         variant='outlined'
                         required
                         fullWidth
-                        id="outlined-adornment-amount"
+                        id='outlined-adornment-amount'
                         value={value}
-                        label="Amount"
-                        type="number"
-                        InputProps={{ 
-                          inputProps: { min: 0 }, 
-                          startAdornment: <InputAdornment position="start">{symbol}</InputAdornment>
+                        label='Amount'
+                        type='number'
+                        InputProps={{
+                          inputProps: { min: 0 },
+                          startAdornment: (
+                            <InputAdornment position='start'>
+                              {symbol}
+                            </InputAdornment>
+                          ),
                         }}
-                        onChange={(e) => {setValue(e.target.value)}}
+                        onChange={(e) => {
+                          setValue(e.target.value);
+                        }}
                       />
                     </Grid>
                   ) : (
@@ -312,122 +338,143 @@ export default function CampaignForm(props) {
                   )}
                   {campaignType === "coupon" ? (
                     <>
-                    <Grid item xs={6} sm={6}>
-                      <TextField
-                        InputLabelProps={{
-                          style: { color: theme.palette.text[theme.palette.type] },
-                        }}
-                        variant='outlined'
-                        required
-                        fullWidth
-                        id='numUses'
-                        label='Number of Uses'
-                        name='numUses'
-                        type="number"
-                        helperText="Use -1 for unlimited"
-                        InputProps={{ inputProps: { min: -1 } }}
-                        value={numUses}
-                        onChange={(e) => {
-                          setNumUses(e.target.value);
-                        }}
-                      />
-                    </Grid>
-                    <Grid item xs={6} sm={6}>
-                      <TextField
-                        InputLabelProps={{
-                          style: { color: theme.palette.text[theme.palette.type] },
-                        }}
-                        variant='outlined'
-                        required
-                        fullWidth
-                        id="outlined-adornment-amount"
-                        value={value}
-                        label="Amount"
-                        type="number"
-                        InputProps={{ 
-                          inputProps: { min: 0 }, 
-                          startAdornment: <InputAdornment position="start">{symbol}</InputAdornment>
-                        }}
-                        onChange={(e) => {setValue(e.target.value)}}
-                      />
-                    </Grid>
-                    <Grid item xs={6} sm={6}>
-                      <TextField
-                        InputLabelProps={{
-                          style: { color: theme.palette.text[theme.palette.type] },
-                        }}
-                        fullWidth
-                        id="unit"
-                        select
-                        label="Unit"
-                        value={unit}
-                        defaultValue={unit}
-                        onChange={(e) => {
-                          setUnit(e.target.value)
-                          if (e.target.value === "percent") {
-                            setSymbol("%")
-                          } else {
-                            setSymbol("$")
-                          }
-                        }}
-                        variant="outlined"
-                      >
-                        {symbols.map((option) => {
-                          return option.label === "$" ? (
-                            <MenuItem selected key={option.label} value={option.value}>
-                             {option.label}
-                            </MenuItem>
-                            ) :
-                            <MenuItem selected key={option.label} value={option.value}>
-                              {option.label}
-                            </MenuItem>
-                          }
-                        )}
-                      </TextField>
-                    </Grid>
+                      <Grid item xs={6} sm={6}>
+                        <TextField
+                          InputLabelProps={{
+                            style: {
+                              color: theme.palette.text[theme.palette.type],
+                            },
+                          }}
+                          variant='outlined'
+                          required
+                          fullWidth
+                          id='numUses'
+                          label='Number of Uses'
+                          name='numUses'
+                          type='number'
+                          helperText='Use -1 for unlimited'
+                          InputProps={{ inputProps: { min: -1 } }}
+                          value={numUses}
+                          onChange={(e) => {
+                            setNumUses(e.target.value);
+                          }}
+                        />
+                      </Grid>
+                      <Grid item xs={6} sm={6}>
+                        <TextField
+                          InputLabelProps={{
+                            style: {
+                              color: theme.palette.text[theme.palette.type],
+                            },
+                          }}
+                          variant='outlined'
+                          required
+                          fullWidth
+                          id='outlined-adornment-amount'
+                          value={value}
+                          label='Amount'
+                          type='number'
+                          InputProps={{
+                            inputProps: { min: 0 },
+                            startAdornment: (
+                              <InputAdornment position='start'>
+                                {symbol}
+                              </InputAdornment>
+                            ),
+                          }}
+                          onChange={(e) => {
+                            setValue(e.target.value);
+                          }}
+                        />
+                      </Grid>
+                      <Grid item xs={6} sm={6}>
+                        <TextField
+                          InputLabelProps={{
+                            style: {
+                              color: theme.palette.text[theme.palette.type],
+                            },
+                          }}
+                          fullWidth
+                          id='unit'
+                          select
+                          label='Unit'
+                          value={unit}
+                          defaultValue={unit}
+                          onChange={(e) => {
+                            setUnit(e.target.value);
+                            if (e.target.value === "percent") {
+                              setSymbol("%");
+                            } else {
+                              setSymbol("$");
+                            }
+                          }}
+                          variant='outlined'>
+                          {symbols.map((option) => {
+                            return option.label === "$" ? (
+                              <MenuItem
+                                selected
+                                key={option.label}
+                                value={option.value}>
+                                {option.label}
+                              </MenuItem>
+                            ) : (
+                              <MenuItem
+                                selected
+                                key={option.label}
+                                value={option.value}>
+                                {option.label}
+                              </MenuItem>
+                            );
+                          })}
+                        </TextField>
+                      </Grid>
                     </>
                   ) : (
                     <></>
                   )}
                   {campaignType === "ticket" ? (
                     <>
-                    <Grid item xs={6} sm={6}>
-                      <TextField
-                        InputLabelProps={{
-                          style: { color: theme.palette.text[theme.palette.type] },
-                        }}
-                        variant='outlined'
-                        required
-                        fullWidth
-                        id='numUses'
-                        label='Number of Uses'
-                        name='numUses'
-                        type="number"
-                        helperText="Use -1 for unlimited"
-                        InputProps={{ inputProps: { min: -1 } }}
-                        value={numUses}
-                        onChange={(e) => {
-                          setNumUses(e.target.value);
-                        }}
-                      />
-                    </Grid>
-                    <Grid item xs={6} sm={6}>
-                      <TextField
-                        InputLabelProps={{
-                          style: { color: theme.palette.text[theme.palette.type] },
-                        }}
-                        variant='outlined'
-                        required
-                        fullWidth
-                        id='access'
-                        label='Access'
-                        name='access'
-                        value={access}
-                        onChange={(e) => {
-                          setAccess(e.target.value);
-                        }}
-                      />
-                    </Grid>
+                      <Grid item xs={6} sm={6}>
+                        <TextField
+                          InputLabelProps={{
+                            style: {
+                              color: theme.palette.text[theme.palette.type],
+                            },
+                          }}
+                          variant='outlined'
+                          required
+                          fullWidth
+                          id='numUses'
+                          label='Number of Uses'
+                          name='numUses'
+                          type='number'
+                          helperText='Use -1 for unlimited'
+                          InputProps={{ inputProps: { min: -1 } }}
+                          value={numUses}
+                          onChange={(e) => {
+                            setNumUses(e.target.value);
+                          }}
+                        />
+                      </Grid>
+                      <Grid item xs={6} sm={6}>
+                        <TextField
+                          InputLabelProps={{
+                            style: {
+                              color: theme.palette.text[theme.palette.type],
+                            },
+                          }}
+                          variant='outlined'
+                          required
+                          fullWidth
+                          id='access'
+                          label='Access'
+                          name='access'
+                          value={access}
+                          onChange={(e) => {
+                            setAccess(e.target.value);
+                          }}
+                        />
+                      </Grid>
                     </>
                   ) : (
                     <></>
