@@ -34,9 +34,10 @@ export default function QrScanner(props) {
   let [redeemValue, setRedeemValue] = useState(1);
   let [facingMode, setFacingMode] = useState("environment");
 
-  let handleScan = (data) => {
+  let handleScan = async (data) => {
     if (data) {
       setResult(data);
+      fetchResult(data);
     }
   };
   let handleError = (err) => {
@@ -83,28 +84,30 @@ export default function QrScanner(props) {
     setResult("");
     setParsedResult({});
   };
+  async function fetchResult(value) {
+    try {
+      let res = await QrScannerUtil.getOne(value, theme);
+      if (res.constructor && res.constructor.name === "Error") throw res;
 
+      setParsedResult(res);
+    } catch (err) {
+      console.log(err);
+      props.setSnack({
+        open: true,
+        message: err.message,
+        severity: "error",
+      });
+      setParsedResult("");
+    }
+  }
   let timeOut;
 
   let handleChange = async (e, amount = null) => {
     clearTimeout(timeOut);
     await setResult(e.target.value);
     if (e.target.value === "" || !props.user.businessName) return;
-    timeOut = setTimeout(async function () {
-      try {
-        let res = await QrScannerUtil.getOne(e.target.value, theme);
-        if (res.constructor && res.constructor.name === "Error") throw res;
-
-        setParsedResult(res);
-      } catch (err) {
-        console.log(err);
-        props.setSnack({
-          open: true,
-          message: err.message,
-          severity: "error",
-        });
-        setParsedResult("");
-      }
+    timeOut = setTimeout(() => {
+      fetchResult(e.target.value);
     }, 500);
   };
   return (

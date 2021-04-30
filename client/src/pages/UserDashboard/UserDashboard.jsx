@@ -180,7 +180,6 @@ export default function UserDashboard(props) {
   };
   useEffect(() => {
     try {
-      
       updateDataSet();
       socket.on("client-redeem", (data) => {
         handleEmit(data);
@@ -188,7 +187,6 @@ export default function UserDashboard(props) {
     } catch (err) {
       console.log(err);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
@@ -299,14 +297,13 @@ export default function UserDashboard(props) {
             </Card>
           </Box>
           <Box mt={2}>
-            <Button 
+            <Button
               type='button'
               fullWidth
               variant='contained'
               color='primary'
               component={RouterLink}
-              to={"/user/scan"}
-            >
+              to={"/user/scan"}>
               Scan Item
             </Button>
           </Box>
@@ -327,6 +324,7 @@ export default function UserDashboard(props) {
                 key={item._id}
                 data={item}
                 setDataSet={props.setDataSet}
+                updateDataSet={updateDataSet}
                 setSnack={props.setSnack}
                 user={props.user}
               />

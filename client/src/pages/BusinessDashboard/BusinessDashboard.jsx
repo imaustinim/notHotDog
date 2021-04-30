@@ -238,6 +238,7 @@ export default function BusinessDashboard(props) {
                 key={item._id}
                 data={item}
                 setDataSet={props.setDataSet}
+                updateDataSet={updateDataSet}
                 setSnack={props.setSnack}
                 user={props.user}
               />

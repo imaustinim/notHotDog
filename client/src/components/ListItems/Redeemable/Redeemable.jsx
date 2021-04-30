@@ -63,6 +63,7 @@ export default function Redeemable(props) {
           message: `Successfully deleted ${res.token._node.name}!`,
           severity: "success",
         });
+        props.updateDataSet();
       }
       props.handleAccordian(props.idx);
     } catch (err) {
@@ -171,11 +172,13 @@ export default function Redeemable(props) {
             </Typography>
           </Box>
         </AccordionSummary>
-        <AccordionDetails
-          className={classes.accordianDetails}
-          >
+        <AccordionDetails className={classes.accordianDetails}>
           <Box display='flex' flexDirection='column'>
-            <Box display='flex' flexDirection='column' className={classes.detailHover} onClick={props.handleAccordian(props.idx)}>
+            <Box
+              display='flex'
+              flexDirection='column'
+              className={classes.detailHover}
+              onClick={props.handleAccordian(props.idx)}>
               <Box display='flex'>
                 <Box alignSelf='center'>
                   <Typography variant='h6'>
@@ -207,13 +210,13 @@ export default function Redeemable(props) {
                   </Box>
                 </Box>
               </Box>
-              <Box minHeight='50px' mt={.5}>
+              <Box minHeight='50px' mt={0.5}>
                 <Typography variant='body2'>
                   {parsedData.description}
                 </Typography>
               </Box>
               <Box display='flex' mt='auto' mb={0} pt={1}>
-                <Box mt='auto' mb="0" mr='auto' align='left'>
+                <Box mt='auto' mb='0' mr='auto' align='left'>
                   {props.user.businessName ? (
                     <>
                       <Box mt='auto' mr='auto' align='left'>
@@ -249,10 +252,14 @@ export default function Redeemable(props) {
                     </Typography>
                   </Box>
                 </Box>
-                <Box mt='auto' display="flex" mb="0" ml='auto' mr={0} align='right'>
-                  <Typography variant='body2'>
-                    {parsedData.date}
-                  </Typography>
+                <Box
+                  mt='auto'
+                  display='flex'
+                  mb='0'
+                  ml='auto'
+                  mr={0}
+                  align='right'>
+                  <Typography variant='body2'>{parsedData.date}</Typography>
                 </Box>
               </Box>
             </Box>
