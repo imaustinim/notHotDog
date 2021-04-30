@@ -34,7 +34,6 @@ export async function deleteToken(id) {
 
     let token = await fetchResponse.json();
     if (!fetchResponse.ok) throw token;
-    console.log(token);
     return token;
   } catch (err) {
     return err;
