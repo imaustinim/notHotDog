@@ -7,7 +7,7 @@ import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import HotDogIcon from "../HotDogIcon/HotDogIcon"
 import NotHotDog from "../nothotdog/nothotdog"
-import Slide from '@material-ui/core/Slide';
+import Carousel from "../Carousel/Carousel"
 
 export default function DemoColourGrid(props) {
   const [hotdog, setHotdog] = useState(true);
@@ -178,6 +178,11 @@ export default function DemoColourGrid(props) {
                 Let our QR scanner simplify the process of adding and claiming your benefits
               </Typography>
               </Box>
+            </Box>
+          </Grid>
+          <Grid item xs={12} sm={12}>
+            <Box display="flex" justifyContent="center" mt={6} mb={2}>
+              <Carousel/>
             </Box>
           </Grid>
         </Grid>
