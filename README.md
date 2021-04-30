@@ -47,7 +47,7 @@ A platform for businesses to create coupons, giftcards, and event tickets and di
 
 ## (Here is a FREE! $100 gift card for you to test out!)
 
-[![](https://i.imgur.com/1Dq2tjA.png)](https://i.imgur.com/1Dq2tjA.png)
+[![](https://i.imgur.com/3oqogyK.png)](https://i.imgur.com/3oqogyK.png)
 \*\* accepted at no stores anywhere
 
 ## Business owners: Redeem coupons using our QR code scanner
