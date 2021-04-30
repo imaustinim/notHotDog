@@ -56,6 +56,8 @@ A platform for businesses to create coupons, giftcards, and event tickets and di
 
 ## Planning Materials
 
+["ERD"](https://lucid.app/lucidchart/7756c38f-7cf4-4dfc-92fe-09186c7e3671/view)
+
 ["Trello" Board](https://github.com/imaustinim/notHotDog/projects/1)
 
 [Wireframe (figma)](https://www.figma.com/file/G3XCH8mvmsLCGu5j3E73Xe/Untitled?node-id=0%3A1)
